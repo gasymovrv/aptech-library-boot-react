@@ -14,6 +14,7 @@
 		<module>library-rest-api</module>
 		<module>library-client-react-main</module>
 		<module>library-client-react-books</module>
+		<module>library-client-react-npm-books</module>
 	</modules>
 
 	<parent>
@@ -27,54 +28,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<node.js.version>v8.11.3</node.js.version>
+		<yarn.version>v1.9.4</yarn.version>
+		<frontend.plugin.version>1.6</frontend.plugin.version>
 	</properties>
 
-	<build>
-		<plugins>
-
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<!-- NB! Set <version> to the latest released version of frontend-maven-plugin, like in README.md -->
-				<version>1.6</version>
-
-				<configuration>
-					<installDirectory>target</installDirectory>
-				</configuration>
-
-				<executions>
-
-					<execution>
-						<id>install node and yarn</id>
-						<goals>
-							<goal>install-node-and-yarn</goal>
-						</goals>
-						<configuration>
-							<nodeVersion>v8.11.3</nodeVersion>
-							<yarnVersion>v1.9.4</yarnVersion>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>yarn install</id>
-						<goals>
-							<goal>yarn</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-
-				</executions>
-			</plugin>
-
-		</plugins>
-
-	</build>
 
 </project>

@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>library-client-react-books</artifactId>
+	<artifactId>library-client-react-npm-books</artifactId>
 	<parent>
 		<groupId>ru.aptech</groupId>
 		<artifactId>aptech-library-boot-react</artifactId>
@@ -11,8 +11,8 @@
 	</parent>
 	<packaging>pom</packaging>
 
-	<name>library-client-react-books</name>
-	<description>aptech library react client - book list</description>
+	<name>library-client-react-npm-books</name>
+	<description>aptech library react client - npm test book list</description>
 
 	<build>
 		<plugins>
@@ -25,20 +25,20 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>install node and yarn</id>
+						<id>install node and npm</id>
 						<goals>
-							<goal>install-node-and-yarn</goal>
+							<goal>install-node-and-npm</goal>
 						</goals>
 						<configuration>
 							<nodeVersion>${node.js.version}</nodeVersion>
-							<yarnVersion>${yarn.version}</yarnVersion>
 						</configuration>
 					</execution>
 					<execution>
-						<id>yarn install</id>
+						<id>npm install</id>
 						<goals>
-							<goal>yarn</goal>
+							<goal>npm</goal>
 						</goals>
+						<!-- Optional configuration which provides for running any npm command -->
 						<configuration>
 							<arguments>install</arguments>
 						</configuration>
