@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>library-client-react-main</artifactId>
+	<artifactId>library-client-react-books</artifactId>
 	<parent>
 		<groupId>ru.aptech</groupId>
 		<artifactId>aptech-library-boot-react</artifactId>
@@ -11,7 +11,7 @@
 	</parent>
 	<packaging>pom</packaging>
 
-	<name>library-client-react-main</name>
-	<description>aptech library react client - main client's module</description>
+	<name>library-client-react-books</name>
+	<description>aptech library react client - book list</description>
 
 </project>
