@@ -37,13 +37,22 @@ class App extends Component {
   }
 
   render() {
-    const books = this.state.cats.sort((a,b)=>a.genre.name > b.genre.name);
+    const books = this.state.cats.sort((a,b)=>{
+        if (a.genre.name > b.genre.name) {
+            return 1;
+        }
+        if (a.genre.name < b.genre.name) {
+            return -1;
+        }
+        // a должно быть равным b
+        return 0;
+    });
     return (
       <div className="App">
         <table className="ui celled table">
           <thead>
             <tr>
-              <th>Имя</th>
+              <th>Название</th>
               <th>Цена</th>
               <th />
             </tr>
