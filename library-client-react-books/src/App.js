@@ -37,7 +37,7 @@ class App extends Component {
   }
 
   render() {
-    const cats = this.state.cats;
+    const books = this.state.cats.sort((a,b)=>a.genre.name > b.genre.name);
     return (
       <div className="App">
         <table className="ui celled table">
@@ -49,21 +49,21 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            {cats.map((c, idx) => [
-              (idx > 1 && cats[idx - 1].generation !== c.generation) ||
+            {books.map((b, idx) => [
+              (idx > 1 && books[idx - 1].genre.name !== b.genre.name) ||
               idx === 0 ? (
                 <tr>
                   <td className="generation" colspan="3">
-                    Generation {c.generation}
+                    {b.genre.name}
                   </td>
                 </tr>
               ) : null,
               <tr>
                 <td>
-                  <img src={`data:image/jpeg;base64,${c.image}`} />
-                  {c.name}
+                  <img src={`data:image/jpeg;base64,${b.image}`} />
+                  {b.name}
                 </td>
-                <td>{c.price} MC</td>
+                <td>{b.price} MC</td>
                 <td>Купить</td>
               </tr>,
             ])}
