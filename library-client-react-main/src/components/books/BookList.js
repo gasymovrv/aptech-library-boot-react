@@ -9,7 +9,7 @@ class BookList extends React.Component{
 
     //срабатывает после появления текущего компонента в DOM
     componentDidMount(){
-        fetch('http://localhost:8080/books/findAll')
+        fetch('books/findAll')
             .then(response => response.json())
             .then(data => this.setState({bookList: data}));
     }
