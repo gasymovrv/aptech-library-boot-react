@@ -12,6 +12,7 @@
 
 	<modules>
 		<module>library-rest-api</module>
+		<module>library-client-react-main</module>
 	</modules>
 
 	<parent>

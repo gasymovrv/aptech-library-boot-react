@@ -9,7 +9,7 @@ class GenreList extends React.Component{
 
     //срабатывает после появления текущего компонента в DOM
     componentDidMount(){
-        fetch('genres/findAll')
+        fetch('http://localhost:8080/genres/findAll')
             .then(response => response.json())
             .then(data => this.setState({genreList: data}));
     }
