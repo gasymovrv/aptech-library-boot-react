@@ -25,13 +25,14 @@ class Header extends React.Component {
     };
 
     render() {
+        const {watchText, isActiveWatch} = this.state;
         return (
             <div className="mainmenu-wrapper">
                 <div className="container">
                     <div className="row">
                         <ul className="list-inline">
-                            <li><input className="btn btn-sm" type="button" onClick={this.toggleIsActiveWatch} value={this.state.watchText}/></li>
-                            <li><Watch isActive={this.state.isActiveWatch}/></li>
+                            <li><input className="btn btn-sm" type="button" onClick={this.toggleIsActiveWatch} value={watchText}/></li>
+                            <li><Watch isActive={isActiveWatch}/></li>
                         </ul>
                     </div>
                     <div className="menuextras">

@@ -68,7 +68,7 @@ class Watch extends React.Component {
     }
 
     render() {
-        const {time} =this.state;
+        const {time, watchStyle} =this.state;
         let sec = time.getSeconds();
         let min = time.getMinutes();
         let hour = time.getHours();
@@ -81,7 +81,7 @@ class Watch extends React.Component {
         if(hour < 10){
             hour='0'+hour;
         }
-        return (<p className={this.state.watchStyle}>{hour} : {min} : {sec}</p>)
+        return (<p className={watchStyle}>{hour} : {min} : {sec}</p>)
     }
 }
 

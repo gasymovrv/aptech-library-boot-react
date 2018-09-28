@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import BookImage from './BookImage';
-import Genre from './Genre';
+import React, {Component} from 'react';
+import Category from './Category';
 
 class App extends Component {
   state = {
@@ -39,48 +38,36 @@ class App extends Component {
   }
 
   render() {
-    const books = this.state.books.sort((a,b)=>{
-        if (a.genre.name > b.genre.name) {
-            return 1;
+    //acc - это объект, содержащий ключи - genre.id со значением в виде массива [book]
+    const books = this.state.books.reduce((acc, book)=>{
+        if(acc[book.genre.id]){
+            acc[book.genre.id].push(book);
+        } else {
+            acc[book.genre.id] = [book];
         }
-        if (a.genre.name < b.genre.name) {
-            return -1;
-        }
-        // a должно быть равным b
-        return 0;
-    });
+        return acc;
+    }, {});
     return (
-      <div className="App">
-        <table className="ui celled table">
-          <thead>
-            <tr>
-              <th>Название</th>
-              <th>Цена</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {books.map((b, idx) => [
-              (idx > 1 && books[idx - 1].genre.name !== b.genre.name) ||
-              idx === 0 ? (
+        <div className="App">
+            <table className="ui celled table">
+                <thead>
                 <tr>
-                  <td className="generation" colspan="3">
-                    {b.genre.name}
-                  </td>
+                    <th>Название</th>
+                    <th>Цена</th>
+                    <th/>
                 </tr>
-              ) : null,
-              <tr>
-                <td>
-                    <BookImage src={`data:image/jpeg;base64,${b.image}`}/>
-                  {b.name}
-                </td>
-                <td>{b.price} MC</td>
-                <td>Купить</td>
-              </tr>,
-            ])}
-          </tbody>
-        </table>
-      </div>
+                </thead>
+                <tbody>
+                {Object.keys(books).map((key) => (
+                    <Category
+                        key={key}
+                        title={`${books[key][0] ? books[key][0].genre.name : ""}`}
+                        books={books[key]}
+                    />
+                ))}
+                </tbody>
+            </table>
+        </div>
     );
   }
 }

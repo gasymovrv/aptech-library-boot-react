@@ -13,11 +13,16 @@ img {
   width: 90vw;
 }
 
-.generation {
+.category {
   font-weight: bold;
 }
 
 .book-image{
   border: 1px solid #ddd;
   border-radius: 50%;
+}
+
+.category-title{
+  background-color: #fff;
+  cursor: pointer;
 }
