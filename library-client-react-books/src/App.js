@@ -1,40 +1,20 @@
 import React, {Component} from 'react';
 import Category from './Category';
+import Api from './api';
 
 class App extends Component {
   state = {
-    loading: true,
     books: [],
   };
 
+  api = new Api();
+
   componentDidMount() {
-    fetch('http://localhost:8080/books/findAll')
-      .then(r => r.json())
-      .then(books => {
-        this.setState({
-          loading: false,
-          books: books,
-        });
-        // const ws = new WebSocket('ws://books.demo.javascript.ninja');
-        // ws.addEventListener('message', e => {
-        //   const message = JSON.parse(e.data);
-        //   if (message.action === 'add') {
-        //     this.setState({
-        //       books: books,
-        //     });
-        //   }
-        //
-        //   if (message.action === 'update') {
-        //     // Хинт для Кати: тут ошибка
-        //     console.log(this.state.books, message.cat.id);
-        //     const cat = this.state.books.find(({ id }) => id === message.cat.id);
-        //     if (cat) {
-        //       Object.assign(cat, message.cat);
-        //       this.setState({ books: [...books, cat] });
-        //     }
-        //   }
-        // });
-      });
+    this.api.subscribe((books)=>this.setState({books}));
+  }
+
+  componentWillUnmount() {
+    this.api.unsubscribe((books)=>this.setState({books}));
   }
 
   render() {
