@@ -15,6 +15,7 @@
 		<module>library-client-react-main</module>
 		<module>library-client-react-books</module>
 		<module>library-client-react-npm-books</module>
+		<module>library-client-reactstrap</module>
 	</modules>
 
 	<parent>

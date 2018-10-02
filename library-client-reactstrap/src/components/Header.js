@@ -1,5 +1,6 @@
 import React from 'react';
 import Watch from "./Watch";
+import { Container, Row, ListGroup, ListGroupItem } from 'reactstrap';
 import logo from '../img/BeSmart-logo.svg' // relative path to image
 
 class Header extends React.Component {
@@ -28,13 +29,13 @@ class Header extends React.Component {
         const {watchText, isActiveWatch} = this.state;
         return (
             <div className="mainmenu-wrapper">
-                <div className="container">
-                    <div className="row">
+                <Container>
+                    <Row>
                         <ul className="list-inline">
                             <li><input className="btn btn-sm" type="button" onClick={this.toggleIsActiveWatch} value={watchText}/></li>
                             <li><Watch isActive={isActiveWatch}/></li>
                         </ul>
-                    </div>
+                    </Row>
                     <div className="menuextras">
                         <div className="extras">
                             <ul>
@@ -45,20 +46,20 @@ class Header extends React.Component {
                         </div>
                     </div>
                     <nav id="mainmenu" className="mainmenu">
-                        <ul>
-                            <li className="logo-wrapper"><a href="#"><img src={logo} alt="Изображение не найдено"/></a></li>
-                            <li>
+                        <ListGroup>
+                            <ListGroupItem className="logo-wrapper"><a href="#"><img src={logo} alt="Изображение не найдено"/></a></ListGroupItem>
+                            <ListGroupItem>
                                 <a href="#">Все книги</a>
-                            </li>
-                            <li>
+                            </ListGroupItem>
+                            <ListGroupItem>
                                 <a href="#">Авторы</a>
-                            </li>
-                            <li>
+                            </ListGroupItem>
+                            <ListGroupItem>
                                 <a href="#">О нас</a>
-                            </li>
-                        </ul>
+                            </ListGroupItem>
+                        </ListGroup>
                     </nav>
-                </div>
+                </Container>
             </div>
         )
     }
