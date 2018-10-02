@@ -5,7 +5,6 @@ class Watch extends React.Component {
 
     state = {
         time: new Date(),
-        watchStyle: ""
     };
 
     //пишем через стрелочную чтобы связать this
@@ -15,7 +14,6 @@ class Watch extends React.Component {
 
     //пишем через стрелочную чтобы связать this
     activateWatch = (interval) => {
-        this.setState({watchStyle : ""});
         this.updateTime();
         this.interval= setInterval(this.updateTime,interval);
     };
@@ -23,7 +21,6 @@ class Watch extends React.Component {
     //пишем через стрелочную чтобы связать this
     deactivateWatch = () => {
         clearInterval(this.interval);
-        this.setState({watchStyle : "disabled-watch"});
     };
 
     //------Методы жизненного цикла-------
@@ -81,7 +78,7 @@ class Watch extends React.Component {
         if(hour < 10){
             hour='0'+hour;
         }
-        return (<p className={watchStyle}>{hour} : {min} : {sec}</p>)
+        return (<p className={this.props.isActive ?  "" : "disabled-watch"}>{hour} : {min} : {sec}</p>)
     }
 }
 
