@@ -3,6 +3,7 @@ import Header from "./Header";
 import Top from "./Top";
 import Letters from "./Letters";
 import Main from "./Main";
+import Footer from "./Footer";
 
 function App(){
     //если нужно рендерить несколько элементов,
@@ -13,6 +14,7 @@ function App(){
             <Top/>
             <Letters/>
             <Main/>
+            <Footer/>
         </Fragment>
     )
 }
