@@ -1,5 +1,6 @@
 package ru.aptech.library.service;
 
+import ru.aptech.library.dto.PageDto;
 import ru.aptech.library.entities.Book;
 
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 public interface BookService {
 
 	List<Book> findAll();
+
+	PageDto<Book> findAll(int page, int size);
 	
 	List<Book> findByName(String name);
 

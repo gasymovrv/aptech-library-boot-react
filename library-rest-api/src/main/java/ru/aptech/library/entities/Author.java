@@ -15,7 +15,7 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = "books")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Author implements Serializable {
+public class Author implements Serializable, CommonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter

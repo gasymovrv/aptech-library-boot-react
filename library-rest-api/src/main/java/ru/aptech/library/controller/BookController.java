@@ -2,6 +2,7 @@ package ru.aptech.library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.aptech.library.dto.PageDto;
 import ru.aptech.library.entities.Book;
 import ru.aptech.library.service.BookService;
 
@@ -18,6 +19,11 @@ public class BookController {
     @GetMapping("/findAll")
     public List<Book> findAll() {
         return bookService.findAll();
+    }
+
+    @GetMapping("/findAll/{page}/{size}")
+    public PageDto<Book> findAll(@PathVariable Integer page, @PathVariable Integer size) {
+        return bookService.findAll(page, size);
     }
 
     @GetMapping("/findByName/{name}")

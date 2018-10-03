@@ -10,7 +10,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(exclude = "parent")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Genre implements Serializable {
+public class Genre implements Serializable, CommonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter

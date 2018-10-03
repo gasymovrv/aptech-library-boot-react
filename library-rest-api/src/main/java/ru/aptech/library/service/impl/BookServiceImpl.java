@@ -2,7 +2,10 @@ package ru.aptech.library.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.aptech.library.dto.PageDto;
 import ru.aptech.library.entities.Book;
 import ru.aptech.library.repositories.BookRepository;
 import ru.aptech.library.service.BookService;
@@ -19,6 +22,12 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> findAll() {
 		return bookRepository.findAll();
+	}
+
+	@Override
+	public PageDto<Book> findAll(int page, int size) {
+		Page<Book> somethings = bookRepository.findAll(PageRequest.of(page, size));
+        return new PageDto<>(somethings.getTotalElements(), somethings.getContent());
 	}
 
 	@Override

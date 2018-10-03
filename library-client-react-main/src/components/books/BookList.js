@@ -1,24 +1,61 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Book from "./Book";
+import BooksApi from "../../api/booksApi";
+import Pagination from "react-js-pagination";
 
 class BookList extends React.Component{
 
     state = {
-        bookList: []
+        bookList: [],
+        activePage : 1,
+        itemsCountPerPage : 6,
+        totalItemsCount : 0
     };
 
-    //срабатывает после появления текущего компонента в DOM
+    api = new BooksApi();
+
+
+    handlePageChange = (pageNumber) => {
+        console.log(pageNumber);
+        this.setState({activePage: pageNumber});
+        this.api.findAllWithPaging(
+            (books, totalElements) => {
+                this.setState({bookList: books, totalItemsCount: totalElements})
+            },
+            pageNumber,
+            this.state.itemsCountPerPage
+        );
+    };
+
+
     componentDidMount(){
-        fetch('http://localhost:8080/books/findAll')
-            .then(response => response.json())
-            .then(data => this.setState({bookList: data}));
+        const {activePage, itemsCountPerPage} = this.state;
+        this.api.findAllWithPaging(
+            (books, totalElements) => {
+                this.setState({bookList: books, totalItemsCount: totalElements})
+            },
+            activePage,
+            itemsCountPerPage
+        );
     }
 
     render() {
-        let books = this.state.bookList.map(b =>
+        const {bookList, activePage, itemsCountPerPage, totalItemsCount} = this.state;
+        let books = bookList.map(b =>
             <Book key={b.id} book={b}/>
         );
-        return (<div className="row">{books}</div>)
+        return (
+            <Fragment>
+                    <div className="row">{books}</div>
+                    <Pagination
+                        activePage={activePage}
+                        itemsCountPerPage={itemsCountPerPage}
+                        totalItemsCount={totalItemsCount}
+                        pageRangeDisplayed={5}
+                        onChange={this.handlePageChange}
+                    />
+            </Fragment>
+            )
     }
 }
 

@@ -9,7 +9,6 @@ class Header extends React.Component {
         watchText: "Включить часы"
     };
 
-    //пишем через стрелочную чтобы связать this
     toggleIsActiveWatch = () => {
         if (!this.state.isActiveWatch) {
             this.setState({
