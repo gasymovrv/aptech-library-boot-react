@@ -1,10 +1,10 @@
 import React from "react";
-import BookList from './books/BookList';
 import GenreList from './genres/GenreList';
 
-class Main extends React.Component{
+export default class Main extends React.Component {
 
     render() {
+        const {component} = this.props;
         return (
             <div className="section">
                 <div className="container">
@@ -14,7 +14,7 @@ class Main extends React.Component{
                             <GenreList/>
                         </div>
                         <div className="col-sm-9">
-                            <BookList/>
+                            {component}
                         </div>
                     </div>
                 </div>
@@ -22,5 +22,3 @@ class Main extends React.Component{
         )
     }
 }
-
-export default Main;

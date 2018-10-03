@@ -1,7 +1,7 @@
 import React from "react";
 
 
-class GenreList extends React.Component{
+export default class GenreList extends React.Component{
 
     state = {
         genreList: [{id:-1, name:"неизвестно"}]
@@ -20,5 +20,3 @@ class GenreList extends React.Component{
         return (<ul className="blog-categories">{genres}</ul>)
     }
 }
-
-export default GenreList;

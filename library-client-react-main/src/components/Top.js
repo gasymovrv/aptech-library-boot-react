@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-class Top extends React.Component {
+export default class Top extends React.Component {
 
     render() {
         return (
@@ -17,5 +17,3 @@ class Top extends React.Component {
         )
     }
 }
-
-export default Top;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-class Watch extends React.Component {
+export default class Watch extends React.Component {
 
     state = {
         time: new Date(),
@@ -81,5 +81,3 @@ class Watch extends React.Component {
         return (<p className={this.props.isActive ?  "" : "disabled-watch"}>{hour} : {min} : {sec}</p>)
     }
 }
-
-export default Watch;

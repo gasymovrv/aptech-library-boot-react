@@ -2,7 +2,7 @@ import React from 'react';
 import Watch from "./Watch";
 import logo from '../img/BeSmart-logo.svg' // relative path to image
 
-class Header extends React.Component {
+export default class Header extends React.Component {
 
     state = {
         isActiveWatch: false,
@@ -47,10 +47,10 @@ class Header extends React.Component {
                         <ul>
                             <li className="logo-wrapper"><a href="#"><img src={logo} alt="Изображение не найдено"/></a></li>
                             <li>
-                                <a href="#">Все книги</a>
+                                <a onClick={this.props.booksClick} href="#">Все книги</a>
                             </li>
                             <li>
-                                <a href="#">Авторы</a>
+                                <a onClick={this.props.authorsClick} href="#">Авторы</a>
                             </li>
                             <li>
                                 <a href="#">О нас</a>
@@ -62,5 +62,3 @@ class Header extends React.Component {
         )
     }
 }
-
-export default Header;

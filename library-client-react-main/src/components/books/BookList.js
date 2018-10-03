@@ -3,7 +3,7 @@ import Book from "./Book";
 import BooksApi from "../../api/booksApi";
 import Pagination from "react-js-pagination";
 
-class BookList extends React.Component{
+export default class BookList extends React.Component{
 
     state = {
         bookList: [],
@@ -58,5 +58,3 @@ class BookList extends React.Component{
             )
     }
 }
-
-export default BookList;
