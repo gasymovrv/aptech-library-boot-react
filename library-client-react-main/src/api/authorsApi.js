@@ -1,13 +1,13 @@
 
-export default class BooksApi{
+export default class AuthorsApi{
 
     _path = 'http://localhost:8080';
 
     findAll(fn){
         fetch(`${this._path}/authors/findAll`)
             .then(r => r.json())
-            .then(booksResponse => {
-                fn(booksResponse)
+            .then(authorsResponse => {
+                fn(authorsResponse)
             });
     }
 
@@ -18,5 +18,55 @@ export default class BooksApi{
                 fn(authorsPageResponse.content, authorsPageResponse.totalElements);
             });
     }
+
+    findById(fn, id){
+        fetch(`${this._path}/authors/findById/${id}`)
+            .then(r => r.json())
+            .then(authorResponse => {
+                 fn(authorResponse)
+            });
+    }
+
+    saveOrUpdate(author, okFn, errFn){
+        let options = {
+            method: 'POST',//тип запроса
+            headers: {
+                'Content-Type': 'application/json', //отправляемый тип
+                'Accept': 'application/json' //принимаемый тип (из контроллера)
+            },
+            body: JSON.stringify(author)//отправляемое отсюда (Request)
+        };
+        return fetch(`${this._path}/authors/save`, options)
+            .then((response) => {
+                if(response.status === 200){
+                    okFn();
+                } else {
+                    console.log(response);
+                    errFn();
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                errFn();
+            });
+    }
+
+    deleteById(id, okFn, errFn){
+        return fetch(`${this._path}/authors/deleteById/${id}`, {method: 'DELETE'})
+            .then((response) => {
+                if(response.status === 200){
+                    okFn();
+                } else {
+                    console.log(response);
+                    errFn();
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                errFn();
+            });
+    }
+
+
 }
 

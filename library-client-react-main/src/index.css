@@ -4,7 +4,11 @@
 
 .admin-button{
   background: none repeat scroll 0 0 #b34f4f !important;
-  border: 1px solid #b34f4f;
+  border: 1px solid #b34f4f !important;
+}
+.admin-button:hover {
+  background: none repeat scroll 0 0 #3b3c41 !important;
+  border: 1px solid #3b3c41 !important;
 }
 
 .orders-table table td{

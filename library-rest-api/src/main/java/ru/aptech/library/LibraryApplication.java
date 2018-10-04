@@ -34,6 +34,7 @@ public class LibraryApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
+                        .allowedMethods("DELETE", "GET", "POST")
                         .allowedOrigins("*");
             }
         };

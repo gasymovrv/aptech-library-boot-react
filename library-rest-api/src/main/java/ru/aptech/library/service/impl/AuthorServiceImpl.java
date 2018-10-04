@@ -7,6 +7,7 @@ import ru.aptech.library.entities.Author;
 import ru.aptech.library.repositories.AuthorRepository;
 import ru.aptech.library.service.AuthorService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,20 +23,22 @@ public class AuthorServiceImpl implements AuthorService {
 	}
 
 	@Override
+	public Author findById(Long id) {
+		return authorRepository.findById(id).orElse(new Author());
+	}
+
+	@Override
 	public Author saveOrUpdate(Author author) {
+		author.setCreated(LocalDateTime.now());
+		if (author.getViews() == null) {
+			author.setViews(0L);
+		}
 		return authorRepository.save(author);
 	}
 
 	@Override
-	public boolean deleteById(Long id) {
-		boolean success = false;
-		try {
-			authorRepository.deleteById(id);
-			success = true;
-		} catch (Exception e) {
-			log.error("Не удалось удалить запись с id = " + id, e);
-		}
-		return success;
+	public void deleteById(Long id) {
+		authorRepository.deleteById(id);
 	}
 
 	@Override

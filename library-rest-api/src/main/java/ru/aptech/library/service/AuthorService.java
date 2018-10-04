@@ -8,9 +8,11 @@ public interface AuthorService {
 
 	List<Author> findAll();
 
+	Author findById(Long id);
+
 	List<Author> findByFio(String fio);
 
 	Author saveOrUpdate(Author author);
 
-	boolean deleteById(Long id);
+	void deleteById(Long id);
 }

@@ -20,13 +20,18 @@ public class AuthorController {
         return authorService.findAll();
     }
 
+    @GetMapping("/findById/{id}")
+    public Author findById(@PathVariable Long id) {
+        return authorService.findById(id);
+    }
+
     @PostMapping("/save")
     public Author save(@RequestBody Author author){
         return authorService.saveOrUpdate(author);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public boolean deleteById(@PathVariable Long id) {
-        return authorService.deleteById(id);
+    @DeleteMapping("/deleteById/{id}")
+    public void deleteById(@PathVariable Long id) {
+        authorService.deleteById(id);
     }
 }
