@@ -8,12 +8,14 @@ import ru.aptech.library.entities.Book;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-	
+
+	List<Book> findAll();
+
+	Page<Book> findAll(Pageable pageable);
+
 	List<Book> findByName(String name);
 
 	List<Book> findByAuthorFio(String fio);
 
 	void deleteById(Long id);
-
-	Page<Book> findAll(Pageable pageable);
 }

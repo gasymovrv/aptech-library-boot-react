@@ -1,5 +1,6 @@
 package ru.aptech.library.service;
 
+import ru.aptech.library.dto.PageDto;
 import ru.aptech.library.entities.Author;
 
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 public interface AuthorService {
 
 	List<Author> findAll();
+
+	PageDto<Author> findAll(int page, int size);
 
 	Author findById(Long id);
 

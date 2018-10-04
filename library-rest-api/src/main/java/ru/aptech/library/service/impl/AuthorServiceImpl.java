@@ -2,7 +2,10 @@ package ru.aptech.library.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.aptech.library.dto.PageDto;
 import ru.aptech.library.entities.Author;
 import ru.aptech.library.repositories.AuthorRepository;
 import ru.aptech.library.service.AuthorService;
@@ -20,6 +23,12 @@ public class AuthorServiceImpl implements AuthorService {
 	@Override
 	public List<Author> findAll() {
 		return authorRepository.findAll();
+	}
+
+	@Override
+	public PageDto<Author> findAll(int page, int size) {
+		Page<Author> somethings = authorRepository.findAll(PageRequest.of(page, size));
+		return new PageDto<>(somethings.getTotalElements(), somethings.getContent());
 	}
 
 	@Override

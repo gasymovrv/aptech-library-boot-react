@@ -9,10 +9,10 @@ export default class AuthorList extends React.Component {
     state = {
         authorList: [],
         successDelete: undefined,
-        deletedAuthor:{}
-        // activePage : 1,
-        // itemsCountPerPage : 6,
-        // totalItemsCount : 0
+        deletedAuthor:{},
+        activePage : 1,
+        itemsCountPerPage : 6,
+        totalItemsCount : 0
     };
 
     api = new AuthorsApi();
@@ -21,12 +21,10 @@ export default class AuthorList extends React.Component {
         this.api.deleteById(
             author.id,
             () => {
-                this.api.findAll((authors) => {
-                    this.setState({
-                        authorList: authors,
-                        successDelete: true,
-                        deletedAuthor: author
-                    })
+                this.getAuthors(this.state.activePage, this.state.itemsCountPerPage);
+                this.setState({
+                    successDelete: true,
+                    deletedAuthor: author
                 });
                 this.infoTimeout(10);
             },
@@ -43,31 +41,24 @@ export default class AuthorList extends React.Component {
         }, timeout*1000);
     };
 
-    // handlePageChange = (pageNumber) => {
-    //     console.log(pageNumber);
-    //     this.setState({activePage: pageNumber});
-    //     this.api.findAllWithPaging(
-    //         (books, totalElements) => {
-    //             this.setState({authorList: books, totalItemsCount: totalElements})
-    //         },
-    //         pageNumber,
-    //         this.state.itemsCountPerPage
-    //     );
-    // };
+    handlePageChange = (pageNumber) => {
+        this.setState({activePage: pageNumber});
+        this.getAuthors(pageNumber, this.state.itemsCountPerPage);
+    };
 
+    getAuthors = (activePage, itemsCountPerPage) => {
+        this.api.findAllWithPaging(
+            (authors, totalElements) => {
+                this.setState({authorList: authors, totalItemsCount: totalElements})
+            },
+            activePage,
+            itemsCountPerPage
+        );
+    };
 
     componentDidMount() {
-        this.api.findAll((authors) => {
-            this.setState({authorList: authors})
-        });
-        // const {activePage, itemsCountPerPage} = this.state;
-        // this.api.findAllWithPaging(
-        //     (books, totalElements) => {
-        //         this.setState({authorList: books, totalItemsCount: totalElements})
-        //     },
-        //     activePage,
-        //     itemsCountPerPage
-        // );
+        const {activePage, itemsCountPerPage} = this.state;
+        this.getAuthors(activePage, itemsCountPerPage);
     }
 
     componentWillUnmount(){
@@ -75,7 +66,7 @@ export default class AuthorList extends React.Component {
     }
 
     render() {
-        const {authorList, deletedAuthor, successDelete} = this.state;
+        const {authorList, deletedAuthor, successDelete, activePage, itemsCountPerPage, totalItemsCount} = this.state;
         let info = '';
         if (successDelete !== undefined && successDelete) {
             info =
@@ -106,13 +97,13 @@ export default class AuthorList extends React.Component {
                     </div>
                 </div>
                 <div className="row">{authors}</div>
-                {/*<Pagination*/}
-                    {/*activePage={activePage}*/}
-                    {/*itemsCountPerPage={itemsCountPerPage}*/}
-                    {/*totalItemsCount={totalItemsCount}*/}
-                    {/*pageRangeDisplayed={5}*/}
-                    {/*onChange={this.handlePageChange}*/}
-                {/*/>*/}
+                <Pagination
+                    activePage={activePage}
+                    itemsCountPerPage={itemsCountPerPage}
+                    totalItemsCount={totalItemsCount}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                />
             </Fragment>
         )
     }
