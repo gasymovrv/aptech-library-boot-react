@@ -9,7 +9,7 @@ export default function Fader({children}) {
             transitionAppear={true}
             transitionAppearTimeout={500}
             transitionEnterTimeout={1000}
-            transitionLeaveTimeout={500}
+            transitionLeaveTimeout={1000}
 
         >
             {children}
