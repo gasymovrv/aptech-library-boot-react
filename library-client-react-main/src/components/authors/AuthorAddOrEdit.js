@@ -151,6 +151,7 @@ export default class AuthorAddOrEdit extends React.Component {
                                 dateFormat="DD.MM.YYYY"
                                 placeholderText="Не позже текущей"
                                 onChange={this.handleBirthday}
+                                name='birthday'
                             />
                         </div>
                     </div>
