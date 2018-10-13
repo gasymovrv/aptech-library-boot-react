@@ -6,65 +6,64 @@ import Main from "./Main";
 import Footer from "./Footer";
 import BookList from './books/BookList';
 import AuthorList from "./authors/AuthorList";
-import AuthorAddOrEdit from "./authors/AuthorAddOrEdit";
+import AuthorForm from "./authors/AuthorForm";
+import {findAuthorById} from "../api/authorsApi";
+import moment from "moment/moment";
 
-export default class App extends React.Component{
-    //если нужно рендерить несколько элементов,
-    // то можно так (<Fragment>) или через массив (более старый вар)
+class App extends React.Component{
     state = {
         pageName: 'books',
-        action: '',
-        editedAuthorId: -1
-    };
-
-    getAuthorsPage = ()=>{
-      this.setState({
-          pageName: 'authors',
-          action: '',
-          editedAuthorId: -1
-      })
-    };
-
-    getBooksPage = ()=>{
-      this.setState({
-          pageName: 'books',
-          action: '',
-          editedAuthorId: -1
-      })
+        author : {
+            fio: '',
+            birthday: null
+        }
     };
 
     addAuthor = ()=>{
         this.setState({
-            pageName: 'addAuthor',
-            action: '',
-            editedAuthorId: -1
+            pageName: 'authorForm',
+            author : {
+                fio: '',
+                birthday: null
+            }
         })
     };
 
     editAuthor = (authorId) => {
+        findAuthorById((author) => {
+            author.birthday = moment(Date.parse(author.birthday));
+            this.setState({
+                pageName: 'authorForm',
+                author: author
+            })
+        }, authorId)
+    };
+
+    authorsClick = () => {
+        console.log(this);
         this.setState({
-            pageName: 'addAuthor',
-            action: 'edit',
-            editedAuthorId: authorId
+            pageName: 'authors'
+        })
+    };
+    booksClick = () => {
+        this.setState({
+            pageName: 'books'
         })
     };
 
     render() {
-        const {pageName, action, editedAuthorId} = this.state;
+        const {pageName, author} = this.state;
         let component;
         if (pageName === 'books') {
             component = <BookList/>
         } else if (pageName === 'authors') {
             component = <AuthorList authorAddClick={this.addAuthor} authorEditClick={this.editAuthor}/>
-        } else if (pageName === 'addAuthor' && action!=='edit') {
-            component = <AuthorAddOrEdit/>
-        } else if (pageName === 'addAuthor' && action==='edit') {
-            component = <AuthorAddOrEdit isEdit authorId={editedAuthorId}/>
+        } else if (pageName === 'authorForm') {
+            component = <AuthorForm initialData={author}/>
         }
-
         return (
             <Fragment>
-                <Header authorsClick={this.getAuthorsPage} booksClick={this.getBooksPage}/>
+                <Header authorsClick={this.authorsClick} booksClick={this.booksClick}/>
                 <Top/>
                 <Letters/>
                 <Main component={component}/>
@@ -73,3 +72,5 @@ export default class App extends React.Component{
         )
     }
 }
+
+export default App;

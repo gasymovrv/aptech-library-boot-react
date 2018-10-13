@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import AuthorsApi from "../../api/authorsApi";
+import {deleteAuthorById, findAuthorsWithPaging} from "../../api/authorsApi";
 import Pagination from "react-js-pagination";
 import Author from "./Author";
 import Fader from "../Fader";
@@ -15,10 +15,8 @@ export default class AuthorList extends React.Component {
         totalItemsCount : 0
     };
 
-    api = new AuthorsApi();
-
     deleteAuthor = (author) => {
-        this.api.deleteById(
+        deleteAuthorById(
             author.id,
             () => {
                 this.getAuthors(this.state.activePage, this.state.itemsCountPerPage);
@@ -47,7 +45,7 @@ export default class AuthorList extends React.Component {
     };
 
     getAuthors = (activePage, itemsCountPerPage) => {
-        this.api.findAllWithPaging(
+        findAuthorsWithPaging(
             (authors, totalElements) => {
                 this.setState({authorList: authors, totalItemsCount: totalElements})
             },
@@ -92,8 +90,13 @@ export default class AuthorList extends React.Component {
                 </Fader>
                 <div id="row-info" className="row">
                     <div className="col-sm-2">
-                        <a onClick={this.props.authorAddClick} href="#" type="button" role="button"
-                           className="btn btn-md admin-button">Добавить автора</a>
+                        <a onClick={this.props.authorAddClick}
+                           href="#"
+                           type="button"
+                           role="button"
+                           className="btn btn-md admin-button">
+                            Добавить автора
+                        </a>
                     </div>
                 </div>
                 <div className="row">{authors}</div>

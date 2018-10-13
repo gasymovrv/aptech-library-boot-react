@@ -1,5 +1,4 @@
 import React from "react";
-import AuthorsApi from "../../api/authorsApi";
 
 export default class Author extends React.Component {
 

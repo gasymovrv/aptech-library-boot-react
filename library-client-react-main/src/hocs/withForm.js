@@ -15,6 +15,12 @@ export default function withForm(Component) {
       });
     };
 
+    onChangeDate = (name) => (date) => {
+      this.setState({
+        [name]: date,
+      });
+    };
+
     onSubmit = e => {
       e.preventDefault();
       if (this.props.onSubmit) {
@@ -28,6 +34,7 @@ export default function withForm(Component) {
           {...this.props}
           onSubmit={this.onSubmit}
           onChange={this.onChange}
+          onChangeDate={this.onChangeDate}
           data={this.state}
         />
       );
