@@ -21,7 +21,7 @@ public class Author implements Serializable, CommonEntity {
     @Getter @Setter
     private Long id;
 
-    @Column(name = "fio")
+    @Column(name = "fio", nullable = false)
     @Getter @Setter
     private String fio;
 

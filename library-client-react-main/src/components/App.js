@@ -16,7 +16,8 @@ class App extends React.Component{
         author : {
             fio: '',
             birthday: null
-        }
+        },
+        isEditPage : false
     };
 
     addAuthor = ()=>{
@@ -25,16 +26,20 @@ class App extends React.Component{
             author : {
                 fio: '',
                 birthday: null
-            }
+            },
+            isEditPage: false
         })
     };
 
     editAuthor = (authorId) => {
         findAuthorById((author) => {
-            author.birthday = moment(Date.parse(author.birthday));
+            if(author.birthday){
+                author.birthday = moment(Date.parse(author.birthday));
+            }
             this.setState({
                 pageName: 'authorForm',
-                author: author
+                author: author,
+                isEditPage: true
             })
         }, authorId)
     };
@@ -42,24 +47,26 @@ class App extends React.Component{
     authorsClick = () => {
         console.log(this);
         this.setState({
-            pageName: 'authors'
+            pageName: 'authors',
+            isEditPage: false
         })
     };
     booksClick = () => {
         this.setState({
-            pageName: 'books'
+            pageName: 'books',
+            isEditPage: false
         })
     };
 
     render() {
-        const {pageName, author} = this.state;
+        const {pageName, author, isEditPage} = this.state;
         let component;
         if (pageName === 'books') {
             component = <BookList/>
         } else if (pageName === 'authors') {
             component = <AuthorList authorAddClick={this.addAuthor} authorEditClick={this.editAuthor}/>
         } else if (pageName === 'authorForm') {
-            component = <AuthorForm initialData={author}/>
+            component = <AuthorForm initialData={author} isEdit={isEditPage}/>
         }
         return (
             <Fragment>
