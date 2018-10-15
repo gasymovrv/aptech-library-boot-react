@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import withForm from "../../hocs/withForm";
 import withHandlers from "../../hocs/withHandlers";
 import {saveOrUpdateAuthor} from "../../api/authorsApi";
+import moment from "moment/moment";
 
 function AuthorForm({data, onSubmit, onReset, onChange, onChangeDate}) {
     const {fio, birthday} = data;
@@ -35,6 +36,7 @@ function AuthorForm({data, onSubmit, onReset, onChange, onChangeDate}) {
                         id="birthday"
                         className="form-control"
                         selected={birthday}
+                        maxDate={moment()}
                         dateFormat="DD.MM.YYYY"
                         placeholderText="Не позже текущей"
                         onChange={onChangeDate('birthday')}
@@ -77,5 +79,5 @@ function AuthorForm({data, onSubmit, onReset, onChange, onChangeDate}) {
 export default withHandlers({
     onSubmit: props => values => {
         saveOrUpdateAuthor(values, alert, alert);
-    },
+    }
 })(withForm(AuthorForm));
