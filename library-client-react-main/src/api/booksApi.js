@@ -1,22 +1,19 @@
+const _path = 'http://localhost:8080';
 
-export default class BooksApi{
-
-    _path = 'http://localhost:8080';
-
-    findAll(fn){
-        fetch(`${this._path}/books/findAll`)
-            .then(r => r.json())
-            .then(booksResponse => {
-                fn(booksResponse)
-            });
-    }
-
-    findAllWithPaging(fn, page, size){
-        fetch(`${this._path}/books/findAll/${page-1}/${size}`)
-            .then(r => r.json())
-            .then(booksPageResponse => {
-                fn(booksPageResponse.content, booksPageResponse.totalElements);
-            });
-    }
+export function findAllBooks(fn) {
+    fetch(`${_path}/books/findAll`)
+        .then(r => r.json())
+        .then(booksResponse => {
+            fn(booksResponse)
+        });
 }
+
+export function findBooksWithPaging(fn, page, size) {
+    fetch(`${_path}/books/findAll/${page - 1}/${size}`)
+        .then(r => r.json())
+        .then(booksPageResponse => {
+            fn(booksPageResponse.content, booksPageResponse.totalElements);
+        });
+}
+
 

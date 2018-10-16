@@ -1,70 +1,52 @@
 import React, {Fragment} from "react";
 import {deleteAuthorById, findAuthorsWithPaging} from "../../api/authorsApi";
-import Pagination from "react-js-pagination";
 import Author from "./Author";
 import Fader from "../Fader";
+import withPagination from "../../hocs/withPagination";
 
-export default class AuthorList extends React.Component {
+class AuthorList extends React.Component {
+
 
     state = {
-        authorList: [],
         successDelete: undefined,
-        deletedAuthor:{},
-        activePage : 1,
-        itemsCountPerPage : 6,
-        totalItemsCount : 0
+        deletedAuthor:{}
     };
 
     deleteAuthor = (author) => {
         deleteAuthorById(
             author.id,
             () => {
-                this.getAuthors(this.state.activePage, this.state.itemsCountPerPage);
                 this.setState({
                     successDelete: true,
                     deletedAuthor: author
                 });
-                this.infoTimeout(10);
+                clearTimeout(this.infoBoxTimeout);
+                this.startInfoBoxTimeout(10);
             },
             () => {
-                this.setState({successDelete: false, deletedAuthor: author});
-                this.infoTimeout(10);
+                this.setState({
+                    successDelete: false,
+                    deletedAuthor: author
+                });
+                clearTimeout(this.infoBoxTimeout);
+                this.startInfoBoxTimeout(10);
             }
         );
     };
 
-    infoTimeout = (timeout)=>{
-        this.infoBLockTimeout= setTimeout(() => {
+    startInfoBoxTimeout = (timeout)=>{
+        this.infoBoxTimeout= setTimeout(() => {
             this.setState({successDelete: undefined});
         }, timeout*1000);
     };
-
-    handlePageChange = (pageNumber) => {
-        this.setState({activePage: pageNumber});
-        this.getAuthors(pageNumber, this.state.itemsCountPerPage);
-    };
-
-    getAuthors = (activePage, itemsCountPerPage) => {
-        findAuthorsWithPaging(
-            (authors, totalElements) => {
-                this.setState({authorList: authors, totalItemsCount: totalElements})
-            },
-            activePage,
-            itemsCountPerPage
-        );
-    };
-
-    componentDidMount() {
-        const {activePage, itemsCountPerPage} = this.state;
-        this.getAuthors(activePage, itemsCountPerPage);
-    }
 
     componentWillUnmount(){
         clearTimeout(this.infoBLockTimeout);
     }
 
     render() {
-        const {authorList, deletedAuthor, successDelete, activePage, itemsCountPerPage, totalItemsCount} = this.state;
+        const {deletedAuthor, successDelete} = this.state;
+        const {data:authorList} = this.props;
         let info = '';
         if (successDelete !== undefined && successDelete) {
             info =
@@ -100,14 +82,9 @@ export default class AuthorList extends React.Component {
                     </div>
                 </div>
                 <div className="row">{authors}</div>
-                <Pagination
-                    activePage={activePage}
-                    itemsCountPerPage={itemsCountPerPage}
-                    totalItemsCount={totalItemsCount}
-                    pageRangeDisplayed={5}
-                    onChange={this.handlePageChange}
-                />
             </Fragment>
         )
     }
 }
+
+export default withPagination(AuthorList, findAuthorsWithPaging);

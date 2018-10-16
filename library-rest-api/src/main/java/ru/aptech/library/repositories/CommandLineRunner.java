@@ -15,6 +15,9 @@ import java.util.Random;
 @Component
 public class CommandLineRunner implements org.springframework.boot.CommandLineRunner {
 
+    private final int COUNT_AUTHORS = 15;
+    private final int COUNT_BOOKS = 15;
+    private final int COUNT_GENRES = 15;
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
@@ -28,7 +31,7 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
     @Override
     public void run(String... strings) throws Exception {
         List<Genre> genres = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < COUNT_GENRES; i++) {
             genres.add(genreRepository.save(
                     new Genre(null,
                             "genre" + i,
@@ -37,7 +40,7 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
             );
         }
         List<Author> authors = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < COUNT_AUTHORS; i++) {
             authors.add(authorRepository.save(
                     new Author(null,
                             "author" + i,
@@ -45,15 +48,15 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
                     )
             );
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < COUNT_BOOKS; i++) {
             bookRepository.save(
                     new Book(
                             null,
                             "book" + i,
                             10 * i,
                             "isbn" + i,
-                            genres.get(getRandomIntegerInRange(0, 4)),
-                            authors.get(getRandomIntegerInRange(0, 4)),
+                            genres.get(getRandomIntegerInRange(0, COUNT_GENRES-1)),
+                            authors.get(getRandomIntegerInRange(0, COUNT_AUTHORS/2)),
                             1800 + i,
                             new byte[10],
                             "описание",
