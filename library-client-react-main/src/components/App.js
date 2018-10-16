@@ -45,7 +45,6 @@ class App extends React.Component{
     };
 
     authorsClick = () => {
-        console.log(this);
         this.setState({
             pageName: 'authors',
             isEditPage: false

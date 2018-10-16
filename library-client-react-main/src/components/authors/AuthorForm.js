@@ -22,7 +22,7 @@ function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onCh
             </div>)
     } else if (successSubmit !== undefined && !successSubmit) {
         info =
-            (<div key={data} className="alert alert-danger info-message" role="alert">
+            (<div key={data} className="alert alert-danger" role="alert">
                 {`Произошла ошибка при попытке ${errorText} авторе ${errorViewFio}!`}
             </div>)
     }

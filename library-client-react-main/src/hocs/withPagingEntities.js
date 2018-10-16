@@ -3,7 +3,7 @@ import Pagination from "react-js-pagination";
 
 import getDisplayName from '../helpers/getDisplayName';
 
-export default function withPagination(Component, findEntitiesWithPaging) {
+export default function withPagingEntities(Component, findEntitiesWithPaging) {
     class PaginationContainer extends React.Component {
         constructor(props){
             super(props);
@@ -18,10 +18,10 @@ export default function withPagination(Component, findEntitiesWithPaging) {
 
         handlePageChange = (pageNumber) => {
             this.setState({activePage: pageNumber});
-            this.getEntities(pageNumber, this.state.itemsCountPerPage);
+            this.loadEntities(pageNumber, this.state.itemsCountPerPage);
         };
 
-        getEntities = (activePage, itemsCountPerPage) => {
+        loadEntities = (activePage, itemsCountPerPage) => {
             if(findEntitiesWithPaging && typeof findEntitiesWithPaging === 'function') {
                 findEntitiesWithPaging(
                     (entities, totalElements) => {
@@ -31,23 +31,36 @@ export default function withPagination(Component, findEntitiesWithPaging) {
                     itemsCountPerPage
                 );
             } else {
-                throw Error('findEntitiesWithPaging incorrect!')
+                throw Error('Argument findEntitiesWithPaging is incorrect!')
+            }
+        };
+
+        refreshPageAfterDelete = ()=>{
+            const {entityList, activePage, itemsCountPerPage, totalItemsCount} = this.state;
+            //переходим на предыдущую страницу, если в момент удаления был только 1 элемент
+            if (entityList.length === 1 && activePage > 1) {
+                this.setState((state, props) => {
+                    this.loadEntities(state.activePage - 1, itemsCountPerPage);
+                    return {activePage: state.activePage - 1}
+                });
+            } else {
+                this.loadEntities(activePage, itemsCountPerPage);
             }
         };
 
         componentDidMount() {
             const {activePage, itemsCountPerPage} = this.state;
-            this.getEntities(activePage, itemsCountPerPage);
+            this.loadEntities(activePage, itemsCountPerPage);
         }
 
         render() {
             const {entityList, activePage, itemsCountPerPage, totalItemsCount} = this.state;
-
             return (
                 <Fragment>
                     <Component
                         {...this.props}
                         data={entityList}
+                        refreshPageAfterDelete={this.refreshPageAfterDelete}
                     />
                     <Pagination
                         activePage={activePage}
@@ -60,6 +73,6 @@ export default function withPagination(Component, findEntitiesWithPaging) {
             )
         }
     }
-    PaginationContainer.displayName = `withPagination(${getDisplayName(Component)})`;
+    PaginationContainer.displayName = `withPagingEntities(${getDisplayName(Component)})`;
     return PaginationContainer;
 }

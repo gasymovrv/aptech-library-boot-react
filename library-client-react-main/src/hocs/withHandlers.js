@@ -17,7 +17,6 @@ export default function withHandlers(handlers) {
             }, {});
 
             render() {
-                console.log(this.handlers);
                 return <Component {...this.handlers} {...this.props} />;
             }
         }

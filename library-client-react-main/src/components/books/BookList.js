@@ -1,6 +1,6 @@
 import React from "react";
 import Book from "./Book";
-import withPagination from "../../hocs/withPagination";
+import withPagingEntities from "../../hocs/withPagingEntities";
 import {findBooksWithPaging} from "../../api/booksApi";
 
 function BookList({data:bookList}) {
@@ -10,4 +10,4 @@ function BookList({data:bookList}) {
     return (<div className="row">{books}</div>)
 }
 
-export default withPagination(BookList, findBooksWithPaging)
+export default withPagingEntities(BookList, findBooksWithPaging)

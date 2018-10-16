@@ -2,10 +2,9 @@ import React, {Fragment} from "react";
 import {deleteAuthorById, findAuthorsWithPaging} from "../../api/authorsApi";
 import Author from "./Author";
 import Fader from "../Fader";
-import withPagination from "../../hocs/withPagination";
+import withPagingEntities from "../../hocs/withPagingEntities";
 
 class AuthorList extends React.Component {
-
 
     state = {
         successDelete: undefined,
@@ -16,6 +15,7 @@ class AuthorList extends React.Component {
         deleteAuthorById(
             author.id,
             () => {
+                this.props.refreshPageAfterDelete();
                 this.setState({
                     successDelete: true,
                     deletedAuthor: author
@@ -24,6 +24,7 @@ class AuthorList extends React.Component {
                 this.startInfoBoxTimeout(10);
             },
             () => {
+                this.props.refreshPageAfterDelete();
                 this.setState({
                     successDelete: false,
                     deletedAuthor: author
@@ -41,7 +42,7 @@ class AuthorList extends React.Component {
     };
 
     componentWillUnmount(){
-        clearTimeout(this.infoBLockTimeout);
+        clearTimeout(this.infoBoxTimeout);
     }
 
     render() {
@@ -55,7 +56,7 @@ class AuthorList extends React.Component {
                 </div>)
         } else if (successDelete !== undefined && !successDelete) {
             info =
-                (<div key={deletedAuthor} className="alert alert-danger info-message" role="alert">
+                (<div key={deletedAuthor} className="alert alert-danger" role="alert">
                     {`Произошла ошибка при попытке удалить информацию об авторе ${deletedAuthor.fio}!`}
                 </div>)
         }
@@ -87,4 +88,4 @@ class AuthorList extends React.Component {
     }
 }
 
-export default withPagination(AuthorList, findAuthorsWithPaging);
+export default withPagingEntities(AuthorList, findAuthorsWithPaging);
