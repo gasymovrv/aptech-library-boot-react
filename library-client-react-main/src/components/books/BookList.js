@@ -10,4 +10,4 @@ function BookList({data:bookList}) {
     return (<div className="row">{books}</div>)
 }
 
-export default withPagingEntities(BookList, findBooksWithPaging)
+export default withPagingEntities(findBooksWithPaging)(BookList);
