@@ -61,9 +61,9 @@ class App extends React.Component{
         const {pageName, author, isEditPage} = this.state;
         let component;
         if (pageName === 'books') {
-            component = <BookList itemsCountPerPage={3}/>
+            component = <BookList/>
         } else if (pageName === 'authors') {
-            component = <AuthorList itemsCountPerPage={6} addClick={this.addAuthor} editClick={this.editAuthor}/>
+            component = <AuthorList addClick={this.addAuthor} editClick={this.editAuthor}/>
         } else if (pageName === 'authorForm') {
             component = <AuthorForm initialData={author} isEdit={isEditPage}/>
         }

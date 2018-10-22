@@ -45,6 +45,4 @@ function AuthorList({data: authorList, editClick, addClick, deleteClick, deleted
     )
 }
 
-export default withPagingEntities(findAuthorsWithPaging)(
-    (withListActions(deleteAuthorById))(AuthorList)
-);
+export default withListActions(deleteAuthorById)((withPagingEntities(findAuthorsWithPaging))(AuthorList));

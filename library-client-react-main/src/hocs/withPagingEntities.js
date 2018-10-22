@@ -3,18 +3,14 @@ import Pagination from "react-js-pagination";
 
 import getDisplayName from '../helpers/getDisplayName';
 
-export default function withPagingEntities(findEntitiesWithPaging) {
+export default function withPagingEntities(findEntitiesWithPaging, itemsCountPerPage) {
     return function (Component) {
         class PaginationContainer extends React.Component {
-            constructor(props){
-                super(props);
-                this.state.itemsCountPerPage = props.itemsCountPerPage;
-            }
-
             state = {
                 entityList: [],
                 activePage: 1,
-                totalItemsCount: 0
+                totalItemsCount: 0,
+                itemsCountPerPage: itemsCountPerPage || 6
             };
 
             handlePageChange = (pageNumber) => {
