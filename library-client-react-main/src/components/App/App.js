@@ -1,13 +1,13 @@
 import React, {Fragment} from 'react';
-import Header from "./Header";
-import Top from "./Top";
-import Letters from "./Letters";
-import Main from "./Main";
-import Footer from "./Footer";
-import BookList from './BookList';
-import AuthorList from "./AuthorList";
-import AuthorForm from "./AuthorForm";
-import {findAuthorById} from "../api/authorsApi";
+import Header from "../Header";
+import Top from "../Top";
+import Letters from "../Letters";
+import Main from "../Main";
+import Footer from "../Footer";
+import BookList from '../BookList/index';
+import AuthorList from "../AuthorList/index";
+import AuthorForm from "../AuthorForm/index";
+import {findAuthorById} from "../../api/authorsApi";
 import moment from "moment/moment";
 
 class App extends React.Component{

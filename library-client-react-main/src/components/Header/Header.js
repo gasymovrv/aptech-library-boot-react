@@ -1,6 +1,6 @@
 import React from 'react';
-import Watch from "./Watch";
-import logo from '../img/BeSmart-logo.svg' // relative path to image
+import Watch from "../Watch";
+import logo from '../../img/BeSmart-logo.svg' // relative path to image
 
 export default class Header extends React.Component {
 
