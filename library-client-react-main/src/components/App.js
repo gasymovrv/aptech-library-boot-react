@@ -4,7 +4,7 @@ import Top from "./Top";
 import Letters from "./Letters";
 import Main from "./Main";
 import Footer from "./Footer";
-import BookList from './books/BookList';
+import BookList from './BookList';
 import AuthorList from "./AuthorList";
 import AuthorForm from "./AuthorForm";
 import {findAuthorById} from "../api/authorsApi";
