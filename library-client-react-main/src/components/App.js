@@ -5,8 +5,8 @@ import Letters from "./Letters";
 import Main from "./Main";
 import Footer from "./Footer";
 import BookList from './books/BookList';
-import AuthorList from "./authors/AuthorList";
-import AuthorForm from "./authors/AuthorForm";
+import AuthorList from "./AuthorList";
+import AuthorForm from "./AuthorForm";
 import {findAuthorById} from "../api/authorsApi";
 import moment from "moment/moment";
 
