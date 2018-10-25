@@ -17,15 +17,16 @@ export default function withPagingEntities(itemsCountPerPage) {
             };
 
             refreshPageAfterDelete = ()=>{
-                const {entityList, activePage, itemsCountPerPage} = this.state;
+                const {activePage, itemsCountPerPage} = this.state;
+                const {entityList, loadEntities} = this.props;
                 //переходим на предыдущую страницу, если в момент удаления был только 1 элемент
                 if (entityList.length === 1 && activePage > 1) {
                     this.setState((state, props) => {
-                        this.props.loadEntities(state.activePage - 1, itemsCountPerPage);
+                        loadEntities(state.activePage - 1, itemsCountPerPage);
                         return {activePage: state.activePage - 1}
                     });
                 } else {
-                    this.props.loadEntities(activePage, itemsCountPerPage);
+                    loadEntities(activePage, itemsCountPerPage);
                 }
             };
 
@@ -36,12 +37,12 @@ export default function withPagingEntities(itemsCountPerPage) {
 
             render() {
                 const {activePage, itemsCountPerPage} = this.state;
-                const {entityList, totalItemsCount} = this.props;
+                //убираем лишнее из пропсов(loadEntities)
+                const {totalItemsCount, loadEntities, ...rest} = this.props;
                 return (
                     <Fragment>
                         <Component
-                            {...this.props}
-                            data={entityList}
+                            {...rest}
                             refreshPageAfterDelete={this.refreshPageAfterDelete}
                         />
                         <Pagination

@@ -14,25 +14,23 @@ export default function withLoadingEntities(findEntities, isPaging) {
             }
 
             loadEntities = (activePage, itemsCountPerPage) => {
+                console.log("loadEntities {");
+                console.log("\tfindEntities="+findEntities.name);
+                console.log("\tactivePage="+activePage);
+                console.log("\titemsCountPerPage="+itemsCountPerPage);
                 if(findEntities && typeof findEntities === 'function') {
-                    if(activePage && itemsCountPerPage) {
-                        findEntities(
-                            (entities, totalElements) => {
-                                this.setState({entityList: entities, totalItemsCount: totalElements})
-                            },
-                            activePage,
-                            itemsCountPerPage
-                        );
-                    } else {
-                        findEntities(
-                            (entities) => {
-                                this.setState({entityList: entities})
-                            }
-                        );
-                    }
+                    //если передали что-то типа findAll, то totalItemsCount==undefined
+                    findEntities(
+                        (entities, totalElements) => {
+                            this.setState({entityList: entities, totalItemsCount: totalElements})
+                        },
+                        activePage,
+                        itemsCountPerPage
+                    );
                 } else {
                     throw Error('Argument findEntitiesWithPaging is incorrect!')
                 }
+                console.log("}");
             };
 
             componentDidMount() {

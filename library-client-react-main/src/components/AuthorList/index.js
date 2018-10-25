@@ -5,5 +5,5 @@ import AuthorList from "./AuthorList";
 import withLoadingEntities from "../../hocs/withLoadingEntities";
 
 //все таки зависят от очередности (в withListActions нужно передать refreshPageAfterDelete)
-const withListActionsAndPaging = withLoadingEntities(findAuthorsWithPaging, true)(withPagingEntities()(withListActions(deleteAuthorById)(AuthorList)));
+const withListActionsAndPaging = withLoadingEntities(findAuthorsWithPaging, true)(withPagingEntities(1)(withListActions(deleteAuthorById)(AuthorList)));
 export default withListActionsAndPaging;

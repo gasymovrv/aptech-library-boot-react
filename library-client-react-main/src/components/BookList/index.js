@@ -4,4 +4,4 @@ import withPagingEntities from "../../hocs/withPagingEntities";
 import withLoadingEntities from "../../hocs/withLoadingEntities";
 
 
-export default withLoadingEntities(findBooksWithPaging, true)(withPagingEntities()(BookList));
+export default withLoadingEntities(findBooksWithPaging, true)(withPagingEntities(3)(BookList));
