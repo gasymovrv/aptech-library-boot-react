@@ -1,9 +1,6 @@
 import React, {Fragment} from "react";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-import withForm from "../../hocs/withForm";
-import withHandlers from "../../hocs/withHandlers";
-import {saveOrUpdateAuthor} from "../../api/authorsApi";
 import moment from "moment/moment";
 import Fader from "../Fader/Fader";
 

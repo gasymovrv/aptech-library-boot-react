@@ -3,7 +3,7 @@ import Pagination from "react-js-pagination";
 
 import getDisplayName from '../helpers/getDisplayName';
 
-export default function withPagingEntities(itemsCountPerPage) {
+export default function withPaging(itemsCountPerPage) {
     return function (Component) {
         class PaginationContainer extends React.Component {
             state = {
