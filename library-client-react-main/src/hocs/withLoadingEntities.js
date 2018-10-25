@@ -28,7 +28,7 @@ export default function withLoadingEntities(findEntities, isPaging) {
                         itemsCountPerPage
                     );
                 } else {
-                    throw Error('Argument findEntitiesWithPaging is incorrect!')
+                    throw Error('Argument findEntities is incorrect!')
                 }
                 console.log("}");
             };
