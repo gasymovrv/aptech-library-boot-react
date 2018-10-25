@@ -1,7 +1,7 @@
 import React from "react";
 import GenreList from '../GenreList/index';
 
-export default function Main({component}) {
+export default function Main({children}) {
     return (
         <div className="section">
             <div className="container">
@@ -11,7 +11,7 @@ export default function Main({component}) {
                         <GenreList/>
                     </div>
                     <div className="col-sm-9">
-                        {component}
+                        {children}
                     </div>
                 </div>
             </div>

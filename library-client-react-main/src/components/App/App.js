@@ -1,4 +1,6 @@
 import React, {Fragment} from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
 import Header from "../Header";
 import Top from "../Top";
 import Letters from "../Letters";
@@ -20,41 +22,15 @@ class App extends React.Component{
         isEditPage : false
     };
 
-    addAuthor = ()=>{
-        this.setState({
-            pageName: 'authorForm',
-            author : {
-                fio: '',
-                birthday: null
-            },
-            isEditPage: false
-        })
-    };
-
     editAuthor = (authorId) => {
         findAuthorById((author) => {
             if(author.birthday){
                 author.birthday = moment(Date.parse(author.birthday));
             }
             this.setState({
-                pageName: 'authorForm',
                 author: author,
-                isEditPage: true
             })
         }, authorId)
-    };
-
-    authorsClick = () => {
-        this.setState({
-            pageName: 'authors',
-            isEditPage: false
-        })
-    };
-    booksClick = () => {
-        this.setState({
-            pageName: 'books',
-            isEditPage: false
-        })
     };
 
     render() {
@@ -63,18 +39,32 @@ class App extends React.Component{
         if (pageName === 'books') {
             component = <BookList/>
         } else if (pageName === 'authors') {
-            component = <AuthorList addClick={this.addAuthor} editClick={this.editAuthor}/>
+            component = <AuthorList editClick={this.editAuthor}/>
         } else if (pageName === 'authorForm') {
             component = <AuthorForm initialData={author} isEdit={isEditPage}/>
         }
         return (
-            <Fragment>
-                <Header authorsClick={this.authorsClick} booksClick={this.booksClick}/>
-                <Top/>
-                <Letters/>
-                <Main component={component}/>
-                <Footer/>
-            </Fragment>
+            <Router>
+                <Fragment>
+                    <Header/>
+                    <Top/>
+                    <Letters/>
+                    <Main>
+                        <Switch>
+                            <Route exact path="/" component={BookList} />
+                            <Route exact path="/authors" component={AuthorList}/>}/>
+                            <Route path="/authors/edit-form/:id" component={({match})=>(<AuthorForm isEdit={true} match={match}/>)}/>}/>
+                            <Route path="/authors/add-form" component={AuthorForm}/>
+                            <Route path="/authors/delete/:id" component={AuthorList}/>
+                            {/*<Route path="/" render={()=><AuthorList num="2" someProp={100}/>}/>*/}
+                            {/*<Route path="/" render={()=><AuthorList num="2" someProp={100}/>}/>*/}
+                            {/*<Route path="/profile" component={Profile} />*/}
+                            {/*<Route path="/wallets" component={Wallets} />*/}
+                        </Switch>
+                    </Main>
+                    <Footer/>
+                </Fragment>
+            </Router>
         )
     }
 }

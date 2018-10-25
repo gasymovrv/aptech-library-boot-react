@@ -1,8 +1,9 @@
 import React, {Fragment} from "react";
+import {Link} from "react-router-dom";
 import Author from "../Author";
 import Fader from "../Fader";
 
-export  default function AuthorList({entityList, editClick, addClick, deleteClick, deletedEntity:deletedAuthor, successDelete}) {
+export  default function AuthorList({entityList, deleteClick, deletedEntity:deletedAuthor, successDelete}) {
     let info = '';
     if (successDelete !== undefined && successDelete) {
         info =
@@ -16,10 +17,7 @@ export  default function AuthorList({entityList, editClick, addClick, deleteClic
             </div>)
     }
     let authors = entityList.map(a =>
-        <Author key={a.id}
-                author={a}
-                authorEditClick={editClick}
-                authorDeleteClick={deleteClick}/>
+        <Author key={a.id} author={a}/>
     );
     return (
         <Fragment>
@@ -28,13 +26,12 @@ export  default function AuthorList({entityList, editClick, addClick, deleteClic
             </Fader>
             <div id="row-info" className="row">
                 <div className="col-sm-2">
-                    <a onClick={addClick}
-                       href="#"
+                    <Link to="/authors/add-form"
                        type="button"
                        role="button"
                        className="btn btn-md admin-button">
                         Добавить автора
-                    </a>
+                    </Link>
                 </div>
             </div>
             <div className="row">{authors}</div>
