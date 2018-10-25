@@ -27,9 +27,10 @@ export default function withForm(Component) {
         };
 
         onSubmit = e => {
+            const {onSubmit} = this.props;
             e.preventDefault();
-            if (this.props.onSubmit) {
-                this.props.onSubmit(
+            if (onSubmit) {
+                onSubmit(
                     this.state.data,
                     () => {
                         this.setState((state, props) => ({
@@ -67,17 +68,18 @@ export default function withForm(Component) {
         }
 
         render() {
+            const {data, savedData, oldData, successSubmit} = this.state;
             return (
                 <Component
                     {...this.props}
-                    successSubmit={this.state.successSubmit}
+                    successSubmit={successSubmit}
                     onSubmit={this.onSubmit}
                     onReset={this.onReset}
                     onChange={this.onChange}
                     onChangeDate={this.onChangeDate}
-                    data={this.state.data}
-                    savedData={this.state.savedData}
-                    oldData={this.state.oldData}
+                    data={data}
+                    savedData={savedData}
+                    oldData={oldData}
                 />
             );
         }
