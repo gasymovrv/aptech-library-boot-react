@@ -10,7 +10,8 @@
     "react-js-pagination": "^3.0.2",
     "react-moment": "^0.8.1",
     "react-scripts": "1.1.5",
-    "react-transition-group": "1.x"
+    "react-transition-group": "1.x",
+    "recompose": "^0.30.0"
   },
   "scripts": {
     "start": "set PORT=3001 &&  react-scripts start",
