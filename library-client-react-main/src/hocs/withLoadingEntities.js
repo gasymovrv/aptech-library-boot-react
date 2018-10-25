@@ -2,35 +2,51 @@ import React from "react";
 
 import getDisplayName from '../helpers/getDisplayName';
 
-export default function withPagingEntities(findEntities) {
+export default function withLoadingEntities(findEntities, isPaging) {
     return function (Component) {
         class LoadingEntities extends React.Component {
-            state = {
-                entityList: []
-            };
+            constructor(props){
+                super(props);
+                this.state = {
+                    entityList: [],
+                    totalItemsCount: 0
+                };
+            }
 
-            loadEntities = () => {
+            loadEntities = (activePage, itemsCountPerPage) => {
+                console.log("loadEntities {");
+                console.log("\tfindEntities="+findEntities.name);
+                console.log("\tactivePage="+activePage);
+                console.log("\titemsCountPerPage="+itemsCountPerPage);
                 if(findEntities && typeof findEntities === 'function') {
+                    //если передали что-то типа findAll, то totalItemsCount==undefined
                     findEntities(
-                        (entities) => {
-                            this.setState({entityList: entities})
-                        }
+                        (entities, totalElements) => {
+                            this.setState({entityList: entities, totalItemsCount: totalElements})
+                        },
+                        activePage,
+                        itemsCountPerPage
                     );
                 } else {
-                    throw Error('Argument findEntities is incorrect!')
+                    throw Error('Argument findEntitiesWithPaging is incorrect!')
                 }
+                console.log("}");
             };
 
             componentDidMount() {
-                this.loadEntities();
+                if(!isPaging) {
+                    this.loadEntities();
+                }
             }
 
             render() {
-                const {entityList} = this.state;
+                const {entityList, totalItemsCount} = this.state;
                 return (
                     <Component
                         {...this.props}
-                        data={entityList}
+                        entityList={entityList}
+                        totalItemsCount={totalItemsCount}
+                        loadEntities={this.loadEntities}
                     />
                 )
             }

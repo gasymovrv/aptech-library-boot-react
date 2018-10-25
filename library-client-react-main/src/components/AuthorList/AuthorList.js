@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import Author from "../Author";
 import Fader from "../Fader";
 
-export  default function AuthorList({data: authorList, editClick, addClick, deleteClick, deletedEntity:deletedAuthor, successDelete}) {
+export  default function AuthorList({entityList, editClick, addClick, deleteClick, deletedEntity:deletedAuthor, successDelete}) {
     let info = '';
     if (successDelete !== undefined && successDelete) {
         info =
@@ -15,7 +15,7 @@ export  default function AuthorList({data: authorList, editClick, addClick, dele
                 {`Произошла ошибка при попытке удалить информацию об авторе ${deletedAuthor.fio}!`}
             </div>)
     }
-    let authors = authorList.map(a =>
+    let authors = entityList.map(a =>
         <Author key={a.id}
                 author={a}
                 authorEditClick={editClick}
