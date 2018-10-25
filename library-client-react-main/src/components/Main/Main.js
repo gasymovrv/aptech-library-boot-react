@@ -1,5 +1,5 @@
 import React from "react";
-import GenreList from './genres/GenreList';
+import GenreList from '../GenreList/index';
 
 export default function Main({component}) {
     return (

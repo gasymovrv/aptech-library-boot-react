@@ -1,13 +1,13 @@
 import React, {Fragment} from 'react';
-import Header from "./Header";
-import Top from "./Top";
-import Letters from "./Letters";
-import Main from "./Main";
-import Footer from "./Footer";
-import BookList from './books/BookList';
-import AuthorList from "./authors/AuthorList";
-import AuthorForm from "./authors/AuthorForm";
-import {findAuthorById} from "../api/authorsApi";
+import Header from "../Header";
+import Top from "../Top";
+import Letters from "../Letters";
+import Main from "../Main";
+import Footer from "../Footer";
+import BookList from '../BookList/index';
+import AuthorList from "../AuthorList/index";
+import AuthorForm from "../AuthorForm/index";
+import {findAuthorById} from "../../api/authorsApi";
 import moment from "moment/moment";
 
 class App extends React.Component{
@@ -61,9 +61,9 @@ class App extends React.Component{
         const {pageName, author, isEditPage} = this.state;
         let component;
         if (pageName === 'books') {
-            component = <BookList itemsCountPerPage={3}/>
+            component = <BookList/>
         } else if (pageName === 'authors') {
-            component = <AuthorList itemsCountPerPage={6} addClick={this.addAuthor} editClick={this.editAuthor}/>
+            component = <AuthorList addClick={this.addAuthor} editClick={this.editAuthor}/>
         } else if (pageName === 'authorForm') {
             component = <AuthorForm initialData={author} isEdit={isEditPage}/>
         }

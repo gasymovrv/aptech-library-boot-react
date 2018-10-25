@@ -1,5 +1,5 @@
 import React from "react";
-import '../css/fader.css';
+import '../../css/fader.css';
 import {CSSTransitionGroup} from 'react-transition-group'
 
 export default function Fader({children}) {

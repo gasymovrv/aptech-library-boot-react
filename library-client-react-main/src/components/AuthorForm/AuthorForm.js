@@ -5,9 +5,9 @@ import withForm from "../../hocs/withForm";
 import withHandlers from "../../hocs/withHandlers";
 import {saveOrUpdateAuthor} from "../../api/authorsApi";
 import moment from "moment/moment";
-import Fader from "../Fader";
+import Fader from "../Fader/Fader";
 
-function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit}) {
+export default function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit}) {
     const {fio, birthday} = data;
     const successViewFio = isEdit ? oldData.fio : savedData.fio;
     const errorViewFio = isEdit ? savedData.fio : fio;
@@ -97,9 +97,3 @@ function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onCh
     );
 
 }
-
-export default withHandlers({
-    onSubmit: props => (data, okFn, errFn) => {
-        saveOrUpdateAuthor(data, okFn, errFn);
-    }
-})(withForm(AuthorForm));

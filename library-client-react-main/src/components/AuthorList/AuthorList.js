@@ -1,11 +1,8 @@
 import React, {Fragment} from "react";
-import {deleteAuthorById, findAuthorsWithPaging} from "../../api/authorsApi";
-import Author from "./Author";
+import Author from "../Author";
 import Fader from "../Fader";
-import withPagingEntities from "../../hocs/withPagingEntities";
-import withListActions from "../../hocs/withListActions";
 
-function AuthorList({data: authorList, editClick, addClick, deleteClick, deletedEntity:deletedAuthor, successDelete}) {
+export  default function AuthorList({data: authorList, editClick, addClick, deleteClick, deletedEntity:deletedAuthor, successDelete}) {
     let info = '';
     if (successDelete !== undefined && successDelete) {
         info =
@@ -45,6 +42,3 @@ function AuthorList({data: authorList, editClick, addClick, deleteClick, deleted
     )
 }
 
-export default withPagingEntities(findAuthorsWithPaging)(
-    (withListActions(deleteAuthorById))(AuthorList)
-);
