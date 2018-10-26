@@ -4,7 +4,7 @@ import React from 'react';
 export default function Letters() {
     const ruLetters = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'];
     const letters = ruLetters.map(ch =>
-        <button key={ch} className="btn btn-sm letters-button">{ch}</button>
+        <button key={ch} className="btn btn-sm neighboring-buttons">{ch}</button>
     );
     return (
         <div className="container flex-center">
