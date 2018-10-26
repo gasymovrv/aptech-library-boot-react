@@ -1,4 +1,5 @@
 import React from "react";
+import Fader from "../Fader";
 
 
 export  default function InfoBox({infoKey, successAction, successText, errorText}) {
@@ -16,6 +17,10 @@ export  default function InfoBox({infoKey, successAction, successText, errorText
     } else {
         info = null;
     }
-    return info;
+    return (
+        <Fader>
+            {info}
+        </Fader>
+    );
 }
 

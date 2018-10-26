@@ -1,7 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import Author from "../Author";
-import Fader from "../Fader";
 import InfoBox from "../InfoBox";
 
 export  default function AuthorList({entityList, deletedEntity, successDelete, children, onDelete}) {
@@ -10,13 +9,11 @@ export  default function AuthorList({entityList, deletedEntity, successDelete, c
     );
     return (
         <div className="col-sm-9">
-            <Fader>
-                <InfoBox infoKey={deletedEntity.id}
-                         successAction={successDelete}
-                         successText={`Информация об авторе ${deletedEntity.fio} успешно удалена!`}
-                         errorText={`Произошла ошибка при попытке удалить информацию об авторе ${deletedEntity.fio}!`}
-                />
-            </Fader>
+            <InfoBox infoKey={deletedEntity.id}
+                     successAction={successDelete}
+                     successText={`Информация об авторе ${deletedEntity.fio} успешно удалена!`}
+                     errorText={`Произошла ошибка при попытке удалить информацию об авторе ${deletedEntity.fio}!`}
+            />
             <div className="row">
                 <div className="col-sm-2">
                     <Link to="/authors/add-form"

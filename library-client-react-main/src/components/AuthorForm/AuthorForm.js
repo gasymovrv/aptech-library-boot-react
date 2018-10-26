@@ -1,7 +1,6 @@
 import React from "react";
 import Calendar from 'react-calendar';
-
-import Fader from "../Fader/Fader";
+import InfoBox from "../InfoBox";
 
 export default function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit}) {
     const {fio, birthday} = data;
@@ -9,24 +8,14 @@ export default function AuthorForm({data, savedData, oldData, onSubmit, onReset,
     const errorViewFio = isEdit ? savedData.fio : fio;
     const successText = isEdit ? 'отредактирована' : 'добавлена';
     const errorText = isEdit ? 'изменить информацию об' : 'добавления информации о новом';
-    let info = '';
 
-    if (successSubmit !== undefined && successSubmit) {
-        info =
-            (<div key={data} className="alert alert-success" role="alert">
-                {`Информация об авторе ${successViewFio} успешно ${successText}!`}
-            </div>)
-    } else if (successSubmit !== undefined && !successSubmit) {
-        info =
-            (<div key={data} className="alert alert-danger" role="alert">
-                {`Произошла ошибка при попытке ${errorText} авторе ${errorViewFio}!`}
-            </div>)
-    }
     return (
         <div className="col-sm-9">
-            <Fader>
-                {info}
-            </Fader>
+            <InfoBox infoKey={data}
+                     successAction={successSubmit}
+                     successText={`Информация об авторе ${successViewFio} успешно ${successText}!`}
+                     errorText={`Произошла ошибка при попытке ${errorText} авторе ${errorViewFio}!`}
+            />
             <form onSubmit={onSubmit} onReset={onReset}>
                 <div className="form-group row">
                     <label htmlFor="fio" className="col-sm-2 col-form-label">
