@@ -1,19 +1,17 @@
-import React, {Fragment} from "react";
-import {Link} from "react-router-dom";
-import Author from "../Author";
-import Fader from "../Fader";
+import React from "react";
 
-export  default function AuthorList({deletedEntity:deletedAuthor, successAction}) {
+
+export  default function InfoBox({infoKey, successAction, successText, errorText}) {
     let info;
     if (successAction !== undefined && successAction) {
         info =
-            (<div key={deletedAuthor} className="alert alert-success" role="alert">
-                {`Информация об авторе ${deletedAuthor.fio} успешно удалена!`}
+            (<div key={infoKey} className="alert alert-success" role="alert">
+                {successText}
             </div>)
     } else if (successAction !== undefined && !successAction) {
         info =
-            (<div key={deletedAuthor} className="alert alert-danger" role="alert">
-                {`Произошла ошибка при попытке удалить информацию об авторе ${deletedAuthor.fio}!`}
+            (<div key={infoKey} className="alert alert-danger" role="alert">
+                {errorText}
             </div>)
     } else {
         info = null;

@@ -1,28 +1,21 @@
-import React, {Fragment} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
 import Author from "../Author";
 import Fader from "../Fader";
+import InfoBox from "../InfoBox";
 
-export  default function AuthorList({entityList, deletedEntity:deletedAuthor, successDelete, children, onDelete}) {
-    let info = '';
-    if (successDelete !== undefined && successDelete) {
-        info =
-            (<div key={deletedAuthor} className="alert alert-success" role="alert">
-                {`Информация об авторе ${deletedAuthor.fio} успешно удалена!`}
-            </div>)
-    } else if (successDelete !== undefined && !successDelete) {
-        info =
-            (<div key={deletedAuthor} className="alert alert-danger" role="alert">
-                {`Произошла ошибка при попытке удалить информацию об авторе ${deletedAuthor.fio}!`}
-            </div>)
-    }
+export  default function AuthorList({entityList, deletedEntity, successDelete, children, onDelete}) {
     let authors = entityList.map(a =>
         <Author onDelete={onDelete} key={a.id} author={a}/>
     );
     return (
         <div className="col-sm-9">
             <Fader>
-                {info}
+                <InfoBox infoKey={deletedEntity.id}
+                         successAction={successDelete}
+                         successText={`Информация об авторе ${deletedEntity.fio} успешно удалена!`}
+                         errorText={`Произошла ошибка при попытке удалить информацию об авторе ${deletedEntity.fio}!`}
+                />
             </Fader>
             <div className="row">
                 <div className="col-sm-2">
