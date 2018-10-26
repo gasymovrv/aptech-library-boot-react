@@ -17,7 +17,7 @@ const withHandleForm = compose(
     }),
     lifecycle({
         componentDidMount() {
-            const {isEdit, match} = this.props;
+            const {isEdit, id} = this.props;
             if (isEdit) {
                 findAuthorById(
                     (entity) => {
@@ -27,7 +27,7 @@ const withHandleForm = compose(
                         //поля из state сохраняются в пропсы
                         this.setState({entity: {...entity}})
                     },
-                    match.params.id
+                    id
                 );
             }
         }

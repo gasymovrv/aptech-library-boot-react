@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import Pagination from "react-js-pagination";
 
 import getDisplayName from '../helpers/getDisplayName';
@@ -40,11 +40,9 @@ export default function withPaging(itemsCountPerPage) {
                 //убираем лишнее из пропсов(loadEntities)
                 const {totalItemsCount, loadEntities, ...rest} = this.props;
                 return (
-                    <Fragment>
-                        <Component
-                            {...rest}
-                            refreshPageAfterDelete={this.refreshPageAfterDelete}
-                        />
+                    <Component
+                        {...rest}
+                        refreshPageAfterDelete={this.refreshPageAfterDelete}>
                         <Pagination
                             activePage={activePage}
                             itemsCountPerPage={itemsCountPerPage}
@@ -52,7 +50,7 @@ export default function withPaging(itemsCountPerPage) {
                             pageRangeDisplayed={5}
                             onChange={this.handlePageChange}
                         />
-                    </Fragment>
+                    </Component>
                 )
             }
         }

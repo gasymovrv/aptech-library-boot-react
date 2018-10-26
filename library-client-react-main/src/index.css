@@ -2,6 +2,10 @@
   margin-bottom: 5px;
 }
 
+.letters-button{
+  margin-left: 1px;
+}
+
 .admin-button{
   background: none repeat scroll 0 0 #b34f4f !important;
   border: 1px solid #b34f4f !important;
@@ -21,4 +25,9 @@
 
 .disabled-watch{
   opacity: 0.3;
+}
+
+.flex-center{
+  display: flex !important;
+  justify-content: center !important;
 }

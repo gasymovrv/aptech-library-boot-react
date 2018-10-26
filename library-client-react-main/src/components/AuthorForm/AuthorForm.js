@@ -24,7 +24,7 @@ export default function AuthorForm({data, savedData, oldData, onSubmit, onReset,
             </div>)
     }
     return (
-        <Fragment>
+        <div className="col-sm-9">
             <Fader>
                 {info}
             </Fader>
@@ -58,6 +58,7 @@ export default function AuthorForm({data, savedData, oldData, onSubmit, onReset,
                             dateFormat="DD.MM.YYYY"
                             placeholderText="Не позже текущей"
                             onChange={onChangeDate('birthday')}
+                            showYearDropdown
                         />
                     </div>
                 </div>
@@ -90,7 +91,7 @@ export default function AuthorForm({data, savedData, oldData, onSubmit, onReset,
                     </div>
                 </div>
             </form>
-        </Fragment>
+        </div>
     );
 
 }

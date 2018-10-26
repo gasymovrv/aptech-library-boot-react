@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import Author from "../Author";
 import Fader from "../Fader";
 
-export  default function AuthorList({entityList, deleteClick, deletedEntity:deletedAuthor, successDelete}) {
+export  default function AuthorList({entityList, deleteClick, deletedEntity:deletedAuthor, successDelete, children}) {
     let info = '';
     if (successDelete !== undefined && successDelete) {
         info =
@@ -20,11 +20,11 @@ export  default function AuthorList({entityList, deleteClick, deletedEntity:dele
         <Author key={a.id} author={a}/>
     );
     return (
-        <Fragment>
+        <div className="col-sm-9">
             <Fader>
                 {info}
             </Fader>
-            <div id="row-info" className="row">
+            <div className="row">
                 <div className="col-sm-2">
                     <Link to="/authors/add-form"
                        type="button"
@@ -35,7 +35,8 @@ export  default function AuthorList({entityList, deleteClick, deletedEntity:dele
                 </div>
             </div>
             <div className="row">{authors}</div>
-        </Fragment>
+            <div className="row flex-center">{children}</div>
+        </div>
     )
 }
 
