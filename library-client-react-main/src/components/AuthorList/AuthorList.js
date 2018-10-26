@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import Author from "../Author";
 import Fader from "../Fader";
 
-export  default function AuthorList({entityList, deleteClick, deletedEntity:deletedAuthor, successDelete, children}) {
+export  default function AuthorList({entityList, deletedEntity:deletedAuthor, successDelete, children, onDelete}) {
     let info = '';
     if (successDelete !== undefined && successDelete) {
         info =
@@ -17,7 +17,7 @@ export  default function AuthorList({entityList, deleteClick, deletedEntity:dele
             </div>)
     }
     let authors = entityList.map(a =>
-        <Author key={a.id} author={a}/>
+        <Author onDelete={onDelete} key={a.id} author={a}/>
     );
     return (
         <div className="col-sm-9">

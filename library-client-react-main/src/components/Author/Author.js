@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-export default function Author({author}) {
+export default function Author({author, onDelete}) {
     return (
         <div className="col-sm-4">
             <div className="shop-item">
@@ -30,14 +30,15 @@ export default function Author({author}) {
                           data-content="Изменить">
                         <i className="glyphicon glyphicon-pencil icon-white"/>
                     </Link>
-                    <Link to={`/authors/delete/${author.id}`}
-                          className="btn admin-button item-actions"
-                          role="button"
-                          data-placement="top"
-                          data-toggle="popover"
-                          data-content="Удалить">
+                    <button
+                        className="btn admin-button item-actions neighboring-buttons"
+                        role="button"
+                        data-placement="top"
+                        data-toggle="popover"
+                        data-content="Удалить"
+                        onClick={onDelete(author)}>
                         <i className="glyphicon glyphicon-trash icon-white"/>
-                    </Link>
+                    </button>
                 </div>
             </div>
         </div>

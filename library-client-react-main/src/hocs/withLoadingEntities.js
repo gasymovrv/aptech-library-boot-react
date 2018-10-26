@@ -14,10 +14,6 @@ export default function withLoadingEntities(findEntities, isPaging) {
             }
 
             loadEntities = (activePage, itemsCountPerPage) => {
-                console.log("loadEntities {");
-                console.log("\tfindEntities="+findEntities.name);
-                console.log("\tactivePage="+activePage);
-                console.log("\titemsCountPerPage="+itemsCountPerPage);
                 if(findEntities && typeof findEntities === 'function') {
                     //если передали что-то типа findAll, то totalItemsCount==undefined
                     findEntities(
@@ -30,7 +26,6 @@ export default function withLoadingEntities(findEntities, isPaging) {
                 } else {
                     throw Error('Argument findEntities is incorrect!')
                 }
-                console.log("}");
             };
 
             componentDidMount() {
