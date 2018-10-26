@@ -1,7 +1,6 @@
-import React, {Fragment} from "react";
-import DatePicker from "react-datepicker";
-import 'react-datepicker/dist/react-datepicker.css';
-import moment from "moment/moment";
+import React from "react";
+import Calendar from 'react-calendar';
+
 import Fader from "../Fader/Fader";
 
 export default function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit}) {
@@ -50,15 +49,12 @@ export default function AuthorForm({data, savedData, oldData, onSubmit, onReset,
                         Дата рождения
                     </label>
                     <div className="col-sm-10">
-                        <DatePicker
+                        <Calendar
                             id="birthday"
-                            className="form-control"
-                            selected={birthday}
-                            maxDate={moment()}
-                            dateFormat="DD.MM.YYYY"
-                            placeholderText="Не позже текущей"
+                            value={birthday}
+                            locale="ru-RU"
                             onChange={onChangeDate('birthday')}
-                            showYearDropdown
+                            maxDate={new Date()}
                         />
                     </div>
                 </div>

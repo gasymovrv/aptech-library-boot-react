@@ -3,7 +3,6 @@ import {compose, lifecycle, withHandlers, withState} from 'recompose';
 import AuthorForm from './AuthorForm';
 import withForm from "../../hocs/withForm";
 import {findAuthorById, saveOrUpdateAuthor} from "../../api/authorsApi";
-import moment from "moment/moment";
 
 const withHandleForm = compose(
     withHandlers({
@@ -22,7 +21,7 @@ const withHandleForm = compose(
                 findAuthorById(
                     (entity) => {
                         if (entity.birthday) {
-                            entity.birthday = moment(Date.parse(entity.birthday));
+                            entity.birthday = new Date(entity.birthday);
                         }
                         //поля из state сохраняются в пропсы
                         this.setState({entity: {...entity}})
