@@ -1,6 +1,7 @@
 import React from 'react';
 
 import getDisplayName from '../helpers/getDisplayName';
+import convertUTCDateToLocalDate from '../helpers/convertUTCDateToLocalDate';
 
 export default function withForm(Component) {
     class Form extends React.Component {
@@ -22,7 +23,7 @@ export default function withForm(Component) {
 
         onChangeDate = (name) => (date) => {
             let changedData = {...this.state.data};
-            changedData[name] = date;
+            changedData[name] = convertUTCDateToLocalDate(date);
             this.setState({ data: changedData });
         };
 

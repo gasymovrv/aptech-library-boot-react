@@ -10,7 +10,7 @@ export default function withListActions(deleteEntityById) {
                 deletedEntity: {}
             };
 
-            deleteClick = (entity) => {
+            onDelete = (entity) => () => {
                 if(deleteEntityById && typeof deleteEntityById === 'function') {
                     deleteEntityById(
                         entity.id,
@@ -53,7 +53,7 @@ export default function withListActions(deleteEntityById) {
                 return (
                     <Component
                         {...this.props}
-                        deleteClick={this.deleteClick}
+                        onDelete={this.onDelete}
                         deletedEntity={deletedEntity}
                         successDelete={successDelete}
                     />
