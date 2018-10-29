@@ -1,13 +1,13 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-export default function Author({author, onDelete}) {
+export default function Author({author, onDelete, url}) {
     return (
         <div className="col-sm-4">
             <div className="shop-item">
                 <div className="title">
                     <h3>
-                        <a href="#">{author.fio}</a>
+                        <Link to={`${url}/${author.id}`}>{author.fio}</Link>
                     </h3>
                 </div>
                 <div className="title">
@@ -22,7 +22,7 @@ export default function Author({author, onDelete}) {
                     <h3>Просмотры книг: {author.views}</h3>
                 </div>
                 <div className="actions">
-                    <Link to={`/authors/edit-form/${author.id}`}
+                    <Link to={`${url}/edit-form/${author.id}`}
                           className="btn admin-button item-actions"
                           role="button"
                           data-placement="top"
@@ -32,7 +32,6 @@ export default function Author({author, onDelete}) {
                     </Link>
                     <button
                         className="btn admin-button item-actions neighboring-buttons"
-                        role="button"
                         data-placement="top"
                         data-toggle="popover"
                         data-content="Удалить"

@@ -14,8 +14,8 @@ export default function App() {
     return (
         <Router>
             <Fragment>
-                <Header/>
-                <Top/>
+                <Route path="/" component={Header}/>
+                <Route path="/" component={Top}/>
                 <Route exact path="/" component={Letters}/>
                 <div className="section">
                     <div className="container">
@@ -27,14 +27,14 @@ export default function App() {
                                 <Route exact path="/authors" component={AuthorList}/>
 
                                 <Route path="/authors/edit-form/:id"
-                                       component={({match}) => (<AuthorForm isEdit={true} editId={match.params.id}/>)}/>
+                                       component={(props) => (<AuthorForm {...props} isEdit={true}/>)}/>
 
                                 <Route path="/authors/add-form" component={AuthorForm}/>
                             </Switch>
                         </div>
                     </div>
                 </div>
-                <Footer/>
+                <Route path="/" component={Footer}/>
             </Fragment>
         </Router>
     )

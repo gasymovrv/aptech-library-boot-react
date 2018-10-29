@@ -2,7 +2,8 @@ import React from "react";
 import Calendar from 'react-calendar';
 import InfoBox from "../InfoBox";
 
-export default function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit}) {
+export default function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit, ...props}) {
+    const url = props.match.url;
     const {fio, birthday} = data;
     const successViewFio = isEdit ? oldData.fio : savedData.fio;
     const errorViewFio = isEdit ? savedData.fio : fio;
