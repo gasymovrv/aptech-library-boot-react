@@ -5,10 +5,12 @@ import Header from "../Header";
 import Top from "../Top";
 import Letters from "../Letters";
 import Footer from "../Footer";
-import BookList from '../BookList';
-import AuthorList from "../AuthorList";
-import AuthorForm from "../AuthorForm";
+import BookList from '../books/BookList';
+import AuthorList from "../authors/AuthorList";
+import AuthorForm from "../authors/AuthorForm";
 import GenreList from "../GenreList";
+import NotFound from "../NotFound";
+import BookInfo from "../books/BookInfo";
 
 export default function App() {
     return (
@@ -26,10 +28,14 @@ export default function App() {
 
                                 <Route exact path="/authors" component={AuthorList}/>
 
-                                <Route path="/authors/edit-form/:id"
+                                <Route path="/authors/:id/edit"
                                        component={(props) => (<AuthorForm {...props} isEdit={true}/>)}/>
 
-                                <Route path="/authors/add-form" component={AuthorForm}/>
+                                <Route path="/authors/add" component={AuthorForm}/>
+
+                                <Route path="/books/:id" component={(props) => (<BookInfo {...props}/>)}/>
+
+                                <Route component={NotFound} />
                             </Switch>
                         </div>
                     </div>

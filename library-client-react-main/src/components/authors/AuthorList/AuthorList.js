@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import Author from "../Author";
-import InfoBox from "../InfoBox";
+import InfoBox from "../../InfoBox";
 
 export  default function AuthorList({entityList, deletedEntity, successDelete, children, onDelete, ...props}) {
     const url = props.match.url;
@@ -17,7 +17,7 @@ export  default function AuthorList({entityList, deletedEntity, successDelete, c
             />
             <div className="row">
                 <div className="col-sm-2">
-                    <Link to={`${url}/add-form`}
+                    <Link to={`${url}/add`}
                        type="button"
                        role="button"
                        className="btn btn-md admin-button">

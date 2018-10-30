@@ -31,6 +31,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public Book findById(Long id) {
+		return bookRepository.findById(id).orElse(new Book());
+	}
+
+	@Override
 	public Book saveOrUpdate(Book expense) {
 		return bookRepository.save(expense);
 	}

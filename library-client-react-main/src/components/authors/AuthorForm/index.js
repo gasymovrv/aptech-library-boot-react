@@ -1,8 +1,8 @@
 import {compose, lifecycle, withHandlers, withState} from 'recompose';
 
 import AuthorForm from './AuthorForm';
-import withForm from "../../hocs/withForm";
-import {findAuthorById, saveOrUpdateAuthor} from "../../api/authorsApi";
+import withForm from "../../../hocs/withForm";
+import {findAuthorById, saveOrUpdateAuthor} from "../../../api/authorsApi";
 
 const withHandleForm = compose(
     withHandlers({

@@ -1,6 +1,6 @@
 import React from "react";
 import Calendar from 'react-calendar';
-import InfoBox from "../InfoBox";
+import InfoBox from "../../InfoBox";
 
 export default function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit, ...props}) {
     const url = props.match.url;
@@ -9,7 +9,6 @@ export default function AuthorForm({data, savedData, oldData, onSubmit, onReset,
     const errorViewFio = isEdit ? savedData.fio : fio;
     const successText = isEdit ? 'отредактирована' : 'добавлена';
     const errorText = isEdit ? 'изменить информацию об' : 'добавления информации о новом';
-
     return (
         <div className="col-sm-9">
             <InfoBox infoKey={data}

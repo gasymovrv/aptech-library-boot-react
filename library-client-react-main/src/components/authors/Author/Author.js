@@ -22,7 +22,7 @@ export default function Author({author, onDelete, url}) {
                     <h3>Просмотры книг: {author.views}</h3>
                 </div>
                 <div className="actions">
-                    <Link to={`${url}/edit-form/${author.id}`}
+                    <Link to={`${url}/${author.id}/edit`}
                           className="btn admin-button item-actions"
                           role="button"
                           data-placement="top"
