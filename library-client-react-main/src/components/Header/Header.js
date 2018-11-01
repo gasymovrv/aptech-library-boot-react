@@ -47,10 +47,10 @@ export default class Header extends React.Component {
                         <ul>
                             <li className="logo-wrapper"><a href="#"><img src={logo} alt="Изображение не найдено"/></a></li>
                             <li>
-                                <a onClick={this.props.booksClick} href="#">Все книги</a>
+                                <a href="/">Все книги</a>
                             </li>
                             <li>
-                                <a onClick={this.props.authorsClick} href="#">Авторы</a>
+                                <a href="/authors">Авторы</a>
                             </li>
                             <li>
                                 <a href="#">О нас</a>

@@ -1,82 +1,41 @@
 import React, {Fragment} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 import Header from "../Header";
 import Top from "../Top";
 import Letters from "../Letters";
-import Main from "../Main";
 import Footer from "../Footer";
-import BookList from '../BookList/index';
-import AuthorList from "../AuthorList/index";
-import AuthorForm from "../AuthorForm/index";
-import {findAuthorById} from "../../api/authorsApi";
-import moment from "moment/moment";
+import BookList from '../BookList';
+import AuthorList from "../AuthorList";
+import AuthorForm from "../AuthorForm";
+import GenreList from "../GenreList";
 
-class App extends React.Component{
-    state = {
-        pageName: 'books',
-        author : {
-            fio: '',
-            birthday: null
-        },
-        isEditPage : false
-    };
-
-    addAuthor = ()=>{
-        this.setState({
-            pageName: 'authorForm',
-            author : {
-                fio: '',
-                birthday: null
-            },
-            isEditPage: false
-        })
-    };
-
-    editAuthor = (authorId) => {
-        findAuthorById((author) => {
-            if(author.birthday){
-                author.birthday = moment(Date.parse(author.birthday));
-            }
-            this.setState({
-                pageName: 'authorForm',
-                author: author,
-                isEditPage: true
-            })
-        }, authorId)
-    };
-
-    authorsClick = () => {
-        this.setState({
-            pageName: 'authors',
-            isEditPage: false
-        })
-    };
-    booksClick = () => {
-        this.setState({
-            pageName: 'books',
-            isEditPage: false
-        })
-    };
-
-    render() {
-        const {pageName, author, isEditPage} = this.state;
-        let component;
-        if (pageName === 'books') {
-            component = <BookList/>
-        } else if (pageName === 'authors') {
-            component = <AuthorList addClick={this.addAuthor} editClick={this.editAuthor}/>
-        } else if (pageName === 'authorForm') {
-            component = <AuthorForm initialData={author} isEdit={isEditPage}/>
-        }
-        return (
+export default function App() {
+    return (
+        <Router>
             <Fragment>
-                <Header authorsClick={this.authorsClick} booksClick={this.booksClick}/>
+                <Header/>
                 <Top/>
-                <Letters/>
-                <Main component={component}/>
+                <Route exact path="/" component={Letters}/>
+                <div className="section">
+                    <div className="container">
+                        <div className="row flex-center">
+                            <Route exact path="/" component={GenreList}/>
+                            <Switch>
+                                <Route exact path="/" component={BookList}/>
+
+                                <Route exact path="/authors" component={AuthorList}/>
+
+                                <Route path="/authors/edit-form/:id"
+                                       component={({match}) => (<AuthorForm isEdit={true} editId={match.params.id}/>)}/>
+
+                                <Route path="/authors/add-form" component={AuthorForm}/>
+                            </Switch>
+                        </div>
+                    </div>
+                </div>
                 <Footer/>
             </Fragment>
-        )
-    }
+        </Router>
+    )
 }
-
-export default App;
