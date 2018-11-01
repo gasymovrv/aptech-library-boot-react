@@ -31,3 +31,7 @@
   display: flex !important;
   justify-content: center !important;
 }
+
+.product-details-nav li {
+  cursor: pointer;
+}

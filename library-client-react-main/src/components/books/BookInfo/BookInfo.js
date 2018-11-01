@@ -1,12 +1,20 @@
-import React, {Fragment} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
 import roundNumbers from "../../../helpers/roundNumbers";
 import InfoBox from "../../InfoBox/InfoBox";
+import Tab1 from "./Tab1";
+import Tab2 from "./Tab2";
 
-export default function BookInfo({entity: book, onDelete, successDelete, ...props}) {
+export default function BookInfo({entity: book, onDelete, successDelete, onToggleTab, activeTab, ...props}) {
     const url = props.match.url;
     const imgPath = `data:image/jpeg;base64,${book.image}`;
     const isFree = book.price === 0.0;
+    let tab;
+    if(activeTab === 1){
+        tab = <Tab1 book={book}/>
+    } else if(activeTab===2){
+        tab = <Tab2 book={book}/>
+    }
     return (
         <div className="container">
             <div className="row">
@@ -80,72 +88,11 @@ export default function BookInfo({entity: book, onDelete, successDelete, ...prop
                 <div className="col-sm-12">
                     <div className="tabbable">
                         <ul className="nav nav-tabs product-details-nav">
-                            <li className="active"><a href={'#tab1'} data-toggle="tab">Аннотация</a></li>
-                            <li><a href={'#tab2'} data-toggle="tab">Сведения</a></li>
+                            <li className={activeTab===1 ? "active" : ''} onClick={onToggleTab(1)}><a>Аннотация</a></li>
+                            <li className={activeTab===2 ? "active": ''} onClick={onToggleTab(2)}><a>Сведения</a></li>
                         </ul>
                         <div className="tab-content product-detail-info">
-                            <div className="tab-pane active" id="tab1">
-                                {book.descr
-                                    ?
-                                    <p>{book.descr}</p>
-                                    :
-                                    <h4>Отстутствует</h4>
-                                }
-                            </div>
-                            <div className="tab-pane" id="tab2">
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>Автор</td>
-                                        <td>{book.author.fio}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Жанр</td>
-                                        <td>{book.genre.name}</td>
-                                    </tr>
-                                    {/*<tr>*/}
-                                    {/*<td>Издательство</td>*/}
-                                    {/*<td>{book.publisher.name}</td>*/}
-                                    {/*</tr>*/}
-                                    <tr>
-                                        <td>Год издания</td>
-                                        <td>{book.publishYear}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Количество страниц</td>
-                                        <td>{book.pageCount}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ISBN</td>
-                                        <td>{book.isbn}</td>
-                                    </tr>
-                                    {book.contentType &&
-                                    <Fragment>
-                                        <tr>
-                                            <td>Расширение файла</td>
-                                            <td>{book.fileExtension}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Размер файла</td>
-                                            <td>{book.fileSize}</td>
-                                        </tr>
-                                    </Fragment>
-                                    }
-                                    <tr>
-                                        <td>Рейтинг</td>
-                                        <td>{book.rating}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Количестов голосов</td>
-                                        <td>{book.voteCount}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Количестов просмотров</td>
-                                        <td>{book.views}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            {tab}
                         </div>
                     </div>
                 </div>
