@@ -2,12 +2,18 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 export default function Author({author, onDelete, url}) {
+    const authorInfoLocation = {
+        pathname: `${url}/${author.id}`,
+        state: {
+            entity: {...author},
+        }
+    };
     return (
         <div className="col-sm-4">
             <div className="shop-item">
                 <div className="title">
                     <h3>
-                        <Link to={`${url}/${author.id}`}>{author.fio}</Link>
+                        <Link to={authorInfoLocation}>{author.fio}</Link>
                     </h3>
                 </div>
                 <div className="title">
