@@ -1,8 +1,8 @@
 import {compose, lifecycle, withHandlers, withState} from 'recompose';
 
 import AuthorForm from './AuthorForm';
-import withForm from "../../hocs/withForm";
-import {findAuthorById, saveOrUpdateAuthor} from "../../api/authorsApi";
+import withForm from "../../../hocs/withForm";
+import {findAuthorById, saveOrUpdateAuthor} from "../../../api/authorsApi";
 
 const withHandleForm = compose(
     withHandlers({
@@ -16,7 +16,7 @@ const withHandleForm = compose(
     }),
     lifecycle({
         componentDidMount() {
-            const {isEdit, editId} = this.props;
+            const {isEdit, match} = this.props;
             if (isEdit) {
                 findAuthorById(
                     (entity) => {
@@ -26,7 +26,7 @@ const withHandleForm = compose(
                         //поля из state сохраняются в пропсы
                         this.setState({entity: {...entity}})
                     },
-                    editId
+                    match.params.id
                 );
             }
         }

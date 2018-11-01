@@ -26,6 +26,11 @@ public class BookController {
         return bookService.findAll(page, size);
     }
 
+    @GetMapping("/findById/{id}")
+    public Book findById(@PathVariable Long id) {
+        return bookService.findById(id);
+    }
+
     @GetMapping("/findByName/{name}")
     public Iterable<Book> findByName(@PathVariable String name) {
         return bookService.findByName(name);

@@ -3,7 +3,7 @@ import {Col} from "reactstrap";
 
 class Book extends React.Component{
     render() {
-        let imgPath = `data:image/jpeg;base64,${this.props.book.image}`;
+        const imgPath = `data:image/jpeg;base64,${this.props.book.image}`;
         return (
             <Col sm="4">
                 <div className="shop-item">

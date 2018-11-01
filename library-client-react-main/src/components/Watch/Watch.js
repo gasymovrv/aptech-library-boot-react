@@ -1,6 +1,10 @@
 import React from 'react';
 
-
+/**
+ * Это просто образец с примерами работы методов жизненного цикла
+ * и реализации state-full компонента.
+ * Используется только в Header
+ */
 export default class Watch extends React.Component {
 
     state = {
@@ -65,6 +69,10 @@ export default class Watch extends React.Component {
     }
 
     render() {
+        const {isActive, onToggleWatch, watchText} = this.props;
+        if(typeof onToggleWatch !== 'function' || watchText === undefined || isActive ===undefined ){
+            return null;
+        }
         const {time, watchStyle} =this.state;
         let sec = time.getSeconds();
         let min = time.getMinutes();
@@ -78,6 +86,13 @@ export default class Watch extends React.Component {
         if(hour < 10){
             hour='0'+hour;
         }
-        return (<p className={this.props.isActive ?  "" : "disabled-watch"}>{hour} : {min} : {sec}</p>)
+        return (
+            <div className="row">
+                <ul className="list-inline">
+                    <li><input className="btn btn-sm" type="button" onClick={onToggleWatch} value={watchText}/></li>
+                    <li><p className={this.props.isActive ?  "" : "disabled-watch"}>{hour} : {min} : {sec}</p></li>
+                </ul>
+            </div>
+        )
     }
 }

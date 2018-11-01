@@ -1,11 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import Author from "../Author";
-import InfoBox from "../InfoBox";
+import InfoBox from "../../InfoBox";
 
-export  default function AuthorList({entityList, deletedEntity, successDelete, children, onDelete}) {
+export  default function AuthorList({entityList, deletedEntity, successDelete, children, onDelete, ...props}) {
+    const url = props.match.url;
     let authors = entityList.map(a =>
-        <Author onDelete={onDelete} key={a.id} author={a}/>
+        <Author key={a.id} author={a} onDelete={onDelete} url={url}/>
     );
     return (
         <div className="col-sm-9">
@@ -16,7 +17,7 @@ export  default function AuthorList({entityList, deletedEntity, successDelete, c
             />
             <div className="row">
                 <div className="col-sm-2">
-                    <Link to="/authors/add-form"
+                    <Link to={`${url}/add`}
                        type="button"
                        role="button"
                        className="btn btn-md admin-button">
