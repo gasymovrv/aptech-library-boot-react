@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 export default function Book({book, url}) {
     const imgPath = `data:image/jpeg;base64,${book.image}`;
     const bookInfoLocation = {
-        pathname: `${url}books/${book.id}`,
+        pathname: `${url}/${book.id}`,
         state: { entity: {...book} }
     };
     return (
@@ -35,7 +35,7 @@ export default function Book({book, url}) {
 
                 <div className="title">
                     <h3>
-                        <Link to={`${url}authors/${book.author.id}`}>
+                        <Link to={`/authors/${book.author.id}`}>
                             {book.author.fio}
                         </Link>
                     </h3>

@@ -8,9 +8,6 @@ export default function withFindById(findById) {
                 if (props.location && props.location.state) {
                     entity = props.location.state.entity;
                 }
-                console.log('entity {');
-                console.log(entity);
-                console.log('}');
                 return {entity: entity}
             },
             {

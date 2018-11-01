@@ -5,7 +5,8 @@ import './css/bootstrap.min.css';
 import './css/icomoon-social.css';
 import './css/leaflet.css';
 import './css/main.css'
-import App from './components/App';
+import App from './App';
+
 // import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(<App/>, document.getElementById('root'));
 // registerServiceWorker();
