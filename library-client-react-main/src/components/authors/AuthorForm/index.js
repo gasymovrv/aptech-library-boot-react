@@ -1,8 +1,11 @@
-import {compose, lifecycle, withHandlers, withState} from 'recompose';
+import {branch, compose, withHandlers, withState} from 'recompose';
+import React from "react";
+
 
 import AuthorForm from './AuthorForm';
 import withForm from "../../../hocs/withForm";
 import {findAuthorById, saveOrUpdateAuthor} from "../../../api/authorsApi";
+import withFindById from "../../../hocs/withFindById";
 
 const withHandleForm = compose(
     withHandlers({
@@ -14,23 +17,26 @@ const withHandleForm = compose(
         fio: '',
         birthday: null
     }),
-    lifecycle({
-        componentDidMount() {
-            const {isEdit, match} = this.props;
-            if (isEdit) {
+    branch(
+        ({isEdit}) => isEdit,
+        //если isEdit=true, то просто сначала достаем существующий объект
+        withFindById(
+            (onFind, id) => {
                 findAuthorById(
                     (entity) => {
                         if (entity.birthday) {
                             entity.birthday = new Date(entity.birthday);
                         }
-                        //поля из state сохраняются в пропсы
-                        this.setState({entity: {...entity}})
+                        onFind(entity);
                     },
-                    match.params.id
+                    id
                 );
-            }
+            }),
+        //если isEdit=false, то делаем на лету хок и пробрасываем (типо ничего не делаем)
+        (Component) => {
+            return (props) => <Component {...props}/>
         }
-    }),
+    ),
     withForm
 );
 export default compose(withHandleForm)(AuthorForm);
