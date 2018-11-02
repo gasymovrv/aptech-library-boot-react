@@ -2,8 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import InfoBox from "../../InfoBox";
 
-export default function AuthorInfo({entity: author, onDelete, successDelete, ...props}) {
-    const url = props.match.url;
+export default function AuthorInfo({entity: author, onEdit, onDelete, successDelete}) {
     return (
         <div className="container">
             <div className="row">
@@ -18,22 +17,20 @@ export default function AuthorInfo({entity: author, onDelete, successDelete, ...
                     <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div className="btn-group-lg bottom-indent" role="group" aria-label="First group">
                             {/*<security:authorize access="hasRole('ROLE_ADMIN')">*/}
-                            <Link
-                                to={`${url}/edit`}
-                                className="btn admin-button item-actions neighboring-buttons"
-                                role="button"
-                                data-placement="top"
-                                data-toggle="popover"
-                                data-content="Изменить">
-                                <i className="glyphicon glyphicon-pencil icon-white"/>
-                            </Link>
                             <button
-                                // onClick="confirmDeleteBook(${book.id}, '${book.name}')"
-                                onClick={onDelete(author)}
+                                className="btn admin-button item-actions"
+                                data-placement="top"
+                                data-toggle="popover"
+                                data-content="Изменить"
+                                onClick={onEdit}>
+                                <i className="glyphicon glyphicon-pencil icon-white"/>
+                            </button>
+                            <button
                                 className="btn admin-button item-actions neighboring-buttons"
                                 data-placement="top"
                                 data-toggle="popover"
-                                data-content="Удалить">
+                                data-content="Удалить"
+                                onClick={() => onDelete(author)}>
                                 <i className="glyphicon glyphicon-trash icon-white"/>
                             </button>
                             {/*</security:authorize>*/}

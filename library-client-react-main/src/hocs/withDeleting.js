@@ -18,7 +18,7 @@ export default function withDeleting(deleteEntityById) {
                 };
             }
 
-            onDelete = (entity) => () => {
+            onDelete = (entity) => {
                 const {refreshPageAfterDelete, history} = this.props;
                 if(deleteEntityById && typeof deleteEntityById === 'function') {
                     deleteEntityById(

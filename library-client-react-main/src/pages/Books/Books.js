@@ -9,7 +9,7 @@ import NotFound from "../../components/NotFound";
 import BookInfo from "../../components/books/BookInfo";
 import MainContainer from "../../components/MainContainer";
 
-export default function Books({match}) {
+export default function Books({match, appPaths}) {
     const url = match.url;
     return (
         <Fragment>
@@ -22,7 +22,7 @@ export default function Books({match}) {
             <MainContainer>
                 <Route exact path={url} component={GenreList}/>
                 <Switch>
-                    <Route exact path={url} component={BookList}/>
+                    <Route exact path={url} component={(props) => (<BookList {...props} appPaths={appPaths}/>)}/>
                     <Route path={`${url}/:id(\\d+)`} component={BookInfo}/>
                     <Route component={NotFound}/>
                 </Switch>

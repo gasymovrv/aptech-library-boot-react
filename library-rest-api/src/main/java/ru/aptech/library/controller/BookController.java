@@ -41,6 +41,11 @@ public class BookController {
         return bookService.findByAuthorFio(fio);
     }
 
+    @DeleteMapping("/deleteById/{id}")
+    public void deleteById(@PathVariable Long id) {
+        bookService.deleteById(id);
+    }
+
 //    @RequestMapping(
 //            value = "/api/rest",
 //            method = RequestMethod.PUT)

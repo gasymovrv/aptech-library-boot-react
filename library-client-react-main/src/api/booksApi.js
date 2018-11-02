@@ -18,4 +18,20 @@ export function findBookById(fn, id) {
         .then(bookResponse => fn(bookResponse));
 }
 
+export function deleteBookById(id, okFn, errFn) {
+    return fetch(`${_path}/books/deleteById/${id}`, {method: 'DELETE'})
+        .then((response) => {
+            if (response.status === 200) {
+                okFn();
+            } else {
+                console.log(response);
+                errFn();
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            errFn();
+        });
+}
+
 

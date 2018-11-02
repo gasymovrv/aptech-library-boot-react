@@ -8,7 +8,7 @@ import NotFound from "../../components/NotFound";
 import AuthorInfo from "../../components/authors/AuthorInfo";
 import MainContainer from "../../components/MainContainer";
 
-export default function Authors({match}) {
+export default function Authors({match, appPaths}) {
     const url = match.url;
     return (
         <Fragment>
@@ -21,7 +21,7 @@ export default function Authors({match}) {
             </Switch>
             <MainContainer>
                 <Switch>
-                    <Route exact path={url} component={AuthorList}/>
+                    <Route exact path={url} component={(props) => (<AuthorList {...props} appPaths={appPaths}/>)}/>
                     <Route path={`${url}/add`} component={AuthorForm}/>
                     <Route path={`${url}/:id(\\d+)/edit`}
                            component={(props) => (<AuthorForm {...props} isEdit={true}/>)}/>

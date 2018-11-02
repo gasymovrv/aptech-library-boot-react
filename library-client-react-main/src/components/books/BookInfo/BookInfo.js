@@ -5,8 +5,7 @@ import InfoBox from "../../InfoBox/InfoBox";
 import Tab1 from "./Tab1";
 import Tab2 from "./Tab2";
 
-export default function BookInfo({entity: book, onDelete, successDelete, onToggleTab, activeTab, ...props}) {
-    const url = props.match.url;
+export default function BookInfo({entity: book, onEdit, onDelete, successDelete, onToggleTab, activeTab}) {
     const imgPath = `data:image/jpeg;base64,${book.image}`;
     const isFree = book.price === 0.0;
     let tab;
@@ -20,7 +19,7 @@ export default function BookInfo({entity: book, onDelete, successDelete, onToggl
             <div className="row">
                 <InfoBox infoKey={book.id}
                          successAction={successDelete}
-                         errorText='Произошла ошибка при попытке удалить информацию о данном авторе!'
+                         errorText='Произошла ошибка при попытке удалить данную книгу!'
                 />
                 <div className="col-sm-4">
                     <div className="product-image-large">
@@ -64,20 +63,21 @@ export default function BookInfo({entity: book, onDelete, successDelete, onToggl
                                 <i className="glyphicon glyphicon-download icon-white"/>
                             </button>
                             {/*<security:authorize access="hasRole('ROLE_ADMIN')">*/}
-                            <Link to={`${url}/edit`}
-                                  className="btn admin-button item-actions neighboring-buttons"
-                                  role="button"
-                                  data-placement="top"
-                                  data-toggle="popover"
-                                  data-content="Изменить">
+                            <button
+                                className="btn admin-button item-actions neighboring-buttons"
+                                data-placement="top"
+                                data-toggle="popover"
+                                data-content="Изменить"
+                                onClick={onEdit}>
                                 <i className="glyphicon glyphicon-pencil icon-white"/>
-                            </Link>
+                            </button>
                             <button
                                 // onClick="confirmDeleteBook(${book.id}, '${book.name}')"
                                 className="btn admin-button item-actions neighboring-buttons"
                                 data-placement="top"
                                 data-toggle="popover"
-                                data-content="Удалить">
+                                data-content="Удалить"
+                                onClick={() => onDelete(book)}>
                                 <i className="glyphicon glyphicon-trash icon-white"/>
                             </button>
                             {/*</security:authorize>*/}

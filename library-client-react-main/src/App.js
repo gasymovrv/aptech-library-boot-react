@@ -9,7 +9,7 @@ import Top from "./components/Top";
 import MainContainer from "./components/MainContainer";
 
 export default function App() {
-    const paths = {
+    const appPaths = {
         root: '/',
         authors: '/authors',
         books: '/books',
@@ -20,11 +20,11 @@ export default function App() {
     return (
         <BrowserRouter>
             <Fragment>
-                <Route path={paths.root} component={(props) => <Header {...props} paths={paths}/>}/>
+                <Route path={appPaths.root} component={(props) => <Header {...props} appPaths={appPaths}/>}/>
                 <Switch>
-                    <Redirect exact from={paths.root} to={paths.books}/>
-                    <Route path={paths.authors} component={Authors}/>
-                    <Route path={paths.books} component={Books}/>
+                    <Redirect exact from={appPaths.root} to={appPaths.books}/>
+                    <Route path={appPaths.authors} component={(props) => <Authors {...props} appPaths={appPaths}/>}/>
+                    <Route path={appPaths.books} component={(props) => <Books {...props} appPaths={appPaths}/>}/>
                     <Route component={() =>
                         <Fragment>
                             <Top text="Неизвестная страница"/>
@@ -34,7 +34,7 @@ export default function App() {
                         </Fragment>
                     }/>
                 </Switch>
-                <Route path={paths.root} component={(props) => <Footer {...props} paths={paths}/>}/>
+                <Route path={appPaths.root} component={(props) => <Footer {...props} appPaths={appPaths}/>}/>
             </Fragment>
         </BrowserRouter>
     )

@@ -1,7 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-export default function Author({author, onDelete, url}) {
+export default function Author({author, onEdit, onDelete, ...props}) {
+    const url = props.match.url;
     const authorInfoLocation = {
         pathname: `${url}/${author.id}`,
         state: {
@@ -28,20 +29,20 @@ export default function Author({author, onDelete, url}) {
                     <h3>Просмотры книг: {author.views}</h3>
                 </div>
                 <div className="actions">
-                    <Link to={`${url}/${author.id}/edit`}
-                          className="btn admin-button item-actions"
-                          role="button"
-                          data-placement="top"
-                          data-toggle="popover"
-                          data-content="Изменить">
+                    <button
+                        className="btn admin-button item-actions"
+                        data-placement="top"
+                        data-toggle="popover"
+                        data-content="Изменить"
+                        onClick={() => onEdit(author)}>
                         <i className="glyphicon glyphicon-pencil icon-white"/>
-                    </Link>
+                    </button>
                     <button
                         className="btn admin-button item-actions neighboring-buttons"
                         data-placement="top"
                         data-toggle="popover"
                         data-content="Удалить"
-                        onClick={onDelete(author)}>
+                        onClick={() => onDelete(author)}>
                         <i className="glyphicon glyphicon-trash icon-white"/>
                     </button>
                 </div>
