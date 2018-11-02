@@ -1,5 +1,5 @@
 import React from 'react';
-import error from '../img/404.gif' // relative path to image
+import error from '../img/404.gif'
 
 export default function NotFound() {
     return (

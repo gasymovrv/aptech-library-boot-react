@@ -7,6 +7,7 @@ import BookList from '../../components/books/BookList';
 import GenreList from "../../components/GenreList";
 import NotFound from "../../components/NotFound";
 import BookInfo from "../../components/books/BookInfo";
+import MainContainer from "../../components/MainContainer";
 
 export default function Books({match}) {
     const url = match.url;
@@ -14,21 +15,18 @@ export default function Books({match}) {
         <Fragment>
             <Switch>
                 <Route exact path={url} component={(props) => (<Top {...props} text="Список книг"/>)}/>
-                <Route path={`${url}/:id`} component={(props) => (<Top {...props} text="Информация о книге"/>)}/>
+                <Route path={`${url}/:id(\\d+)`} component={(props) => (<Top {...props} text="Информация о книге"/>)}/>
+                <Route component={() => <Top text="Неизвестная страница"/>}/>
             </Switch>
             <Route exact path={url} component={Letters}/>
-            <div className="section">
-                <div className="container">
-                    <div className="row flex-center">
-                        <Route exact path={url} component={GenreList}/>
-                        <Switch>
-                            <Route exact path={url} component={BookList}/>
-                            <Route path={`${url}/:id`} component={BookInfo}/>
-                            <Route component={NotFound}/>
-                        </Switch>
-                    </div>
-                </div>
-            </div>
+            <MainContainer>
+                <Route exact path={url} component={GenreList}/>
+                <Switch>
+                    <Route exact path={url} component={BookList}/>
+                    <Route path={`${url}/:id(\\d+)`} component={BookInfo}/>
+                    <Route component={NotFound}/>
+                </Switch>
+            </MainContainer>
         </Fragment>
     )
 }

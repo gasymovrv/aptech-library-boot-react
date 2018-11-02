@@ -1,8 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-export default function Footer({...props}){
-    const url = props.match.url;
+export default function Footer({paths}){
     return (
         <div className="footer">
             <div className="container">
@@ -10,10 +9,10 @@ export default function Footer({...props}){
                     <div className="col-footer col-md-3 col-xs-6">
                         <h3>Навигация</h3>
                         <ul className="no-list-style footer-navigate-section">
-                            <li><Link to={url}>Главная</Link></li>
-                            <li><Link to={url}>Список книг</Link></li>
-                            <li><Link to={`${url}authors`}>Список авторов</Link></li>
-                            <li><Link to={url}>О нас</Link></li>
+                            <li><Link to={paths.root}>Главная</Link></li>
+                            <li><Link to={paths.books}>Список книг</Link></li>
+                            <li><Link to={paths.authors}>Список авторов</Link></li>
+                            <li><Link to={paths.aboutUs}>О нас</Link></li>
                         </ul>
                     </div>
 

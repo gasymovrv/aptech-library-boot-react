@@ -3,8 +3,7 @@ import Watch from "../Watch";
 import logo from '../../img/BeSmart-logo.svg' // relative path to image
 import {Link} from "react-router-dom";
 
-export default function Header({watchText, isActiveWatch, onToggleWatch, ...props}) {
-    const url = props.match.url;
+export default function Header({watchText, isActiveWatch, onToggleWatch, paths}) {
     return (
         <div className="mainmenu-wrapper">
             <div className="container">
@@ -14,7 +13,7 @@ export default function Header({watchText, isActiveWatch, onToggleWatch, ...prop
                         <ul>
                             <li>
                                 <i className="glyphicon glyphicon-user icon-white"/>
-                                <Link to={url}>Авторизация</Link>
+                                <Link to={paths.auth}>Авторизация</Link>
                             </li>
                         </ul>
                     </div>
@@ -22,16 +21,16 @@ export default function Header({watchText, isActiveWatch, onToggleWatch, ...prop
                 <nav id="mainmenu" className="mainmenu">
                     <ul>
                         <li className="logo-wrapper">
-                            <Link to={url}><img src={logo} alt="Изображение не найдено"/></Link>
+                            <Link to={paths.root}><img src={logo} alt="Изображение не найдено"/></Link>
                         </li>
                         <li>
-                            <Link to={url}>Все книги</Link>
+                            <Link to={paths.books}>Все книги</Link>
                         </li>
                         <li>
-                            <Link to={`${url}authors`}>Авторы</Link>
+                            <Link to={paths.authors}>Авторы</Link>
                         </li>
                         <li>
-                            <Link to={url}>О нас</Link>
+                            <Link to={paths.aboutUs}>О нас</Link>
                         </li>
                     </ul>
                 </nav>
