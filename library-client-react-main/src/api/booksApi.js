@@ -1,25 +1,23 @@
-const _path = 'http://localhost:8080';
-
 export function findAllBooks(fn) {
-    return fetch(`${_path}/books/findAll`)
+    return fetch(`/books/findAll`)
         .then(r => r.json())
         .then(booksResponse => fn(booksResponse));
 }
 
 export function findBooksWithPaging(fn, page, size) {
-    return fetch(`${_path}/books/findAll/${page - 1}/${size}`)
+    return fetch(`/books/findAll/${page - 1}/${size}`)
         .then(r => r.json())
         .then(booksPageResponse => fn(booksPageResponse.content, booksPageResponse.totalElements));
 }
 
 export function findBookById(fn, id) {
-    return fetch(`${_path}/books/findById/${id}`)
+    return fetch(`/books/findById/${id}`)
         .then(r => r.json())
         .then(bookResponse => fn(bookResponse));
 }
 
 export function deleteBookById(id, okFn, errFn) {
-    return fetch(`${_path}/books/deleteById/${id}`, {method: 'DELETE'})
+    return fetch(`/books/deleteById/${id}`, {method: 'DELETE'})
         .then((response) => {
             if (response.status === 200) {
                 okFn();
