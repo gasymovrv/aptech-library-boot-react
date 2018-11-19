@@ -2,7 +2,9 @@ package ru.aptech.library.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -10,16 +12,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * Created by marcomolteni on 11.07.17.
  */
 @Configuration
-public class CorsConfig {
+public class WebMvcConfig implements WebMvcConfigurer {
 
-    //эта хрень не работает почему-то
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/*").allowedOrigins("http://localhost:3000");
-            }
-        };
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
