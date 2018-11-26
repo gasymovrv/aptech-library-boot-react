@@ -59,6 +59,7 @@ export default class Watch extends React.Component {
         } else {
             this.deactivateWatch();
         }
+        document.addEventListener('click', this.onDocumentClick);
     }
 
     // 4.
@@ -67,6 +68,17 @@ export default class Watch extends React.Component {
     componentWillUnmount(){
         this.deactivateWatch();
     }
+
+    //Обработка ref
+    handleButtonRef = (node) => {
+        this.button = node;
+    };
+    //ref исп-ся если нужно по разному реагировать в зависимости от DOM-элемента
+    onDocumentClick = (event)=>{
+        if(this.button === event.target){
+            alert("Попали на часы!!! (тестируем ref)")
+        }
+    };
 
     render() {
         const {isActive, onToggleWatch, watchText} = this.props;
@@ -90,7 +102,7 @@ export default class Watch extends React.Component {
             <div className="row">
                 <ul className="list-inline">
                     <li><input className="btn btn-sm" type="button" onClick={onToggleWatch} value={watchText}/></li>
-                    <li><p className={this.props.isActive ?  "" : "disabled-watch"}>{hour} : {min} : {sec}</p></li>
+                    <li><p ref={this.handleButtonRef} className={this.props.isActive ?  "" : "disabled-watch"}>{hour} : {min} : {sec}</p></li>
                 </ul>
             </div>
         )
