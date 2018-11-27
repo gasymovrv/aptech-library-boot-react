@@ -1,3 +1,3 @@
-import InfoBox from "./InfoBox";
+import InfoBox from './InfoBox';
 
 export default InfoBox;

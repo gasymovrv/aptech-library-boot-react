@@ -26,18 +26,18 @@ export default function Header({watchText, isActiveWatch, onToggleWatch, appPath
         );
     }
     return (
-        <div className="mainmenu-wrapper">
-            <div className="container">
+        <div className='mainmenu-wrapper'>
+            <div className='container'>
                 <Watch isActive={isActiveWatch} watchText={watchText} onToggleWatch={onToggleWatch}/>
-                <div className="menuextras">
-                    <div className="extras">
+                <div className='menuextras'>
+                    <div className='extras'>
                             {authInfo}
                     </div>
                 </div>
-                <nav id="mainmenu" className="mainmenu">
+                <nav id='mainmenu' className='mainmenu'>
                     <ul>
-                        <li className="logo-wrapper">
-                            <Link to={appPaths.root}><img src={logo} alt="Изображение не найдено"/></Link>
+                        <li className='logo-wrapper'>
+                            <Link to={appPaths.root}><img src={logo} alt='Изображение не найдено'/></Link>
                         </li>
                         <li>
                             <Link to={appPaths.books}>Все книги</Link>

@@ -1,5 +1,5 @@
 export function findAllBooks(fn) {
-    return fetch(`/books/findAll`)
+    return fetch('/books/findAll')
         .then(r => r.json())
         .then(booksResponse => fn(booksResponse));
 }

@@ -1,8 +1,8 @@
-import React, {Fragment} from "react";
+import React, {Fragment} from 'react';
 
 export default function Tab2({book}) {
     return (
-        <div className="tab-pane active" id="tab2">
+        <div className='tab-pane active' id='tab2'>
             <table>
                 <tbody>
                 <tr>

@@ -1,5 +1,5 @@
-import React from "react";
-import getDisplayName from "../helpers/getDisplayName";
+import React from 'react';
+import getDisplayName from '../helpers/getDisplayName';
 
 export default function withDeleting(deleteEntityById) {
     return function (Component) {

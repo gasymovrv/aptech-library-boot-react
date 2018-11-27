@@ -76,7 +76,7 @@ export default class Watch extends React.Component {
     //ref исп-ся если нужно по разному реагировать в зависимости от DOM-элемента
     onDocumentClick = (event)=>{
         if(this.button === event.target){
-            alert("Попали на часы!!! (тестируем ref)")
+            alert('Попали на часы!!! (тестируем ref)')
         }
     };
 
@@ -99,10 +99,10 @@ export default class Watch extends React.Component {
             hour='0'+hour;
         }
         return (
-            <div className="row">
-                <ul className="list-inline">
-                    <li><input className="btn btn-sm" type="button" onClick={onToggleWatch} value={watchText}/></li>
-                    <li><p ref={this.handleButtonRef} className={this.props.isActive ?  "" : "disabled-watch"}>{hour} : {min} : {sec}</p></li>
+            <div className='row'>
+                <ul className='list-inline'>
+                    <li><input className='btn btn-sm' type='button' onClick={onToggleWatch} value={watchText}/></li>
+                    <li><p ref={this.handleButtonRef} className={this.props.isActive ?  '' : 'disabled-watch'}>{hour} : {min} : {sec}</p></li>
                 </ul>
             </div>
         )

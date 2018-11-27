@@ -1,6 +1,6 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import roundNumbers from "../../../helpers/roundNumbers";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import roundNumbers from '../../../helpers/roundNumbers';
 
 export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
     const url = props.match.url;
@@ -11,16 +11,16 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
     };
     const isFree = book.price === 0.0;
     return (
-        <div className="col-sm-4">
-            <div className="shop-item">
+        <div className='col-sm-4'>
+            <div className='shop-item'>
 
-                <div className="image">
+                <div className='image'>
                     <Link to={bookInfoLocation}>
-                        <img className="img-rounded" src={imgPath}/>
+                        <img className='img-rounded' src={imgPath}/>
                     </Link>
                 </div>
 
-                <div className="title">
+                <div className='title'>
                     <h3>
                         <Link to={bookInfoLocation}>
                             {book.name}
@@ -28,7 +28,7 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
                     </h3>
                 </div>
 
-                <div className="title">
+                <div className='title'>
                     <h3>
                         <Link to={`${appPaths.authors}/${book.author.id}`}>
                             {book.author.fio}
@@ -36,7 +36,7 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
                     </h3>
                 </div>
 
-                <div className="title">
+                <div className='title'>
                     <h3>Жанр:
                         <Link to={bookInfoLocation}>
                             {book.genre.name}
@@ -54,52 +54,52 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
                     </h3>
                 </div>
 
-                <div className="price">
+                <div className='price'>
                     {isFree ? 'БЕСПЛАТНО' : roundNumbers(book.price, 2) + ' р.'}
                 </div>
 
-                <div className="actions">
-                    <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div className="btn-group-lg bottom-indent" role="group" aria-label="First group">
+                <div className='actions'>
+                    <div className='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
+                        <div className='btn-group-lg bottom-indent' role='group' aria-label='First group'>
                             {isFree ||
                             <button
                                 // onClick="confirmAddToCart(${book.id}, '${book.name}')"
-                                className="btn item-actions neighboring-buttons"
-                                data-placement="top"
-                                data-toggle="popover"
-                                data-content="В корзину">
-                                <i className="glyphicon glyphicon-shopping-cart icon-white"/>
+                                className='btn item-actions neighboring-buttons'
+                                data-placement='top'
+                                data-toggle='popover'
+                                data-content='В корзину'>
+                                <i className='glyphicon glyphicon-shopping-cart icon-white'/>
                             </button>
                             }
                             <button
                                 // onClick="confirmShowBookContent(${book.id}, '${book.name}', ${book.price})"
-                                className="btn item-actions neighboring-buttons"
-                                data-placement="top"
-                                data-toggle="popover"
-                                data-content="Читать">
-                                <i className="glyphicon glyphicon-eye-open icon-white"/>
+                                className='btn item-actions neighboring-buttons'
+                                data-placement='top'
+                                data-toggle='popover'
+                                data-content='Читать'>
+                                <i className='glyphicon glyphicon-eye-open icon-white'/>
                             </button>
                         </div>
                     </div>
-                    <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div className="btn-group-lg bottom-indent" role="group" aria-label="Second group">
+                    <div className='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
+                        <div className='btn-group-lg bottom-indent' role='group' aria-label='Second group'>
                             {/*<security:authorize access="hasRole('ROLE_ADMIN')">*/}
                             <button
-                                className="btn admin-button item-actions neighboring-buttons"
-                                data-placement="top"
-                                data-toggle="popover"
-                                data-content="Изменить"
+                                className='btn admin-button item-actions neighboring-buttons'
+                                data-placement='top'
+                                data-toggle='popover'
+                                data-content='Изменить'
                                 onClick={() => onEdit(book)}>
-                                <i className="glyphicon glyphicon-pencil icon-white"/>
+                                <i className='glyphicon glyphicon-pencil icon-white'/>
                             </button>
                             <button
                                 // onClick="confirmDeleteBook(${book.id}, '${book.name}')"
-                                className="btn admin-button item-actions neighboring-buttons"
-                                data-placement="top"
-                                data-toggle="popover"
-                                data-content="Удалить"
+                                className='btn admin-button item-actions neighboring-buttons'
+                                data-placement='top'
+                                data-toggle='popover'
+                                data-content='Удалить'
                                 onClick={() => onDelete(book)}>
-                                <i className="glyphicon glyphicon-trash icon-white"/>
+                                <i className='glyphicon glyphicon-trash icon-white'/>
                             </button>
                             {/*</security:authorize>*/}
                         </div>

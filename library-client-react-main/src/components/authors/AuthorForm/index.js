@@ -1,11 +1,11 @@
 import {branch, compose, withHandlers, withState} from 'recompose';
-import React from "react";
+import React from 'react';
 
 
 import AuthorForm from './AuthorForm';
-import withForm from "../../../hocs/withForm";
-import {findAuthorById, saveOrUpdateAuthor} from "../../../api/authorsApi";
-import withFindById from "../../../hocs/withFindById";
+import withForm from '../../../hocs/withForm';
+import {findAuthorById, saveOrUpdateAuthor} from '../../../api/authorsApi';
+import withFindById from '../../../hocs/withFindById';
 
 const withHandleForm = compose(
     withHandlers({

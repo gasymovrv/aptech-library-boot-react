@@ -1,5 +1,5 @@
 export function findAllAuthors(fn) {
-    return fetch(`/authors/findAll`)
+    return fetch('/authors/findAll')
         .then(r => r.json())
         .then(authorsResponse => fn(authorsResponse));
 }
@@ -25,7 +25,7 @@ export function saveOrUpdateAuthor(author, okFn, errFn) {
         },
         body: JSON.stringify(author)//отправляемое отсюда (Request)
     };
-    return fetch(`/authors/save`, options)
+    return fetch('/authors/save', options)
         .then((response) => {
             if (response.status === 200) {
                 okFn();

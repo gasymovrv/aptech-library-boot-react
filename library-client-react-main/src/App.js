@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Books from "./pages/Books";
-import Authors from "./pages/Authors";
-import NotFound from "./components/NotFound";
-import Top from "./components/Top";
-import MainContainer from "./components/MainContainer";
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Books from './pages/Books';
+import Authors from './pages/Authors';
+import NotFound from './components/NotFound';
+import Top from './components/Top';
+import MainContainer from './components/MainContainer';
 
 export default function App() {
     const appPaths = {
@@ -28,7 +28,7 @@ export default function App() {
                     <Route path={appPaths.books} component={(props) => <Books {...props} appPaths={appPaths}/>}/>
                     <Route component={() =>
                         <Fragment>
-                            <Top text="Неизвестная страница"/>
+                            <Top text='Неизвестная страница'/>
                             <MainContainer>
                                 <NotFound/>
                             </MainContainer>

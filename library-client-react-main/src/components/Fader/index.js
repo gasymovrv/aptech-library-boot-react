@@ -1,4 +1,4 @@
-import Fader from "./Fader";
+import Fader from './Fader';
 
 
 export default Fader;

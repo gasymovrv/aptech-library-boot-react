@@ -1,23 +1,23 @@
 import React, {Fragment} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import Top from "../../components/Top";
-import AuthorList from "../../components/authors/AuthorList";
-import AuthorForm from "../../components/authors/AuthorForm";
-import NotFound from "../../components/NotFound";
-import AuthorInfo from "../../components/authors/AuthorInfo";
-import MainContainer from "../../components/MainContainer";
+import Top from '../../components/Top';
+import AuthorList from '../../components/authors/AuthorList';
+import AuthorForm from '../../components/authors/AuthorForm';
+import NotFound from '../../components/NotFound';
+import AuthorInfo from '../../components/authors/AuthorInfo';
+import MainContainer from '../../components/MainContainer';
 
 export default function Authors({match, appPaths}) {
     const url = match.url;
     return (
         <Fragment>
             <Switch>
-                <Route exact path={url} component={(props) => (<Top {...props} text="Список авторов"/>)}/>
-                <Route path={`${url}/add`} component={(props) => (<Top {...props} text="Добавление нового автора"/>)}/>
-                <Route path={`${url}/:id(\\d+)/edit`} component={(props) => (<Top {...props} text="Изменении информации об авторе"/>)}/>
-                <Route path={`${url}/:id(\\d+)`} component={(props) => (<Top {...props} text="Информация об авторе"/>)}/>
-                <Route component={()=><Top text="Неизвестная страница"/>}/>
+                <Route exact path={url} component={(props) => (<Top {...props} text='Список авторов'/>)}/>
+                <Route path={`${url}/add`} component={(props) => (<Top {...props} text='Добавление нового автора'/>)}/>
+                <Route path={`${url}/:id(\\d+)/edit`} component={(props) => (<Top {...props} text='Изменении информации об авторе'/>)}/>
+                <Route path={`${url}/:id(\\d+)`} component={(props) => (<Top {...props} text='Информация об авторе'/>)}/>
+                <Route component={()=><Top text='Неизвестная страница'/>}/>
             </Switch>
             <MainContainer>
                 <Switch>

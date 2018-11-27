@@ -1,6 +1,6 @@
 import {compose, lifecycle, withHandlers, withState} from 'recompose';
 
-import Header from "./Header";
+import Header from './Header';
 import {getCurrentUser} from '../../api/usersApi';
 
 const withWatch = compose(
@@ -10,10 +10,10 @@ const withWatch = compose(
         onToggleWatch: props => () => {
             if (!props.isActiveWatch) {
                 props.setActiveWatch(true);
-                props.setWatchText("Выключить часы");
+                props.setWatchText('Выключить часы');
             } else {
                 props.setActiveWatch(false);
-                props.setWatchText("Включить часы");
+                props.setWatchText('Включить часы');
             }
         }
     }),

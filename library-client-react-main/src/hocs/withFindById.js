@@ -1,4 +1,4 @@
-import {compose, lifecycle, withStateHandlers} from "recompose";
+import {compose, lifecycle, withStateHandlers} from 'recompose';
 
 export default function withFindById(findById) {
     return compose(
