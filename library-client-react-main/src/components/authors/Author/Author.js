@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {isAdmin} from '../../../api/usersApi';
 
 export default function Author({author, onEdit, onDelete, ...props}) {
     const url = props.match.url;
@@ -9,6 +10,7 @@ export default function Author({author, onEdit, onDelete, ...props}) {
             entity: {...author},
         }
     };
+    let currentUserIsAdmin = isAdmin();
     return (
         <div className='col-sm-4'>
             <div className='shop-item'>
@@ -29,6 +31,7 @@ export default function Author({author, onEdit, onDelete, ...props}) {
                     <h3>Просмотры книг: {author.views}</h3>
                 </div>
                 <div className='actions'>
+                    {currentUserIsAdmin &&
                     <button
                         className='btn admin-button item-actions'
                         data-placement='top'
@@ -37,6 +40,8 @@ export default function Author({author, onEdit, onDelete, ...props}) {
                         onClick={() => onEdit(author)}>
                         <i className='glyphicon glyphicon-pencil icon-white'/>
                     </button>
+                    }
+                    {currentUserIsAdmin &&
                     <button
                         className='btn admin-button item-actions neighboring-buttons'
                         data-placement='top'
@@ -45,6 +50,7 @@ export default function Author({author, onEdit, onDelete, ...props}) {
                         onClick={() => onDelete(author)}>
                         <i className='glyphicon glyphicon-trash icon-white'/>
                     </button>
+                    }
                 </div>
             </div>
         </div>

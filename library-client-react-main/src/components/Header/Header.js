@@ -3,7 +3,7 @@ import Watch from '../Watch';
 import logo from '../../img/BeSmart-logo.svg' // relative path to image
 import {Link} from 'react-router-dom';
 
-export default function Header({watchText, isActiveWatch, onToggleWatch, appPaths}) {
+export default function Header({watchText, isActiveWatch, onToggleWatch, onExit, appPaths}) {
     return (
         <div className='mainmenu-wrapper'>
             <div className='container'>
@@ -13,7 +13,10 @@ export default function Header({watchText, isActiveWatch, onToggleWatch, appPath
                         <ul>
                             <li>
                                 <i className='glyphicon glyphicon-user icon-white'/>
-                                <Link to={appPaths.auth}>Авторизация</Link>
+                                <Link to={appPaths.login}> Войти</Link>
+                            </li>
+                            <li>
+                                <a onClick={onExit}> Выйти</a>
                             </li>
                         </ul>
                     </div>

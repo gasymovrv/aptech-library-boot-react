@@ -1,6 +1,7 @@
 import {compose, withHandlers, withState} from 'recompose';
 
 import Header from './Header';
+import {logoutUser} from '../../api/usersApi';
 
 const withWatch = compose(
     withState('isActiveWatch', 'setActiveWatch', false),
@@ -14,6 +15,12 @@ const withWatch = compose(
                 props.setActiveWatch(false);
                 props.setWatchText('Включить часы');
             }
+        },
+        onExit: (props) => (event) => {
+            event.preventDefault();
+            localStorage.setItem('user', null);
+            logoutUser();
+            props.history.push(props.appPaths.login)
         }
     })
 );

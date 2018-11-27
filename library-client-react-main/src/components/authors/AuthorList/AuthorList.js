@@ -1,11 +1,13 @@
 import React from 'react';
 import Author from '../Author';
 import InfoBox from '../../InfoBox';
+import {isAdmin} from '../../../api/usersApi';
 
 export  default function AuthorList({entityList, deletedEntity, successDelete, children, onAdd, onDelete, ...props}) {
     let authors = entityList.map(a =>
         <Author key={a.id} author={a} onDelete={onDelete} {...props}/>
     );
+    let currentUserIsAdmin = isAdmin();
     return (
         <div className='col-sm-9'>
             <InfoBox infoKey={deletedEntity.id}
@@ -13,6 +15,7 @@ export  default function AuthorList({entityList, deletedEntity, successDelete, c
                      successText={`Информация об авторе ${deletedEntity.fio} успешно удалена!`}
                      errorText={`Произошла ошибка при попытке удалить информацию об авторе ${deletedEntity.fio}!`}
             />
+            {currentUserIsAdmin &&
             <div className='row'>
                 <div className='col-sm-2'>
                     <button
@@ -22,6 +25,7 @@ export  default function AuthorList({entityList, deletedEntity, successDelete, c
                     </button>
                 </div>
             </div>
+            }
             <div className='row'>{authors}</div>
             <div className='row flex-center'>{children}</div>
         </div>

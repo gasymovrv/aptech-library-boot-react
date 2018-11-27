@@ -7,6 +7,7 @@ import Authors from './pages/Authors';
 import NotFound from './components/NotFound';
 import Top from './components/Top';
 import MainContainer from './components/MainContainer';
+import Auth from './pages/Auth';
 
 export default function App() {
     const appPaths = {
@@ -14,7 +15,8 @@ export default function App() {
         authors: '/authors',
         books: '/books',
         aboutUs: '/about-us',
-        auth: '/auth',
+        login:'/login',
+        registration:'/registration',
     };
 
     return (
@@ -25,6 +27,8 @@ export default function App() {
                     <Redirect exact from={appPaths.root} to={appPaths.books}/>
                     <Route path={appPaths.authors} component={(props) => <Authors {...props} appPaths={appPaths}/>}/>
                     <Route path={appPaths.books} component={(props) => <Books {...props} appPaths={appPaths}/>}/>
+                    <Route path={appPaths.login} component={(props) => <Auth {...props} appPaths={appPaths}/>}/>
+                    <Route path={appPaths.registration} component={(props) => <Auth {...props} appPaths={appPaths}/>}/>
                     <Route component={() =>
                         <Fragment>
                             <Top text='Неизвестная страница'/>

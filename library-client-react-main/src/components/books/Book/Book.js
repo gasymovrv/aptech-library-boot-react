@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import roundNumbers from '../../../helpers/roundNumbers';
+import {isAdmin} from '../../../api/usersApi';
 
 export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
     const url = props.match.url;
@@ -10,6 +11,8 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
         state: {entity: {...book}}
     };
     const isFree = book.price === 0.0;
+    let currentUserIsAdmin = isAdmin();
+
     return (
         <div className='col-sm-4'>
             <div className='shop-item'>
@@ -83,7 +86,7 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
                     </div>
                     <div className='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>
                         <div className='btn-group-lg bottom-indent' role='group' aria-label='Second group'>
-                            {/*<security:authorize access="hasRole('ROLE_ADMIN')">*/}
+                            {currentUserIsAdmin &&
                             <button
                                 className='btn admin-button item-actions neighboring-buttons'
                                 data-placement='top'
@@ -92,6 +95,8 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
                                 onClick={() => onEdit(book)}>
                                 <i className='glyphicon glyphicon-pencil icon-white'/>
                             </button>
+                            }
+                            {currentUserIsAdmin &&
                             <button
                                 // onClick="confirmDeleteBook(${book.id}, '${book.name}')"
                                 className='btn admin-button item-actions neighboring-buttons'
@@ -101,7 +106,7 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
                                 onClick={() => onDelete(book)}>
                                 <i className='glyphicon glyphicon-trash icon-white'/>
                             </button>
-                            {/*</security:authorize>*/}
+                            }
                         </div>
                     </div>
                 </div>

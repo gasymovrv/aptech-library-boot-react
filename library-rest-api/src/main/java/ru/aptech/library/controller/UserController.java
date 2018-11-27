@@ -5,10 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.aptech.library.dto.UserDto;
 import ru.aptech.library.entities.User;
 import ru.aptech.library.service.impl.UserService;
@@ -48,4 +45,13 @@ public class UserController {
         return userDto;
     }
 
+    @PostMapping("/login")
+    public User loginUser(@RequestBody User user) {
+        User userExists = userService.findUserByEmail(user.getEmail());
+        if(userExists != null && userService.comparePasswords(user.getPassword(), userExists.getPassword())){
+            userExists.setPassword(null);
+            return  userExists;
+        }
+        return null;
+    }
 }

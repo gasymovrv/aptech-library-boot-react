@@ -40,4 +40,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public boolean comparePasswords(String rawPass, String encodePass){
+        return bCryptPasswordEncoder.matches(rawPass, encodePass);
+    }
+
 }
