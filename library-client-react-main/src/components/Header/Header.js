@@ -1,21 +1,37 @@
 import React from 'react';
-import Watch from "../Watch";
+import Watch from '../Watch';
 import logo from '../../img/BeSmart-logo.svg' // relative path to image
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom';
 
-export default function Header({watchText, isActiveWatch, onToggleWatch, appPaths}) {
+export default function Header({watchText, isActiveWatch, onToggleWatch, appPaths, user}) {
+    let authInfo;
+    if(user){
+        authInfo = (
+            <ul>
+                <li>Добро пожаловать, {user.name} {user.lastName}!</li>
+                <li>
+                    <i className='glyphicon glyphicon-log-out icon-white'/>
+                    <a href={appPaths.logout}> Выйти</a>
+                </li>
+            </ul>
+        );
+    } else {
+        authInfo = (
+            <ul>
+                <li>
+                    <i className='glyphicon glyphicon-user icon-white'/>
+                    <a href={appPaths.registration}>Авторизация</a>
+                </li>
+            </ul>
+        );
+    }
     return (
         <div className="mainmenu-wrapper">
             <div className="container">
                 <Watch isActive={isActiveWatch} watchText={watchText} onToggleWatch={onToggleWatch}/>
                 <div className="menuextras">
                     <div className="extras">
-                        <ul>
-                            <li>
-                                <i className="glyphicon glyphicon-user icon-white"/>
-                                <Link to={appPaths.auth}>Авторизация</Link>
-                            </li>
-                        </ul>
+                            {authInfo}
                     </div>
                 </div>
                 <nav id="mainmenu" className="mainmenu">

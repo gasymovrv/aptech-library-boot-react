@@ -5,9 +5,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.aptech.library.entities.User;
 import ru.aptech.library.service.impl.UserService;
 
@@ -69,4 +69,18 @@ public class LoginController {
     }
 
 
+    @GetMapping("/getCurrentUser")
+    @ResponseBody
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userService.findUserByEmail(auth.getName());
+    }
+
+
+    @RequestMapping("/successLoginRedirect")
+    public RedirectView successLoginRedirect() {
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("http://localhost:3001");
+        return redirectView;
+    }
 }

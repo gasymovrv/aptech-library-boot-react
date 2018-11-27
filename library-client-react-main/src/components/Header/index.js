@@ -1,6 +1,7 @@
-import {compose, withHandlers, withState} from 'recompose';
+import {compose, lifecycle, withHandlers, withState} from 'recompose';
 
 import Header from "./Header";
+import {getCurrentUser} from '../../api/usersApi';
 
 const withWatch = compose(
     withState('isActiveWatch', 'setActiveWatch', false),
@@ -14,6 +15,11 @@ const withWatch = compose(
                 props.setActiveWatch(false);
                 props.setWatchText("Включить часы");
             }
+        }
+    }),
+    lifecycle({
+        componentDidMount() {
+            getCurrentUser((user)=>{return this.setState({user:{...user}})})
         }
     })
 );

@@ -14,7 +14,8 @@ export default function App() {
         authors: '/authors',
         books: '/books',
         aboutUs: '/about-us',
-        auth: '/auth',
+        registration: 'http://localhost:8080/registration',
+        logout: 'http://localhost:8080/logout',
     };
 
     return (
