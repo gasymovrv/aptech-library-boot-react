@@ -1,8 +1,8 @@
-import AuthorInfo from "./AuthorInfo";
-import {compose, withHandlers} from "recompose";
-import {deleteAuthorById, findAuthorById} from "../../../api/authorsApi";
-import withDeleting from "../../../hocs/withDeleting";
-import withFindById from "../../../hocs/withFindById";
+import AuthorInfo from './AuthorInfo';
+import {compose, withHandlers} from 'recompose';
+import {deleteAuthorById, findAuthorById} from '../../../api/authorsApi';
+import withDeleting from '../../../hocs/withDeleting';
+import withFindById from '../../../hocs/withFindById';
 
 export default compose(
     withHandlers({

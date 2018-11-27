@@ -1,8 +1,8 @@
-import BookInfo from "./BookInfo";
-import {compose, withHandlers, withState} from "recompose";
-import {deleteBookById, findBookById} from "../../../api/booksApi";
-import withFindById from "../../../hocs/withFindById";
-import withDeleting from "../../../hocs/withDeleting";
+import BookInfo from './BookInfo';
+import {compose, withHandlers, withState} from 'recompose';
+import {deleteBookById, findBookById} from '../../../api/booksApi';
+import withFindById from '../../../hocs/withFindById';
+import withDeleting from '../../../hocs/withDeleting';
 
 export default compose(
     withState('activeTab', 'setActiveTab', 1),

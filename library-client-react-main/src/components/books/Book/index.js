@@ -1,5 +1,5 @@
-import {compose, withHandlers} from "recompose";
-import Book from "./Book";
+import {compose, withHandlers} from 'recompose';
+import Book from './Book';
 
 
 export default compose(

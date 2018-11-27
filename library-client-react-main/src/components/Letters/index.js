@@ -1,4 +1,4 @@
-import Letters from "./Letters";
+import Letters from './Letters';
 
 
 export default Letters;
