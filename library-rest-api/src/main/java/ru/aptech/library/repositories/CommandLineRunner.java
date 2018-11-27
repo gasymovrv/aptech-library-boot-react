@@ -1,9 +1,8 @@
 package ru.aptech.library.repositories;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.aptech.library.entities.Author;
-import ru.aptech.library.entities.Book;
-import ru.aptech.library.entities.Genre;
+import ru.aptech.library.entities.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,11 +20,22 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public CommandLineRunner(BookRepository br, AuthorRepository ar, GenreRepository gr) {
+    public CommandLineRunner(BookRepository br,
+                             AuthorRepository ar,
+                             GenreRepository gr,
+                             RoleRepository rr,
+                             UserRepository ur,
+                             BCryptPasswordEncoder crypt) {
         this.bookRepository = br;
         this.authorRepository = ar;
         this.genreRepository = gr;
+        this.roleRepository = rr;
+        this.userRepository = ur;
+        this.bCryptPasswordEncoder = crypt;
     }
 
     @Override
@@ -72,6 +82,12 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
                     )
             );
         }
+        Role admin = new Role(1, "ADMIN");
+        roleRepository.save(admin);
+        HashSet<Role> roles = new HashSet<>();
+        roles.add(admin);
+        String pass = bCryptPasswordEncoder.encode("12345");
+        userRepository.save(new User(1, "a@a.ru", pass, "a", "a", 1, roles));
     }
 
     private int getRandomIntegerInRange(int min, int max) {
