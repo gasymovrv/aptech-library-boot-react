@@ -1,6 +1,6 @@
 import React from 'react';
 import getDisplayName from '../helpers/getDisplayName';
-import {consoleLog, consoleLogObject, consoleLogWithContext} from '../helpers/consoleLog';
+import {consoleLogWithContext} from '../helpers/consoleLog';
 
 export default function withDeleting(deleteEntityById) {
     return function (Component) {
@@ -10,14 +10,13 @@ export default function withDeleting(deleteEntityById) {
                 let successDelete = undefined;
                 let deletedEntity = {};
                 let showInfo = false;
-                if(props.location && props.location.state){
+                //props.history.action === 'REPLACE' - это исключает вход в условие при обновлении страницы (там action='POP')
+                if(props.location && props.history && props.location.state && props.history.action === 'REPLACE'){
                     successDelete = props.location.state.successDelete;
                     deletedEntity = {...props.location.state.deletedEntity};
                     showInfo = props.location.state.showInfo;
                 }
-                consoleLogWithContext('successDelete', successDelete, withDeleting);
-                consoleLogObject('deletedEntity', deletedEntity, this);
-                consoleLogWithContext('showInfo', showInfo, this);
+                props.history && consoleLogWithContext('props.history.action', props.history.action, withDeleting);
                 this.state = {
                     successDelete: successDelete,
                     deletedEntity: deletedEntity,

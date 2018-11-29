@@ -1,7 +1,6 @@
 import React from 'react';
 import {CSSTransitionGroup} from 'react-transition-group';
 import '../../css/fader.css';
-import {consoleLog} from '../../helpers/consoleLog';
 
 function Fader({children}) {
     return (
@@ -20,8 +19,7 @@ function Fader({children}) {
 
 export default class InfoBox extends React.Component {
     state = {
-        isTimeout: false,
-        stopped: true
+        isTimeout: false
     };
 
     componentDidMount() {
@@ -42,36 +40,28 @@ export default class InfoBox extends React.Component {
         clearTimeout(this.infoBoxTimeout);
     }
 
-    startInfoBoxTimeout = ()=>{
+    startInfoBoxTimeout = () => {
         const {timeout, callbackStopShow} = this.props;
-        this.setState({stopped: false});
-        if (callbackStopShow && typeof callbackStopShow === 'function') {
-            this.infoBoxTimeout = setTimeout(() => {
-                this.setState({isTimeout: true});
+        this.infoBoxTimeout = setTimeout(() => {
+            this.setState({isTimeout: true});
+            if (callbackStopShow && typeof callbackStopShow === 'function') {
+                //если есть функция callbackStopShow - вызываем ее
+                //она меняет пропс show на false в родительском компоненте/хоке
                 callbackStopShow();
-            }, timeout * 1000);
-            consoleLog('callbackStopShow exist')
-        } else {
-            this.infoBoxTimeout = setTimeout(() => {
-                this.setState({
-                    isTimeout: true,
-                    stopped: true
-                });
-            }, timeout * 1000);
-            consoleLog('stopped exist')
-        }
+            }
+        }, timeout * 1000);
     };
 
     render() {
         const {infoKey, successText, errorText, successAction, show} = this.props;
-        const {isTimeout, stopped} = this.state;
+        const {isTimeout} = this.state;
         let info = null;
-        if (show && successAction && !isTimeout && !stopped) {
+        if (show && successAction && !isTimeout) {
             info =
                 (<div key={infoKey} className='alert alert-success' role='alert'>
                     {successText}
                 </div>)
-        } else if (show && !successAction && !isTimeout && !stopped) {
+        } else if (show && !successAction && !isTimeout) {
             info =
                 (<div key={infoKey} className='alert alert-danger' role='alert'>
                     {errorText}

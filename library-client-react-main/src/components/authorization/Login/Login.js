@@ -43,7 +43,7 @@ export default class Login extends React.Component{
                         password:'',
                     });
                     setLocalCurrentUser(respUser);
-                    history.push({
+                    history.replace({
                         pathname: appPaths.auth.account,
                         state: {
                             successSubmit: true,
