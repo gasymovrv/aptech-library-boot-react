@@ -1,5 +1,3 @@
-import {authHeader} from '../helpers/authHeader';
-
 export function findAllAuthors(fn) {
     return fetch('/authors/findAll')
         .then(r => r.json())
@@ -27,12 +25,6 @@ export function saveOrUpdateAuthor(author, okFn, errFn) {
         },
         body: JSON.stringify(author)//отправляемое отсюда (Request)
     };
-    //todo тут прям дикая хуета происходит
-    //если один раз прошел этот запрос, то все остальные защищенные урлы начинают почему-то работать без запроса авторизации
-    let auth = authHeader();
-    if(auth){
-        options.headers['Authorization'] = auth;
-    }
     return fetch('/authors/save', options)
         .then((response) => {
             if (response.status === 200) {

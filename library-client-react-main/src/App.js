@@ -8,38 +8,56 @@ import NotFound from './components/NotFound';
 import Top from './components/Top';
 import MainContainer from './components/MainContainer';
 import Auth from './pages/Auth';
+import {checkAuthorization} from './api/usersApi';
 
-export default function App() {
-    const appPaths = {
-        root: '/',
-        authors: '/authors',
-        books: '/books',
-        aboutUs: '/about-us',
-        login:'/login',
-        registration:'/registration',
-    };
-
-    return (
-        <BrowserRouter>
-            <Fragment>
-                <Route path={appPaths.root} component={(props) => <Header {...props} appPaths={appPaths}/>}/>
-                <Switch>
-                    <Redirect exact from={appPaths.root} to={appPaths.books}/>
-                    <Route path={appPaths.authors} component={(props) => <Authors {...props} appPaths={appPaths}/>}/>
-                    <Route path={appPaths.books} component={(props) => <Books {...props} appPaths={appPaths}/>}/>
-                    <Route path={appPaths.login} component={(props) => <Auth {...props} appPaths={appPaths}/>}/>
-                    <Route path={appPaths.registration} component={(props) => <Auth {...props} appPaths={appPaths}/>}/>
-                    <Route component={() =>
-                        <Fragment>
-                            <Top text='Неизвестная страница'/>
-                            <MainContainer>
-                                <NotFound/>
-                            </MainContainer>
-                        </Fragment>
-                    }/>
-                </Switch>
-                <Route path={appPaths.root} component={(props) => <Footer {...props} appPaths={appPaths}/>}/>
-            </Fragment>
-        </BrowserRouter>
-    )
+export default class App extends React.Component {
+    componentDidMount() {
+        checkAuthorization();
+    }
+    render() {
+        const appPaths = {
+            root: '/',
+            authors: '/authors',
+            books: '/books',
+            aboutUs: '/about-us',
+            auth: {
+                root: '/auth',
+                get login() {
+                    return `${this.root}/login`;
+                },
+                get registration() {
+                    return `${this.root}/registration`;
+                },
+                get account() {
+                    return `${this.root}/account`;
+                },
+                toString() {
+                    return this.root;
+                }
+            }
+        };
+        return (
+            <BrowserRouter>
+                <Fragment>
+                    <Route path={appPaths.root} component={(props) => <Header {...props} appPaths={appPaths}/>}/>
+                    <Switch>
+                        <Redirect exact from={appPaths.root} to={appPaths.books}/>
+                        <Route path={appPaths.authors}
+                               component={(props) => <Authors {...props} appPaths={appPaths}/>}/>
+                        <Route path={appPaths.books} component={(props) => <Books {...props} appPaths={appPaths}/>}/>
+                        <Route path={appPaths.auth.root} component={(props) => <Auth {...props} appPaths={appPaths}/>}/>
+                        <Route component={() =>
+                            <Fragment>
+                                <Top text='Неизвестная страница'/>
+                                <MainContainer>
+                                    <NotFound/>
+                                </MainContainer>
+                            </Fragment>
+                        }/>
+                    </Switch>
+                    <Route path={appPaths.root} component={(props) => <Footer {...props} appPaths={appPaths}/>}/>
+                </Fragment>
+            </BrowserRouter>
+        )
+    }
 }

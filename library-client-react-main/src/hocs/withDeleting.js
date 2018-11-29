@@ -1,5 +1,6 @@
 import React from 'react';
 import getDisplayName from '../helpers/getDisplayName';
+import {consoleLog, consoleLogObject, consoleLogWithContext} from '../helpers/consoleLog';
 
 export default function withDeleting(deleteEntityById) {
     return function (Component) {
@@ -8,13 +9,19 @@ export default function withDeleting(deleteEntityById) {
                 super(props);
                 let successDelete = undefined;
                 let deletedEntity = {};
+                let showInfo = false;
                 if(props.location && props.location.state){
                     successDelete = props.location.state.successDelete;
                     deletedEntity = {...props.location.state.deletedEntity};
+                    showInfo = props.location.state.showInfo;
                 }
+                consoleLogWithContext('successDelete', successDelete, withDeleting);
+                consoleLogObject('deletedEntity', deletedEntity, this);
+                consoleLogWithContext('showInfo', showInfo, this);
                 this.state = {
                     successDelete: successDelete,
-                    deletedEntity: deletedEntity
+                    deletedEntity: deletedEntity,
+                    showInfo: showInfo
                 };
             }
 
@@ -48,9 +55,9 @@ export default function withDeleting(deleteEntityById) {
                 refreshPageAfterDelete();
                 this.setState({
                     successDelete: success,
-                    deletedEntity: entity
+                    deletedEntity: entity,
+                    showInfo: true
                 });
-                this.startInfoBoxTimeout(10);
             };
 
             handleDeleteFromInfo = (entity, success)=>{
@@ -64,48 +71,37 @@ export default function withDeleting(deleteEntityById) {
                     } else {
                         path = '/';
                     }
-                    history.push({
+                    history.replace({
                         pathname: path,
                         state: {
                             successDelete: success,
-                            deletedEntity: entity
+                            deletedEntity: entity,
+                            showInfo: true
                         }
                     });
                 } else {
                     this.setState({
                         successDelete: success,
-                        deletedEntity: entity
+                        deletedEntity: entity,
+                        showInfo: true
                     });
-                    this.startInfoBoxTimeout(10);
                 }
             };
 
-            startInfoBoxTimeout = (timeout) => {
-                clearTimeout(this.infoBoxTimeout);
-                this.infoBoxTimeout = setTimeout(() => {
-                    this.setState({successDelete: undefined});
-                }, timeout * 1000);
+            callbackStopShow = () => {
+                this.setState({showInfo: false})
             };
-
-            componentWillUnmount() {
-                clearTimeout(this.infoBoxTimeout);
-            }
-
-            componentDidMount() {
-                const {successDelete} = this.state;
-                if(successDelete!==undefined && successDelete){
-                    this.startInfoBoxTimeout(10);
-                }
-            }
 
             render() {
-                const {deletedEntity, successDelete} = this.state;
+                const {deletedEntity, successDelete, showInfo} = this.state;
                 return (
                     <Component
                         {...this.props}
                         onDelete={this.onDelete}
                         deletedEntity={deletedEntity}
                         successDelete={successDelete}
+                        showInfo={showInfo}
+                        callbackStopShow={this.callbackStopShow}
                     />
                 )
             }

@@ -8,8 +8,10 @@ import GenreList from '../../components/GenreList';
 import NotFound from '../../components/NotFound';
 import BookInfo from '../../components/books/BookInfo';
 import MainContainer from '../../components/MainContainer';
+import {checkAuthorization} from '../../api/usersApi';
 
 export default function Books({match, appPaths}) {
+    checkAuthorization();
     const url = match.url;
     return (
         <Fragment>

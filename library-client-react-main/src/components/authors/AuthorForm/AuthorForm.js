@@ -2,7 +2,7 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import InfoBox from '../../InfoBox';
 
-export default function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit}) {
+export default function AuthorForm({data, savedData, oldData, onSubmit, onReset, onChange, onChangeDate, isEdit, successSubmit, showInfo, callbackStopShow}) {
     // const url = props.match.url;
     const {fio, birthday} = data;
     const successViewFio = isEdit ? oldData.fio : savedData.fio;
@@ -11,10 +11,13 @@ export default function AuthorForm({data, savedData, oldData, onSubmit, onReset,
     const errorText = isEdit ? 'изменить информацию об' : 'добавления информации о новом';
     return (
         <div className='col-sm-9'>
-            <InfoBox infoKey={data}
+            <InfoBox infoKey='author-form-info'
                      successAction={successSubmit}
                      successText={`Информация об авторе ${successViewFio} успешно ${successText}!`}
                      errorText={`Произошла ошибка при попытке ${errorText} авторе ${errorViewFio}!`}
+                     show={showInfo}
+                     callbackStopShow={callbackStopShow}
+                     timeout={7}
             />
             <form onSubmit={onSubmit} onReset={onReset}>
                 <div className='form-group row'>

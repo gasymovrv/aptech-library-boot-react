@@ -5,7 +5,7 @@ import InfoBox from '../../InfoBox/InfoBox';
 import Tab1 from './Tab1';
 import Tab2 from './Tab2';
 
-export default function BookInfo({entity: book, onEdit, onDelete, successDelete, onToggleTab, activeTab}) {
+export default function BookInfo({entity: book, onEdit, onDelete, successDelete, onToggleTab, activeTab, showInfo, callbackStopShow}) {
     const imgPath = `data:image/jpeg;base64,${book.image}`;
     const isFree = book.price === 0.0;
     let tab;
@@ -20,6 +20,9 @@ export default function BookInfo({entity: book, onEdit, onDelete, successDelete,
                 <InfoBox infoKey={book.id}
                          successAction={successDelete}
                          errorText='Произошла ошибка при попытке удалить данную книгу!'
+                         show={showInfo}
+                         callbackStopShow={callbackStopShow}
+                         timeout={7}
                 />
                 <div className='col-sm-4'>
                     <div className='product-image-large'>

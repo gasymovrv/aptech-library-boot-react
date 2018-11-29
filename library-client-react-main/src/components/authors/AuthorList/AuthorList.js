@@ -3,7 +3,7 @@ import Author from '../Author';
 import InfoBox from '../../InfoBox';
 import {isAdmin} from '../../../api/usersApi';
 
-export  default function AuthorList({entityList, deletedEntity, successDelete, children, onAdd, onDelete, ...props}) {
+export  default function AuthorList({entityList, deletedEntity, successDelete, children, onAdd, onDelete, showInfo, callbackStopShow, ...props}) {
     let authors = entityList.map(a =>
         <Author key={a.id} author={a} onDelete={onDelete} {...props}/>
     );
@@ -14,6 +14,9 @@ export  default function AuthorList({entityList, deletedEntity, successDelete, c
                      successAction={successDelete}
                      successText={`Информация об авторе ${deletedEntity.fio} успешно удалена!`}
                      errorText={`Произошла ошибка при попытке удалить информацию об авторе ${deletedEntity.fio}!`}
+                     show={showInfo}
+                     callbackStopShow={callbackStopShow}
+                     timeout={7}
             />
             {currentUserIsAdmin &&
             <div className='row'>

@@ -11,7 +11,8 @@ export default function withForm(Component) {
                 data:{...props.entity},
                 savedData:{...props.entity},
                 oldData:{...props.entity},
-                successSubmit: undefined
+                successSubmit: undefined,
+                showInfo: false
             };
         }
 
@@ -37,17 +38,15 @@ export default function withForm(Component) {
                         this.setState((state, props) => ({
                             savedData: {...state.data},
                             oldData: {...state.savedData},
-                            successSubmit: true
+                            successSubmit: true,
+                            showInfo: true
                         }));
-                        clearTimeout(this.infoBoxTimeout);
-                        this.startInfoBoxTimeout(10);
                     },
                     () => {
                         this.setState({
-                            successSubmit: false
+                            successSubmit: false,
+                            showInfo: true
                         });
-                        clearTimeout(this.infoBoxTimeout);
-                        this.startInfoBoxTimeout(10);
                     }
                 );
             }
@@ -56,12 +55,6 @@ export default function withForm(Component) {
         onReset = e => {
             e.preventDefault();
             this.setState((state, props) => ({data: {...state.savedData}}));
-        };
-
-        startInfoBoxTimeout = (timeout)=>{
-            this.infoBoxTimeout = setTimeout(() => {
-                this.setState({successSubmit: undefined});
-            }, timeout*1000);
         };
 
         componentWillReceiveProps(nextProp) {
@@ -74,12 +67,12 @@ export default function withForm(Component) {
             }
         }
 
-        componentWillUnmount(){
-            clearTimeout(this.infoBoxTimeout);
-        }
+        callbackStopShow = () => {
+            this.setState({showInfo: false})
+        };
 
         render() {
-            const {data, savedData, oldData, successSubmit} = this.state;
+            const {data, savedData, oldData, successSubmit, showInfo} = this.state;
             return (
                 <Component
                     {...this.props}
@@ -91,6 +84,8 @@ export default function withForm(Component) {
                     data={data}
                     savedData={savedData}
                     oldData={oldData}
+                    showInfo={showInfo}
+                    callbackStopShow={this.callbackStopShow}
                 />
             );
         }

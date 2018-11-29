@@ -2,7 +2,7 @@ import React from 'react';
 import Book from '../Book';
 import InfoBox from '../../InfoBox';
 
-export default function BookList({entityList, deletedEntity, successDelete, children, onAdd, onDelete, ...props}) {
+export default function BookList({entityList, deletedEntity, successDelete, children, onAdd, onDelete, showInfo, callbackStopShow, ...props}) {
     let books = entityList.map(b =>
         <Book key={b.id} book={b} onDelete={onDelete} {...props}/>
     );
@@ -12,6 +12,9 @@ export default function BookList({entityList, deletedEntity, successDelete, chil
                      successAction={successDelete}
                      successText={`Книга ${deletedEntity.name} успешно удалена!`}
                      errorText={`Произошла ошибка при попытке удалить книгу ${deletedEntity.name}!`}
+                     show={showInfo}
+                     callbackStopShow={callbackStopShow}
+                     timeout={7}
             />
             <div className='row'>{books}</div>
             <div className='row flex-center'>{children}</div>

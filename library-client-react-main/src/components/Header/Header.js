@@ -13,7 +13,7 @@ export default function Header({watchText, isActiveWatch, onToggleWatch, onExit,
                         <ul>
                             <li>
                                 <i className='glyphicon glyphicon-user icon-white'/>
-                                <Link to={appPaths.login}> Войти</Link>
+                                <Link to={appPaths.auth.login}> Войти</Link>
                             </li>
                             <li>
                                 <a onClick={onExit}> Выйти</a>

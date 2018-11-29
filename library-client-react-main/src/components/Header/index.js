@@ -1,11 +1,12 @@
 import {compose, withHandlers, withState} from 'recompose';
 
 import Header from './Header';
-import {logoutUser} from '../../api/usersApi';
+import withLogout from '../../hocs/withLogout';
 
 const withWatch = compose(
     withState('isActiveWatch', 'setActiveWatch', false),
     withState('watchText', 'setWatchText', 'Включить часы'),
+    withLogout(),
     withHandlers({
         onToggleWatch: props => () => {
             if (!props.isActiveWatch) {
@@ -15,12 +16,6 @@ const withWatch = compose(
                 props.setActiveWatch(false);
                 props.setWatchText('Включить часы');
             }
-        },
-        onExit: (props) => (event) => {
-            event.preventDefault();
-            localStorage.setItem('user', null);
-            logoutUser();
-            props.history.push(props.appPaths.login)
         }
     })
 );

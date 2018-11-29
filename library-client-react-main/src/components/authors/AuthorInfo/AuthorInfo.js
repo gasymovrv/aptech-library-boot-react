@@ -2,13 +2,16 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import InfoBox from '../../InfoBox';
 
-export default function AuthorInfo({entity: author, onEdit, onDelete, successDelete}) {
+export default function AuthorInfo({entity: author, onEdit, onDelete, successDelete, showInfo, callbackStopShow}) {
     return (
         <div className='container'>
             <div className='row'>
                 <InfoBox infoKey={author.id}
                          successAction={successDelete}
                          errorText='Произошла ошибка при попытке удалить информацию о данном авторе!'
+                         show={showInfo}
+                         callbackStopShow={callbackStopShow}
+                         timeout={7}
                 />
                 <div className='col-sm-7 product-details'>
                     <h4>{author.fio}</h4>

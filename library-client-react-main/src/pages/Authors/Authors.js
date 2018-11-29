@@ -7,8 +7,10 @@ import AuthorForm from '../../components/authors/AuthorForm';
 import NotFound from '../../components/NotFound';
 import AuthorInfo from '../../components/authors/AuthorInfo';
 import MainContainer from '../../components/MainContainer';
+import {checkAuthorization} from '../../api/usersApi';
 
 export default function Authors({match, appPaths}) {
+    checkAuthorization();
     const url = match.url;
     return (
         <Fragment>
