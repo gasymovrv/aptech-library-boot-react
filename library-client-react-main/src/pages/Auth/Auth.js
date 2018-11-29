@@ -6,19 +6,26 @@ import NotFound from '../../components/NotFound';
 import MainContainer from '../../components/MainContainer';
 import Login from '../../components/authorization/Login';
 import Account from '../../components/authorization/Account';
-import {getLocalCurrentUser} from '../../api/usersApi';
+import {checkAuthorization, getLocalCurrentUser} from '../../api/usersApi';
+import Registration from '../../components/authorization/Registration';
+import {consoleLogObjectJSON} from '../../helpers/consoleLog';
 
 export default function Auth({appPaths}) {
     // const url = match.url;
-    const isExistUser = !!getLocalCurrentUser();
+    checkAuthorization();
+    const isExistUser = getLocalCurrentUser();
+    consoleLogObjectJSON('isExistUser', isExistUser, Auth);
     return (
         <Fragment>
             <Switch>
-                {isExistUser &&
-                    <Redirect from={appPaths.auth.login} to={appPaths.auth.account}/>
+                {!isExistUser &&
+                    <Redirect exact from={appPaths.auth.account} to={appPaths.auth.login}/>
                 }
                 {isExistUser &&
-                    <Redirect from={appPaths.auth.registration} to={appPaths.auth.account}/>
+                    <Redirect exact from={appPaths.auth.login} to={appPaths.auth.account}/>
+                }
+                {isExistUser &&
+                    <Redirect exact from={appPaths.auth.registration} to={appPaths.auth.account}/>
                 }
                 <Route exact path={appPaths.auth.login} component={(props) => (<Top {...props} text='Авторизация'/>)}/>
                 <Route exact path={appPaths.auth.registration} component={(props) => (<Top {...props} text='Регистрация'/>)}/>
@@ -28,6 +35,7 @@ export default function Auth({appPaths}) {
             <MainContainer>
                 <Switch>
                     <Route exact path={appPaths.auth.login} component={(props) => (<Login {...props} appPaths={appPaths}/>)}/>
+                    <Route exact path={appPaths.auth.registration} component={(props) => (<Registration {...props} appPaths={appPaths}/>)}/>
                     <Route exact path={appPaths.auth.account} component={(props) => (<Account {...props} appPaths={appPaths}/>)}/>
                     <Route component={NotFound}/>
                 </Switch>

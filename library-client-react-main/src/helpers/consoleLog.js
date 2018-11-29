@@ -11,11 +11,32 @@ export function consoleLogWithContext(name, text, context) {
     )
 }
 
-export function consoleLogObject(name, obj, context) {
+export function consoleLogObjectJSON(name, obj, context) {
     contextConditions(
         () => {consoleLog(`${context.name}: ${name} ${JSON.stringify(obj,null,4)}`);},
         () => {consoleLog(`${context.constructor.name}: ${name} ${JSON.stringify(obj,null,4)}`);},
         () => {consoleLog(`non-context: ${name} ${JSON.stringify(obj,null,4)}`);},
+        context
+    )
+}
+
+export function consoleLogObjectStandart(name, obj, context) {
+    contextConditions(
+        () => {
+            consoleLog(`${context.name}: ${name} {`);
+            consoleLog(obj);
+            consoleLog('}');
+        },
+        () => {
+            consoleLog(`${context.constructor.name}: ${name} {`);
+            consoleLog(obj);
+            consoleLog('}');
+        },
+        () => {
+            consoleLog(`non-context: ${name} {`);
+            consoleLog(obj);
+            consoleLog('}');
+        },
         context
     )
 }

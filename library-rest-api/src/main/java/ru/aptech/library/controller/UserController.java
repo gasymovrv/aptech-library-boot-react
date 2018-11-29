@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.aptech.library.dto.UserDto;
+import ru.aptech.library.entities.Role;
 import ru.aptech.library.entities.User;
 import ru.aptech.library.service.impl.UserService;
 
@@ -20,21 +21,36 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/registration")
-    public UserDto createNewUser(@Valid User user, BindingResult bindingResult) {
+    public UserDto createNewUser(@RequestBody @Valid User user, BindingResult bindingResult) {
         UserDto userDto = new UserDto();
         User userExists = userService.findUserByEmail(user.getEmail());
+        boolean errors = false;
         if (userExists != null) {
             userDto.getErrors().add("There is already a user registered with the email provided");
+            errors = true;
         }
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors();
             for (ObjectError error : bindingResult.getAllErrors()) {
-                userDto.getErrors().add(String.format("Not valid User: %s", error.getObjectName()));
+                userDto.getErrors().add(String.format("Not valid User: %s", error.getDefaultMessage()));
+            }
+            errors = true;
+        }
+        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+            for (Role role : user.getRoles()) {
+                if (role.getRole().equals("ADMIN")) {
+                    userDto.getErrors().add("This method does not create user with role ADMIN");
+                    errors = true;
+                }
             }
         } else {
-            userService.saveUser(user);
-            userDto.setUser(user);
+            userDto.getErrors().add("Roles are empty");
+            errors = true;
         }
+        if(!errors){
+            userService.saveUser(user);
+        }
+        userDto.setUser(user);
         return userDto;
     }
 

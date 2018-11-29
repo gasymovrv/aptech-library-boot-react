@@ -31,8 +31,11 @@ export default class InfoBox extends React.Component {
 
     componentWillReceiveProps(nextProp) {
         if (nextProp.show) {
-            this.setState({isTimeout: false});
-            this.startInfoBoxTimeout();
+            this.setState(()=>{
+                clearTimeout(this.infoBoxTimeout);
+                this.startInfoBoxTimeout();
+                return {isTimeout: false};
+            });
         }
     }
 

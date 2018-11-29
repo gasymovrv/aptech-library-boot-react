@@ -11,6 +11,8 @@ import ru.aptech.library.repositories.UserRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 @Service("userService")
 public class UserService {
@@ -35,8 +37,12 @@ public class UserService {
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        Role userRole = roleRepository.findByRole("ADMIN");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        Set<Role> roles = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            Role userRole = roleRepository.findByRole(role.getRole());
+            roles.add(userRole);
+        }
+        user.setRoles(roles);
         return userRepository.save(user);
     }
 

@@ -1,15 +1,37 @@
 import React from 'react';
 import InfoBox from '../../InfoBox/InfoBox';
-import {consoleLogWithContext} from '../../../helpers/consoleLog';
+import {consoleLogObjectJSON, consoleLogObjectStandart, consoleLogWithContext} from '../../../helpers/consoleLog';
+import {checkAuthorization, getLocalCurrentUser} from '../../../api/usersApi';
 
-export default function Account({location, history}) {
+// function checkBeforeRender(history, appPaths) {
+//     consoleLogObjectStandart('history in Account.js', history);
+//     consoleLogObjectStandart('appPaths in Account.js', appPaths);
+//     //Эта проверка обнулит локального юзера,
+//     // если он не авторизован на сервере
+//     // или оставит пустым если был пуст
+//     checkAuthorization();
+//     let user = getLocalCurrentUser();
+//     consoleLogObjectStandart('user in Account.js', user);
+//     if(!user){
+//         consoleLogObjectStandart('user before history.push', user);
+//         history.push(appPaths.auth.login);
+//     }
+// }
+
+export default function Account({location, history, appPaths}) {
+    // checkBeforeRender(history, appPaths);
     let successSubmit, showInfo;
-    //props.history.action === 'REPLACE' - это исключает вход в условие при обновлении страницы (там action='POP')
-    if(location && history && location.state && history.action === 'REPLACE'){
+    //props.history.action === 'PUSH' - это исключает вход в условие при обновлении страницы (там action='POP')
+    if(location && history && location.state && history.action === 'PUSH'){
         successSubmit = location.state.successSubmit;
         showInfo = location.state.showInfo;
     }
     history && consoleLogWithContext('props.history.action', history.action, Account);
+    const user = getLocalCurrentUser();
+    if(!user){
+        history.push(appPaths.auth.login);
+    }
+    history && consoleLogObjectJSON('user', user, Account);
     return (
         <div className='col-sm-9'>
             <InfoBox infoKey='login-info'
@@ -19,7 +41,45 @@ export default function Account({location, history}) {
                      timeout={7}
                      show={showInfo}
             />
-            Вы авторизованы
+            <h4>Личная информация</h4>
+            <table>
+                <colgroup>
+                    <col style={{width: '50%'}}/>
+                    <col style={{width: '30%'}}/>
+                    <col style={{width: '20%'}}/>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td>Ваш email</td>
+                    <td>{user.email}</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>Имя</td>
+                    <td>{user.name}</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>Фамилия</td>
+                    <td>{user.lastName}</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>Средств на счету</td>
+                    <td>0 р.</td>
+                    <td>
+                        <a className='btn item-actions' role='button'>
+                            Пополнить
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Количество заказов</td>
+                    <td>0</td>
+                    <td/>
+                </tr>
+                </tbody>
+            </table>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import {logoutUser, setLocalCurrentUser} from '../api/usersApi';
 
 export default function withLogout() {
     return withHandlers({
-        onExit: (props) => (event) => {
+        onLogout: (props) => (event) => {
             event.preventDefault();
             setLocalCurrentUser(null);
             logoutUser();

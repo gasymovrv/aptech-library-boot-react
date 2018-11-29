@@ -1,12 +1,10 @@
 import {compose, withHandlers, withState} from 'recompose';
 
 import Header from './Header';
-import withLogout from '../../hocs/withLogout';
 
 const withWatch = compose(
     withState('isActiveWatch', 'setActiveWatch', false),
     withState('watchText', 'setWatchText', 'Включить часы'),
-    withLogout(),
     withHandlers({
         onToggleWatch: props => () => {
             if (!props.isActiveWatch) {

@@ -1,8 +1,8 @@
-import {consoleLogWithContext} from '../helpers/consoleLog';
+import {consoleLogObjectStandart, consoleLogWithContext} from '../helpers/consoleLog';
 
 export function createNewUser(user) {
     let options = {
-        method: 'GET',//тип запроса
+        method: 'POST',//тип запроса
         headers: {
             'Content-Type': 'application/json', //отправляемый тип
             'Accept': 'application/json', //принимаемый тип (из контроллера)
@@ -29,7 +29,9 @@ export function logoutUser() {
 }
 
 export function getLocalCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'))
+    consoleLogObjectStandart('user',user,getLocalCurrentUser)
+    return user;
 }
 
 export function setLocalCurrentUser(user) {
@@ -42,13 +44,13 @@ export function setLocalCurrentUser(user) {
 
 /**
  * Проверяем авторизацию для случая,
- * если на клиент объект user имеется
+ * если на клиенте объект user имеется,
  * а на сервере он не авторизован
  */
 export function checkAuthorization() {
     userIsAuthorize(respResult => {
+        consoleLogWithContext('respResult', respResult, checkAuthorization);
         if (!respResult) {
-            consoleLogWithContext('respResult', respResult, this);
             setLocalCurrentUser(null);
             logoutUser();
         }
@@ -64,25 +66,12 @@ function userIsAuthorize(fn) {
     }
 }
 
-
-//
-// export async function userIsAuthorize() {
-//     const user = getLocalCurrentUser();
-//     let result = false;
-//     if (user) {
-//         await fetch(`/users/userIsAuthorize?email=${user.email}`)
-//             .then(r => r.json())
-//             .then(respResult => result = respResult);
-//     }
-//     return result;
-// }
-
 export function isAdmin() {
     return findRole('ADMIN');
 }
 
 export function isAuthorizeUser() {
-    return findRole('ROLE_USER');
+    return findRole('ROLE_USER') && !findRole('ADMIN');
 }
 
 function findRole(role) {

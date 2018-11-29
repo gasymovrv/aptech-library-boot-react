@@ -82,20 +82,21 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
                     )
             );
         }
-        Role admin = new Role(1, "ADMIN");
-        Role userRole = new Role(2, "ROLE_USER");
+        Role userRole = new Role(1, "ROLE_USER");
+        Role admin = new Role(2, "ADMIN");
         roleRepository.save(admin);
         roleRepository.save(userRole);
 
         HashSet<Role> adminRoles = new HashSet<>();
         adminRoles.add(admin);
+        adminRoles.add(userRole);
         String adminPass = bCryptPasswordEncoder.encode("12345");
-        userRepository.save(new User(1, "a@a.ru", adminPass, "a", "a", 1, adminRoles));
+        userRepository.save(new User(2, "a@a.ru", adminPass, "a", "a", 1, adminRoles));
 
         HashSet<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
         String userPass = bCryptPasswordEncoder.encode("12345");
-        userRepository.save(new User(2, "u@u.ru", userPass, "u", "u", 1, userRoles));
+        userRepository.save(new User(1, "u@u.ru", userPass, "u", "u", 1, userRoles));
     }
 
     private int getRandomIntegerInRange(int min, int max) {

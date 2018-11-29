@@ -10,8 +10,8 @@ export default function withDeleting(deleteEntityById) {
                 let successDelete = undefined;
                 let deletedEntity = {};
                 let showInfo = false;
-                //props.history.action === 'REPLACE' - это исключает вход в условие при обновлении страницы (там action='POP')
-                if(props.location && props.history && props.location.state && props.history.action === 'REPLACE'){
+                //props.history.action === 'PUSH' - это исключает вход в условие при обновлении страницы (там action='POP')
+                if(props.location && props.history && props.location.state && props.history.action === 'PUSH'){
                     successDelete = props.location.state.successDelete;
                     deletedEntity = {...props.location.state.deletedEntity};
                     showInfo = props.location.state.showInfo;
@@ -70,7 +70,7 @@ export default function withDeleting(deleteEntityById) {
                     } else {
                         path = '/';
                     }
-                    history.replace({
+                    history.push({
                         pathname: path,
                         state: {
                             successDelete: success,

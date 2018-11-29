@@ -12,6 +12,7 @@ import {checkAuthorization} from './api/usersApi';
 
 export default class App extends React.Component {
     componentDidMount() {
+        //todo попытка синхронизировать авторизацию на клиенте и на сервере
         checkAuthorization();
     }
     render() {
