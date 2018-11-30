@@ -1,4 +1,5 @@
 import React from 'react';
+import {consoleLog} from '../../helpers/consoleLog';
 
 /**
  * Это просто образец с примерами работы методов жизненного цикла
@@ -7,80 +8,30 @@ import React from 'react';
  */
 export default class Watch extends React.Component {
 
-    state = {
-        time: new Date(),
-    };
 
-    //пишем через стрелочную чтобы связать this
-    updateTime = () => {
-        this.setState({time: new Date()});
-    };
+    //--------------------------Методы жизненного цикла---------------------------------
 
-    //пишем через стрелочную чтобы связать this
-    activateWatch = (interval) => {
-        this.updateTime();
-        this.interval= setInterval(this.updateTime,interval);
-    };
-
-    //пишем через стрелочную чтобы связать this
-    deactivateWatch = () => {
-        clearInterval(this.interval);
-    };
-
-    //------Методы жизненного цикла-------
-
-    // срабатывает при изменениях пропсов
-    //nextProp - обновленные пропсы
-    //this.props - старые пропсы
-    //нужно для работы переключателя часов
-    componentWillReceiveProps(nextProp) {
-        //если стало активно - включаем интервал
-        if (nextProp.isActive && !this.props.isActive) {
-            this.activateWatch(1000);
-        } else if (!nextProp.isActive && this.props.isActive) {
-            this.deactivateWatch();
-        }
-    }
+    //---------Инициализация------------
 
     // 1.
     // срабатывает при создании объекта текущего класса (компонента)
     // constructor = componentWillMount
+    constructor(props){
+        super(props);
+        this.state = {
+            time: new Date()
+        };
+        consoleLog('constructor');
+    }
+
+    componentWillMount(){
+        consoleLog('componentWillMount');
+    }
 
     // 2.
     // вызывается автоматически для отрисовки компонента
-    // render()
-
-    // 3.
-    // срабатывает после появления текущего компонента в DOM (вызова render())
-    //нужно для 1-го запуска часов
-    componentDidMount(){
-        if(this.props.isActive) {
-            this.activateWatch(1000);
-        } else {
-            this.deactivateWatch();
-        }
-        document.addEventListener('click', this.onDocumentClick);
-    }
-
-    // 4.
-    // срабатывает после удаления текущего компонента из DOM
-    // setState - НЕЛЬЗЯ
-    componentWillUnmount(){
-        this.deactivateWatch();
-    }
-
-    //Обработка ref
-    handleButtonRef = (node) => {
-        this.button = node;
-    };
-    //ref исп-ся если нужно по разному реагировать в зависимости от DOM-элемента
-    onDocumentClick = (event)=>{
-        if(this.button === event.target){
-            alert('Попали на часы!!! (тестируем ref)')
-        }
-    };
-
     render() {
+        consoleLog('render');
         const {isActive, onToggleWatch, watchText} = this.props;
         if(typeof onToggleWatch !== 'function' || watchText === undefined || isActive ===undefined ){
             return null;
@@ -107,4 +58,106 @@ export default class Watch extends React.Component {
             </div>
         )
     }
+
+    // 3.
+    // срабатывает после появления текущего компонента в DOM (вызова render())
+    //нужно для 1-го запуска часов
+    componentDidMount(){
+        consoleLog('componentDidMount');
+        if(this.props.isActive) {
+            this.activateWatch(1000);
+        } else {
+            this.deactivateWatch();
+        }
+        document.addEventListener('click', this.onDocumentClick);
+    }
+
+
+    //---------Обновление----------
+
+    // 1.
+    //вызовется только при setState **родителей** даже когда пропсы не менялись
+    //nextProp - обновленные пропсы
+    //this.props - старые пропсы
+    //нужно для работы переключателя часов
+    componentWillReceiveProps(nextProp) {
+        consoleLog('componentWillReceiveProps');
+        //если стало активно - включаем интервал
+        if (nextProp.isActive && !this.props.isActive) {
+            this.activateWatch(1000);
+        } else if (!nextProp.isActive && this.props.isActive) {
+            this.deactivateWatch();
+        }
+    }
+
+    // 2.
+    //вызовется при setState **родителей** или **внутри** самого компонента
+    shouldComponentUpdate(nextProps, nextState){
+        consoleLog('shouldComponentUpdate');
+    }
+
+    // 3.
+    //вызовется при setState **родителей** или **внутри** самого компонента, прямо перед ререндерингом
+    componentWillUpdate(nextProps, nextState){
+        consoleLog('componentWillUpdate');
+    }
+
+    // 4.
+    //render()
+
+    // 5.
+    //после отрисовки
+    componentDidUpdate(prevProps, prevState){
+        consoleLog('componentDidUpdate');
+    }
+
+    //---------Удаление----------
+
+    // 1.
+    // срабатывает после удаления текущего компонента из DOM
+    // setState - НЕЛЬЗЯ
+    componentWillUnmount(){
+        consoleLog('componentWillUnmount');
+        document.removeEventListener('click', this.onDocumentClick);
+        this.deactivateWatch();
+    }
+
+
+
+
+
+
+
+
+
+    //--------------------------Обработчики и прочее---------------------------------
+
+
+    //пишем через стрелочную чтобы связать this
+    updateTime = () => {
+        this.setState({time: new Date()});
+    };
+
+    //пишем через стрелочную чтобы связать this
+    activateWatch = (interval) => {
+        this.updateTime();
+        this.interval= setInterval(this.updateTime,interval);
+    };
+
+    //пишем через стрелочную чтобы связать this
+    deactivateWatch = () => {
+        clearInterval(this.interval);
+    };
+
+    //Обработка ref
+    handleButtonRef = (node) => {
+        this.button = node;
+    };
+    //ref исп-ся если нужно по разному реагировать в зависимости от DOM-элемента
+    onDocumentClick = (event)=>{
+        if(this.button === event.target){
+            alert('Попали на часы!!! (тестируем ref)')
+        }
+    };
+
 }
