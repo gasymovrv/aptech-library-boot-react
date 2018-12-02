@@ -21,9 +21,9 @@ export default class Watch extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            counter: 0,
             time: new Date()
         };
+        this.updatesCounter = 0;
         consoleLog('constructor');
     }
 
@@ -38,7 +38,7 @@ export default class Watch extends React.Component {
         if(typeof onToggleWatch !== 'function' || watchText === undefined || isActive ===undefined ){
             return null;
         }
-        const {time, watchStyle} =this.state;
+        const {time} =this.state;
         // let ms = time.getMilliseconds();
         let sec = time.getSeconds();
         let min = time.getMinutes();
@@ -57,7 +57,7 @@ export default class Watch extends React.Component {
         }
         consoleLog('render');
         return (
-            <div>
+            <div className='box'>
                 <input type='button' onClick={onToggleWatch} value={watchText}/>
                 <p ref={this.handleButtonRef}
                    className={this.props.isActive ? '' : 'disabled-watch'}>{hour} : {min} : {sec}</p>
@@ -117,8 +117,9 @@ export default class Watch extends React.Component {
     // 5.
     //после отрисовки
     componentDidUpdate(prevProps, prevState){
+        this.updatesCounter = this.updatesCounter+1;
         consoleLog('componentDidUpdate');
-        consoleLog('-----------------------end update cycle---------------------------------------');
+        consoleLog(this.updatesCounter + '-----------------------end update cycle---------------------------------------');
     }
 
 

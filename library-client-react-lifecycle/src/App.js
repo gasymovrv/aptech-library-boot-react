@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Watch from './Watch';
+import PureCompExample from './PureCompExample';
 
 export default class App extends Component {
     state = {
@@ -25,8 +26,11 @@ export default class App extends Component {
     render() {
         const {isActiveWatch, watchText} = this.state;
         return (
-            <div className="App">
-                <Watch isActive={isActiveWatch} watchText={watchText} onToggleWatch={this.onToggleWatch}/>
+            <div className="app">
+                <div>
+                    <Watch isActive={isActiveWatch} watchText={watchText} onToggleWatch={this.onToggleWatch}/>
+                    <PureCompExample/>
+                </div>
             </div>
         );
     }
