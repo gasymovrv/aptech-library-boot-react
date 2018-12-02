@@ -16,6 +16,7 @@
 		<module>library-client-react-books</module>
 		<module>library-client-react-npm-books</module>
 		<module>library-client-reactstrap</module>
+		<module>library-client-react-lifecycle</module>
 	</modules>
 
 	<parent>
