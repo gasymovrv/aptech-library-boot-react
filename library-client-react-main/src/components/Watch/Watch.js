@@ -21,6 +21,7 @@ export default class Watch extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            counter: 0,
             time: new Date()
         };
         consoleLog('constructor');
@@ -33,7 +34,6 @@ export default class Watch extends React.Component {
     // 2.
     // вызывается автоматически для отрисовки компонента
     render() {
-        consoleLog('render');
         const {isActive, onToggleWatch, watchText} = this.props;
         if(typeof onToggleWatch !== 'function' || watchText === undefined || isActive ===undefined ){
             return null;
@@ -51,6 +51,7 @@ export default class Watch extends React.Component {
         if(hour < 10){
             hour='0'+hour;
         }
+        consoleLog('render');
         return (
             <div className='row'>
                 <ul className='list-inline'>
@@ -65,13 +66,14 @@ export default class Watch extends React.Component {
     // срабатывает после появления текущего компонента в DOM (вызова render())
     //нужно для 1-го запуска часов
     componentDidMount(){
-        consoleLog('componentDidMount');
         if(this.props.isActive) {
             this.activateWatch(1000);
         } else {
             this.deactivateWatch();
         }
         document.addEventListener('click', this.onDocumentClick);
+        consoleLog('componentDidMount');
+        consoleLog('-----------------------end init cycle---------------------------------------');
     }
 
 
@@ -84,19 +86,20 @@ export default class Watch extends React.Component {
     //this.props - старые пропсы
     //нужно для работы переключателя часов
     componentWillReceiveProps(nextProp) {
-        consoleLog('componentWillReceiveProps');
         //если стало активно - включаем интервал
         if (nextProp.isActive && !this.props.isActive) {
             this.activateWatch(1000);
         } else if (!nextProp.isActive && this.props.isActive) {
             this.deactivateWatch();
         }
+        consoleLog('componentWillReceiveProps');
     }
 
     // 2.
     //вызовется при setState **родителей** или **внутри** самого компонента
     shouldComponentUpdate(nextProps, nextState){
         consoleLog('shouldComponentUpdate');
+        return true;
     }
 
     // 3.
@@ -112,6 +115,7 @@ export default class Watch extends React.Component {
     //после отрисовки
     componentDidUpdate(prevProps, prevState){
         consoleLog('componentDidUpdate');
+        consoleLog('-----------------------end update cycle---------------------------------------');
     }
 
 
@@ -122,9 +126,9 @@ export default class Watch extends React.Component {
     // срабатывает после удаления текущего компонента из DOM
     // setState - НЕЛЬЗЯ
     componentWillUnmount(){
-        consoleLog('componentWillUnmount');
         document.removeEventListener('click', this.onDocumentClick);
         this.deactivateWatch();
+        consoleLog('-------------------componentWillUnmount-------------------------------');
     }
 
 

@@ -1,5 +1,3 @@
-import {consoleLogObjectStandart, consoleLogWithContext} from '../helpers/consoleLog';
-
 export function createNewUser(user) {
     let options = {
         method: 'POST',//тип запроса
@@ -29,8 +27,8 @@ export function logoutUser() {
 }
 
 export function getLocalCurrentUser() {
-    const user = JSON.parse(localStorage.getItem('user'))
-    consoleLogObjectStandart('user',user,getLocalCurrentUser)
+    const user = JSON.parse(localStorage.getItem('user'));
+    // consoleLogObjectStandart('user',user,getLocalCurrentUser)
     return user;
 }
 
@@ -49,7 +47,6 @@ export function setLocalCurrentUser(user) {
  */
 export function checkAuthorization() {
     userIsAuthorize(respResult => {
-        consoleLogWithContext('respResult', respResult, checkAuthorization);
         if (!respResult) {
             setLocalCurrentUser(null);
             logoutUser();

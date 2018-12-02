@@ -1,6 +1,5 @@
 import React from 'react';
 import InfoBox from '../../InfoBox/InfoBox';
-import {consoleLogObjectJSON, consoleLogObjectStandart, consoleLogWithContext} from '../../../helpers/consoleLog';
 import {checkAuthorization, getLocalCurrentUser} from '../../../api/usersApi';
 
 // function checkBeforeRender(history, appPaths) {
@@ -26,12 +25,10 @@ export default function Account({location, history, appPaths}) {
         successSubmit = location.state.successSubmit;
         showInfo = location.state.showInfo;
     }
-    history && consoleLogWithContext('props.history.action', history.action, Account);
     const user = getLocalCurrentUser();
     if(!user){
         history.push(appPaths.auth.login);
     }
-    history && consoleLogObjectJSON('user', user, Account);
     return (
         <div className='col-sm-9'>
             <InfoBox infoKey='login-info'

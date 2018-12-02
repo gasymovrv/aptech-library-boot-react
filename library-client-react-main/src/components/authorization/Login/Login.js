@@ -1,7 +1,6 @@
 import React from 'react';
 import {getLocalCurrentUser, loginUser, setLocalCurrentUser} from '../../../api/usersApi';
 import InfoBox from '../../InfoBox/InfoBox';
-import {consoleLogObjectJSON} from '../../../helpers/consoleLog';
 import {Link} from 'react-router-dom';
 
 export default class Login extends React.Component{
@@ -33,20 +32,17 @@ export default class Login extends React.Component{
         loginUser(email, password)
             .then((resp) => {
                 if (resp.status !== 200) {
-                    consoleLogObjectJSON('resp error', resp, this);
                     this.setState({
                         successSubmit: false,
                         showInfo: true
                     });
                     return null;
                 } else {
-                    consoleLogObjectJSON('resp success', resp, this);
                     return resp.json();
                 }
             })
             .then((respUser) => {
                 if (respUser) {
-                    consoleLogObjectJSON('respUser success', respUser, this);
                     this.setState({
                         email:'',
                         password:'',

@@ -1,6 +1,5 @@
 import React from 'react';
 import getDisplayName from '../helpers/getDisplayName';
-import {consoleLogWithContext} from '../helpers/consoleLog';
 
 export default function withDeleting(deleteEntityById) {
     return function (Component) {
@@ -16,7 +15,6 @@ export default function withDeleting(deleteEntityById) {
                     deletedEntity = {...props.location.state.deletedEntity};
                     showInfo = props.location.state.showInfo;
                 }
-                props.history && consoleLogWithContext('props.history.action', props.history.action, withDeleting);
                 this.state = {
                     successDelete: successDelete,
                     deletedEntity: deletedEntity,

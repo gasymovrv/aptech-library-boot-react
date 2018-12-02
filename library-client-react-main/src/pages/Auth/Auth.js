@@ -8,13 +8,11 @@ import Login from '../../components/authorization/Login';
 import Account from '../../components/authorization/Account';
 import {checkAuthorization, getLocalCurrentUser} from '../../api/usersApi';
 import Registration from '../../components/authorization/Registration';
-import {consoleLogObjectJSON} from '../../helpers/consoleLog';
 
 export default function Auth({appPaths}) {
     // const url = match.url;
     checkAuthorization();
     const isExistUser = getLocalCurrentUser();
-    consoleLogObjectJSON('isExistUser', isExistUser, Auth);
     return (
         <Fragment>
             <Switch>

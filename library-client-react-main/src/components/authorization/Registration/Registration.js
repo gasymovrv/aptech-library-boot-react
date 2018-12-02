@@ -1,7 +1,6 @@
 import React from 'react';
 import {createNewUser} from '../../../api/usersApi';
 import InfoBox from '../../InfoBox/InfoBox';
-import {consoleLogObjectJSON, consoleLogObjectStandart} from '../../../helpers/consoleLog';
 
 export default class Registration extends React.Component{
     state = {
@@ -18,7 +17,6 @@ export default class Registration extends React.Component{
     submitHandler = (event) => {
         event.preventDefault();
         const {email, name, lastName, password1, password2} = this.state;
-        consoleLogObjectStandart('state',this.state)
         const {appPaths, history} = this.props;
         if(password1 !== password2){
             this.setState({
@@ -37,7 +35,6 @@ export default class Registration extends React.Component{
         createNewUser(user)
             .then((resp) => {
                 if (resp.status !== 200) {
-                    consoleLogObjectJSON('resp error', resp, this);
                     this.setState({
                         errorText: 'Ошибка при отправке данных',
                         successSubmit: false,
@@ -51,7 +48,6 @@ export default class Registration extends React.Component{
             .then((respUserDto) => {
                 if (respUserDto) {
                     if (respUserDto.errors && respUserDto.errors.length>0) {
-                        consoleLogObjectJSON('respUserDto errors', respUserDto.errors, this);
                         this.setState({
                             errorText: 'Не получилось зарегистрироваться',
                             successSubmit: false,
