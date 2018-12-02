@@ -1,8 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {isAdmin} from '../../../api/usersApi';
 
-export default function Author({author, onEdit, onDelete, ...props}) {
+export default function Author({author, onEdit, onDelete, currentUserIsAdmin, ...props}) {
     const url = props.match.url;
     const authorInfoLocation = {
         pathname: `${url}/${author.id}`,
@@ -10,7 +9,6 @@ export default function Author({author, onEdit, onDelete, ...props}) {
             entity: {...author},
         }
     };
-    let currentUserIsAdmin = isAdmin();
     return (
         <div className='col-sm-4'>
             <div className='shop-item'>

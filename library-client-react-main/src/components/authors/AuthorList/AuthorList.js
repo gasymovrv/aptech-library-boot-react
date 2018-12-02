@@ -4,10 +4,10 @@ import InfoBox from '../../InfoBox';
 import {isAdmin} from '../../../api/usersApi';
 
 export  default function AuthorList({entityList, deletedEntity, successDelete, children, onAdd, onDelete, showInfo, callbackStopShow, ...props}) {
-    let authors = entityList.map(a =>
-        <Author key={a.id} author={a} onDelete={onDelete} {...props}/>
+    const currentUserIsAdmin = isAdmin();
+    const authors = entityList.map(a =>
+        <Author key={a.id} author={a} currentUserIsAdmin={currentUserIsAdmin} onDelete={onDelete} {...props}/>
     );
-    let currentUserIsAdmin = isAdmin();
     return (
         <div className='col-sm-9'>
             <InfoBox infoKey={deletedEntity.id}

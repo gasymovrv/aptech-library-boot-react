@@ -1,10 +1,12 @@
 import React from 'react';
 import Book from '../Book';
 import InfoBox from '../../InfoBox';
+import {isAdmin} from "../../../api/usersApi";
 
 export default function BookList({entityList, deletedEntity, successDelete, children, onAdd, onDelete, showInfo, callbackStopShow, ...props}) {
-    let books = entityList.map(b =>
-        <Book key={b.id} book={b} onDelete={onDelete} {...props}/>
+    const currentUserIsAdmin =  isAdmin();
+    const books = entityList.map(b =>
+        <Book key={b.id} book={b} currentUserIsAdmin={currentUserIsAdmin} onDelete={onDelete} {...props}/>
     );
     return (
         <div className='col-sm-9'>

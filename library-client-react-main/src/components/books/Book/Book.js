@@ -1,9 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import roundNumbers from '../../../helpers/roundNumbers';
-import {isAdmin} from '../../../api/usersApi';
 
-export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
+export default function Book({book, onEdit, onDelete, appPaths, currentUserIsAdmin, ...props}) {
     const url = props.match.url;
     const imgPath = `data:image/jpeg;base64,${book.image}`;
     const bookInfoLocation = {
@@ -11,7 +10,6 @@ export default function Book({book, onEdit, onDelete, appPaths, ...props}) {
         state: {entity: {...book}}
     };
     const isFree = book.price === 0.0;
-    let currentUserIsAdmin = isAdmin();
 
     return (
         <div className='col-sm-4'>
