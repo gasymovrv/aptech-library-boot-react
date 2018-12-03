@@ -1,5 +1,4 @@
 import React from 'react';
-import Watch from '../Watch';
 import logo from '../../img/BeSmart-logo.svg' // relative path to image
 import {Link} from 'react-router-dom';
 import AuthLinks from '../authorization/AuthLinks';
@@ -8,7 +7,6 @@ export default function Header({watchText, isActiveWatch, onToggleWatch, appPath
     return (
         <div className='mainmenu-wrapper'>
             <div className='container'>
-                <Watch isActive={isActiveWatch} watchText={watchText} onToggleWatch={onToggleWatch}/>
                 <AuthLinks appPaths={appPaths} {...props}/>
                 <nav id='mainmenu' className='mainmenu'>
                     <ul>
