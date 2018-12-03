@@ -1,5 +1,5 @@
 import React from 'react';
-import {consoleLog} from '../../helpers/consoleLog';
+import {log} from '../../helpers/consoleLog';
 
 /**
  * Это просто образец с примерами работы методов жизненного цикла
@@ -24,11 +24,11 @@ export default class Watch extends React.Component {
             counter: 0,
             time: new Date()
         };
-        consoleLog('constructor');
+        log('constructor');
     }
 
     componentWillMount(){
-        consoleLog('componentWillMount');
+        log('componentWillMount');
     }
 
     // 2.
@@ -51,7 +51,7 @@ export default class Watch extends React.Component {
         if(hour < 10){
             hour='0'+hour;
         }
-        consoleLog('render');
+        log('render');
         return (
             <div className='row'>
                 <ul className='list-inline'>
@@ -72,8 +72,8 @@ export default class Watch extends React.Component {
             this.deactivateWatch();
         }
         document.addEventListener('click', this.onDocumentClick);
-        consoleLog('componentDidMount');
-        consoleLog('-----------------------end init cycle---------------------------------------');
+        log('componentDidMount');
+        log('-----------------------end init cycle---------------------------------------');
     }
 
 
@@ -92,20 +92,20 @@ export default class Watch extends React.Component {
         } else if (!nextProp.isActive && this.props.isActive) {
             this.deactivateWatch();
         }
-        consoleLog('componentWillReceiveProps');
+        log('componentWillReceiveProps');
     }
 
     // 2.
     //вызовется при setState **родителей** или **внутри** самого компонента
     shouldComponentUpdate(nextProps, nextState){
-        consoleLog('shouldComponentUpdate');
+        log('shouldComponentUpdate');
         return true;
     }
 
     // 3.
     //вызовется при setState **родителей** или **внутри** самого компонента, прямо перед ререндерингом
     componentWillUpdate(nextProps, nextState){
-        consoleLog('componentWillUpdate');
+        log('componentWillUpdate');
     }
 
     // 4.
@@ -114,8 +114,8 @@ export default class Watch extends React.Component {
     // 5.
     //после отрисовки
     componentDidUpdate(prevProps, prevState){
-        consoleLog('componentDidUpdate');
-        consoleLog('-----------------------end update cycle---------------------------------------');
+        log('componentDidUpdate');
+        log('-----------------------end update cycle---------------------------------------');
     }
 
 
@@ -128,7 +128,7 @@ export default class Watch extends React.Component {
     componentWillUnmount(){
         document.removeEventListener('click', this.onDocumentClick);
         this.deactivateWatch();
-        consoleLog('-------------------componentWillUnmount-------------------------------');
+        log('-------------------componentWillUnmount-------------------------------');
     }
 
 
