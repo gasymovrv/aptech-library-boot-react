@@ -59,7 +59,7 @@ export default class Watch extends React.Component {
         return (
             <div className='box'>
                 <input type='button' onClick={onToggleWatch} value={watchText}/>
-                <p ref={this.handleButtonRef}
+                <p ref={this.handleRef}
                    className={this.props.isActive ? '' : 'disabled-watch'}>{hour} : {min} : {sec}</p>
             </div>
         )
@@ -102,7 +102,17 @@ export default class Watch extends React.Component {
     //вызовется при setState **родителей** или **внутри** самого компонента
     shouldComponentUpdate(nextProps, nextState){
         log('shouldComponentUpdate');
-        return true;
+        //Обнуляем счетчик и выклчаем часы через 5 секунд
+        if((nextProps.isActive === this.props.isActive
+        && nextProps.watchText === this.props.watchText)
+        && this.updatesCounter >= 5
+        ){
+            this.props.onToggleWatch();
+            this.deactivateWatch();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // 3.
@@ -159,16 +169,17 @@ export default class Watch extends React.Component {
 
     //пишем через стрелочную чтобы связать this
     deactivateWatch = () => {
+        this.updatesCounter = 0;
         clearInterval(this.interval);
     };
 
     //Обработка ref
-    handleButtonRef = (node) => {
-        this.button = node;
+    handleRef = (node) => {
+        this.watch = node;
     };
     //ref исп-ся если нужно по разному реагировать в зависимости от DOM-элемента
     onDocumentClick = (event)=>{
-        if(this.button === event.target){
+        if(this.watch === event.target){
             alert('Попали на часы!!! (тестируем ref)')
         }
     };

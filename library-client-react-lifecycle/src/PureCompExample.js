@@ -4,7 +4,7 @@ import React from 'react';
  * Пример когда PureComponent не перерисует компонент:
  * состояние родителя поменялось, но в детей он передает одно и тоже
  */
-export default class PureCompExample extends React.PureComponent {
+export default class PureCompExample extends React.Component {
     state = {value: 0};
 
     componentDidMount() {
@@ -27,13 +27,13 @@ export default class PureCompExample extends React.PureComponent {
 class PureChild extends React.PureComponent {
     render() {
         console.log('rendering PureChild');
-        return <div>{this.props.value}</div>
+        return <div>PureChild value: <b>{this.props.value}</b></div>
     }
 }
 
 class ImpureChild extends React.Component {
     render() {
         console.log('rendering ImpureChild');
-        return <div className='box'>{this.props.value}</div>
+        return <div className='box'>ImpureChild value:  <b>{this.props.value}</b></div>
     }
 }
