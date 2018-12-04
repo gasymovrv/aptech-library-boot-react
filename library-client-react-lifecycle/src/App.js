@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Watch from './Watch';
 import PureCompExample from './PureCompExample';
+import ErrorBoundary from './ErrorBoundary';
+import ErrorExample from './ErrorExample';
 
 export default class App extends Component {
     state = {
@@ -28,8 +30,11 @@ export default class App extends Component {
         return (
             <div className="app">
                 <div>
-                    <Watch isActive={isActiveWatch} watchText={watchText} onToggleWatch={this.onToggleWatch}/>
-                    <PureCompExample/>
+                    {/*<Watch isActive={isActiveWatch} watchText={watchText} onToggleWatch={this.onToggleWatch}/>*/}
+                    {/*<PureCompExample/>*/}
+                    <ErrorBoundary>
+                        <ErrorExample/>
+                    </ErrorBoundary>
                 </div>
             </div>
         );
