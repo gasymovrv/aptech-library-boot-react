@@ -4,9 +4,8 @@ import {log} from './helpers/consoleLog';
 /**
  * Это просто образец с примерами работы методов жизненного цикла
  * и реализации state-full компонента.
- * Используется только в Header
  */
-export default class LifecycleExample extends React.Component {
+class LifecycleExample extends React.Component {
 
 
     //--------------------------Методы жизненного цикла---------------------------------
@@ -27,6 +26,11 @@ export default class LifecycleExample extends React.Component {
         log('constructor');
     }
 
+
+    //new
+    //Совместно со старыми нельзя вызывать
+    //static getDerivedStateFromProps(props, state){}
+
     componentWillMount(){
         log('componentWillMount');
     }
@@ -39,13 +43,9 @@ export default class LifecycleExample extends React.Component {
             return null;
         }
         const {time} =this.state;
-        // let ms = time.getMilliseconds();
         let sec = time.getSeconds();
         let min = time.getMinutes();
         let hour = time.getHours();
-        // if(ms < 10){
-        //     ms='0'+ms;
-        // }
         if(sec < 10){
             sec='0'+sec;
         }
@@ -58,6 +58,7 @@ export default class LifecycleExample extends React.Component {
         log('render');
         return (
             <div className='box'>
+                <h4>LifecycleExample</h4>
                 <input type='button' onClick={onToggleWatch} value={watchText}/>
                 <p ref={this.handleRef}
                    className={this.props.isActive ? '' : 'disabled-watch'}>{hour} : {min} : {sec}</p>
@@ -82,6 +83,10 @@ export default class LifecycleExample extends React.Component {
 
 
     //--------------------------Обновление----------
+    //new
+    //Совместно со старыми нельзя вызывать
+    // static getDerivedStateFromProps(props, state)
+
 
     // 1.
     //вызовется только при setState **родителей** даже когда пропсы не менялись
@@ -102,12 +107,7 @@ export default class LifecycleExample extends React.Component {
     //вызовется при setState **родителей** или **внутри** самого компонента
     shouldComponentUpdate(nextProps, nextState){
         log('shouldComponentUpdate');
-        //Обнуляем счетчик и выклчаем часы через 5 секунд - вообще в этом методе так лучше не делать, он только для оптимизации произ-ти
-        if((nextProps.isActive === this.props.isActive
-        && nextProps.watchText === this.props.watchText)
-        && this.updatesCounter >= 5
-        ){
-            this.props.onToggleWatch();
+        if(this.updatesCounter >= 5){
             this.deactivateWatch();
             return false;
         } else {
@@ -123,6 +123,10 @@ export default class LifecycleExample extends React.Component {
 
     // 4.
     //render()
+
+    //new
+    //Совместно со старыми нельзя вызывать
+    // getSnapshotBeforeUpdate(prevProps, prevState)
 
     // 5.
     //после отрисовки
@@ -158,16 +162,14 @@ export default class LifecycleExample extends React.Component {
 
     //пишем через стрелочную чтобы связать this
     updateTime = () => {
-        this.setState({time: new Date()});
+        this.setState({time: new Date()},() => log('setState=', this.state));
     };
 
-    //пишем через стрелочную чтобы связать this
     activateWatch = (interval) => {
         this.updateTime();
         this.interval= setInterval(this.updateTime,interval);
     };
 
-    //пишем через стрелочную чтобы связать this
     deactivateWatch = () => {
         this.updatesCounter = 0;
         clearInterval(this.interval);
@@ -184,4 +186,36 @@ export default class LifecycleExample extends React.Component {
         }
     };
 
+}
+
+/**
+ * Это обертка чтобы не писать логику в App,
+ * это можно конечно перенести внутрь LifecycleExample и сделать как в NewLifecycleExample.js
+ * Но здесь специально именно так чтобы посмотреть работу componentWillReceiveProps
+*/
+export default class Wrapper extends React.Component {
+    state = {
+        isActiveWatch: false,
+        watchText: 'Включить часы'
+    };
+
+    onToggleWatch = () => {
+        const {isActiveWatch} = this.state;
+        if (!isActiveWatch) {
+            this.setState({
+                isActiveWatch: true,
+                watchText: 'Выключить часы'
+            });
+        } else {
+            this.setState({
+                isActiveWatch: false,
+                watchText: 'Включить часы'
+            });
+        }
+    };
+
+    render(){
+        const {isActiveWatch, watchText} = this.state;
+        return <LifecycleExample isActive={isActiveWatch} watchText={watchText} onToggleWatch={this.onToggleWatch}/>
+    }
 }
