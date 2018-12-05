@@ -7,31 +7,38 @@ export default class ErrorBoundary extends React.Component {
         this.state = { hasError: false };
     }
 
+    //сначала это
     static getDerivedStateFromError(error) {
         // Update state so the next render will show the fallback UI.
-        return { hasError: true };
+        log('getDerivedStateFromError', error);
+        return { hasError: true , error};
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.hasError && nextState.hasError === false) {
-            return false;
-        }
-        return true;
-    }
-
+    //потом это
     componentDidCatch(error, info) {
         // Example "componentStack":
         //   in ComponentThatThrows (created by App)
         //   in ErrorBoundary (created by App)
         //   in div (created by App)
         //   in App
-        log(info.componentStack);
+        log('componentDidCatch', info.componentStack);
+        // this.setState({ //т.к. есть getDerivedStateFromError, то здесь setState уже не сработает
+        //     error,
+        //     errorInfo: info
+        // });
     }
 
     render() {
         if (this.state.hasError) {
             // You can render any custom fallback UI
-            return <h1>Something went wrong.</h1>;
+            return (
+                <div>
+                    <h1>Something went wrong.</h1>
+                    <details>
+                        {this.state.error && this.state.error.toString()}
+                    </details>
+                </div>
+            );
         }
 
         return this.props.children;

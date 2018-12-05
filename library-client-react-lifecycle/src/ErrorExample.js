@@ -14,7 +14,7 @@ export default class ErrorExample extends React.Component {
         setTimeout(() => {
                 this.setState({any: undefined})
             },
-            3000)
+            2000)
     }
 
     render() {
