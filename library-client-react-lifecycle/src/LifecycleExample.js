@@ -6,7 +6,7 @@ import {log} from './helpers/consoleLog';
  * и реализации state-full компонента.
  * Используется только в Header
  */
-export default class Watch extends React.Component {
+export default class LifecycleExample extends React.Component {
 
 
     //--------------------------Методы жизненного цикла---------------------------------
@@ -102,7 +102,7 @@ export default class Watch extends React.Component {
     //вызовется при setState **родителей** или **внутри** самого компонента
     shouldComponentUpdate(nextProps, nextState){
         log('shouldComponentUpdate');
-        //Обнуляем счетчик и выклчаем часы через 5 секунд
+        //Обнуляем счетчик и выклчаем часы через 5 секунд - вообще в этом методе так лучше не делать, он только для оптимизации произ-ти
         if((nextProps.isActive === this.props.isActive
         && nextProps.watchText === this.props.watchText)
         && this.updatesCounter >= 5

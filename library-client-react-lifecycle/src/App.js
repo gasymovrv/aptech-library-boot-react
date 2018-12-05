@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import Watch from './Watch';
+import LifecycleExample from './LifecycleExample';
 import PureCompExample from './PureCompExample';
 import ErrorBoundary from './ErrorBoundary';
 import ErrorExample from './ErrorExample';
+import RenderCallbackExample, {Loading, Profile} from './RenderCallbackExample';
+import HooksExample from './HooksExample';
 
 export default class App extends Component {
     state = {
@@ -30,11 +32,17 @@ export default class App extends Component {
         return (
             <div className="app">
                 <div>
-                    {/*<Watch isActive={isActiveWatch} watchText={watchText} onToggleWatch={this.onToggleWatch}/>*/}
+                    {/*<LifecycleExample isActive={isActiveWatch} watchText={watchText} onToggleWatch={this.onToggleWatch}/>*/}
                     {/*<PureCompExample/>*/}
-                    <ErrorBoundary>
-                        <ErrorExample/>
-                    </ErrorBoundary>
+                    {/*<ErrorBoundary>*/}
+                        {/*<ErrorExample/>*/}
+                    {/*</ErrorBoundary>*/}
+                    <RenderCallbackExample username='tylermcginnis33'>
+                        {(user) => user === null
+                            ? <Loading />
+                            : <Profile user={user} />}
+                    </RenderCallbackExample>
+                    <HooksExample/>
                 </div>
             </div>
         );
