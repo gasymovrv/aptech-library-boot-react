@@ -26,6 +26,7 @@ export default class NewLifecycleExample extends React.Component {
             watchText: 'Включить часы'
         };
         this.updatesCounter = 0;
+        this.mouseCoord = {};
         log('constructor');
     }
 
@@ -48,7 +49,7 @@ export default class NewLifecycleExample extends React.Component {
             <div className='box'>
                 <h4>NewLifecycleExample</h4>
                 <button onClick={this.onToggleWatch}>{watchText}</button>
-                <Watch isActive={isActiveWatch} time={time}/>
+                <Watch isActive={isActiveWatch} time={time} onRef={this.watchRefHandler}/>
             </div>
         )
     }
@@ -85,16 +86,28 @@ export default class NewLifecycleExample extends React.Component {
 
     // 4.
     //вызовется прямо перед изменениями из VDOM, которые должны быть отображены в DOM
+    // Например у вас есть приложение, в котором новые сообщения добавляются сверху экрана –
+    // если пользователь будет скроллить вниз, и добавится новое сообщение, экран будет «прыгать» и это сделает UI тяжелее в использовании.
+    // Добавлением getSnapshotBeforeUpdate вы сможете рассчитать текущее положение скролла и восстанавливать его через апдейт DOM-а.
     getSnapshotBeforeUpdate(prevProps, prevState){
-        log('getSnapshotBeforeUpdate');
-        return null;
+        log('getSnapshotBeforeUpdate, snapshot=', this.mouseCoord);
+        //Создаем какой-то snapshot, он затем попадет в componentDidUpdate
+        //Я сделал перемещение часов на последнее место где была мышь,
+        // чтобы это имело смысл нужно добавить зависимостей от текущего состояния элемента или пропсов..
+        return this.mouseCoord;
     }
 
     // 5.
     //после отрисовки
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps, prevState, snapshot){
         this.updatesCounter = this.updatesCounter+1;
-        log('componentDidUpdate');
+        log('componentDidUpdate, snapshot=', snapshot);
+        if(this.state.isActiveWatch && snapshot && this.watchRef){
+            this.watchRef.style.position = "absolute";
+            this.watchRef.style.border = "solid 2px";
+            this.watchRef.style.left = snapshot.pageX;
+            this.watchRef.style.top = snapshot.pageY;
+        }
         log(this.updatesCounter + '-----------------------end update cycle---------------------------------------');
     }
 
@@ -106,11 +119,10 @@ export default class NewLifecycleExample extends React.Component {
     // срабатывает после удаления текущего компонента из DOM
     // setState - НЕЛЬЗЯ
     componentWillUnmount(){
+        document.removeEventListener("mousemove", this.mouseMoveInfo);
         clearInterval(this.interval);
         log('-------------------componentWillUnmount-------------------------------');
     }
-
-
 
 
 
@@ -122,24 +134,35 @@ export default class NewLifecycleExample extends React.Component {
 
     onToggleWatch = () => {
         const {isActiveWatch} = this.state;
+        this.watchRef.removeAttribute("style");
         if (!isActiveWatch) {
             this.setState({
                 isActiveWatch: true,
                 watchText: 'Выключить часы'
             });
             this.interval= setInterval(()=>this.setState({time: new Date()},() => log('setState=', this.state)), 1000);
+            document.addEventListener("mousemove", this.mouseMoveInfo);
         } else {
             this.setState({
                 isActiveWatch: false,
                 watchText: 'Включить часы'
             });
             clearInterval(this.interval);
+            document.removeEventListener("mousemove", this.mouseMoveInfo);
         }
     };
+
+    mouseMoveInfo =(event) => {
+        this.mouseCoord = {pageX : `${event.pageX}px`, pageY : `${event.pageY}px`};
+    };
+
+    watchRefHandler = (node)=>{
+        this.watchRef = node;
+    }
 }
 
 
-function Watch({isActive, time}) {
+function Watch({isActive, time, onRef}) {
     if(isActive === undefined ){
         return {};
     }
@@ -155,5 +178,5 @@ function Watch({isActive, time}) {
     if(hour < 10){
         hour='0'+hour;
     }
-    return <p className={isActive ? '' : 'disabled-watch'}>{hour} : {min} : {sec}</p>
+    return <div ref={onRef} className={isActive ? '' : 'disabled-watch'}>{hour} : {min} : {sec}</div>
 }
