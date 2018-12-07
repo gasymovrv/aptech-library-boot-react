@@ -1,16 +1,18 @@
 import React from 'react';
 
 import getDisplayName from '../helpers/getDisplayName';
+import convertUTCDateToLocalDate from '../helpers/convertUTCDateToLocalDate';
 
 export default function withForm(Component) {
     class Form extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
-                data:{...props.initialData},
-                savedData:{...props.initialData},
-                oldData:{...props.initialData},
-                successSubmit: undefined
+                data:{...props.entity},
+                savedData:{...props.entity},
+                oldData:{...props.entity},
+                successSubmit: undefined,
+                showInfo: false
             };
         }
 
@@ -22,30 +24,29 @@ export default function withForm(Component) {
 
         onChangeDate = (name) => (date) => {
             let changedData = {...this.state.data};
-            changedData[name] = date;
+            changedData[name] = convertUTCDateToLocalDate(date);
             this.setState({ data: changedData });
         };
 
         onSubmit = e => {
+            const {onSubmit} = this.props;
             e.preventDefault();
-            if (this.props.onSubmit) {
-                this.props.onSubmit(
+            if (onSubmit) {
+                onSubmit(
                     this.state.data,
                     () => {
                         this.setState((state, props) => ({
                             savedData: {...state.data},
                             oldData: {...state.savedData},
-                            successSubmit: true
+                            successSubmit: true,
+                            showInfo: true
                         }));
-                        clearTimeout(this.infoBoxTimeout);
-                        this.startInfoBoxTimeout(10);
                     },
                     () => {
                         this.setState({
-                            successSubmit: false
+                            successSubmit: false,
+                            showInfo: true
                         });
-                        clearTimeout(this.infoBoxTimeout);
-                        this.startInfoBoxTimeout(10);
                     }
                 );
             }
@@ -56,28 +57,35 @@ export default function withForm(Component) {
             this.setState((state, props) => ({data: {...state.savedData}}));
         };
 
-        startInfoBoxTimeout = (timeout)=>{
-            this.infoBoxTimeout = setTimeout(() => {
-                this.setState({successSubmit: undefined});
-            }, timeout*1000);
-        };
-
-        componentWillUnmount(){
-            clearTimeout(this.infoBoxTimeout);
+        componentWillReceiveProps(nextProp) {
+            if (nextProp.entity !== this.props.entity) {
+                this.setState({
+                    data:{...nextProp.entity},
+                    savedData:{...nextProp.entity},
+                    oldData:{...nextProp.entity}
+                })
+            }
         }
 
+        callbackStopShow = () => {
+            this.setState({showInfo: false})
+        };
+
         render() {
+            const {data, savedData, oldData, successSubmit, showInfo} = this.state;
             return (
                 <Component
                     {...this.props}
-                    successSubmit={this.state.successSubmit}
+                    successSubmit={successSubmit}
                     onSubmit={this.onSubmit}
                     onReset={this.onReset}
                     onChange={this.onChange}
                     onChangeDate={this.onChangeDate}
-                    data={this.state.data}
-                    savedData={this.state.savedData}
-                    oldData={this.state.oldData}
+                    data={data}
+                    savedData={savedData}
+                    oldData={oldData}
+                    showInfo={showInfo}
+                    callbackStopShow={this.callbackStopShow}
                 />
             );
         }

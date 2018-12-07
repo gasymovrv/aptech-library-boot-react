@@ -1,9 +1,8 @@
 package ru.aptech.library.repositories;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.aptech.library.entities.Author;
-import ru.aptech.library.entities.Book;
-import ru.aptech.library.entities.Genre;
+import ru.aptech.library.entities.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,11 +20,22 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public CommandLineRunner(BookRepository br, AuthorRepository ar, GenreRepository gr) {
+    public CommandLineRunner(BookRepository br,
+                             AuthorRepository ar,
+                             GenreRepository gr,
+                             RoleRepository rr,
+                             UserRepository ur,
+                             BCryptPasswordEncoder crypt) {
         this.bookRepository = br;
         this.authorRepository = ar;
         this.genreRepository = gr;
+        this.roleRepository = rr;
+        this.userRepository = ur;
+        this.bCryptPasswordEncoder = crypt;
     }
 
     @Override
@@ -72,6 +82,21 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
                     )
             );
         }
+        Role userRole = new Role(1, "ROLE_USER");
+        Role admin = new Role(2, "ADMIN");
+        roleRepository.save(admin);
+        roleRepository.save(userRole);
+
+        HashSet<Role> adminRoles = new HashSet<>();
+        adminRoles.add(admin);
+        adminRoles.add(userRole);
+        String adminPass = bCryptPasswordEncoder.encode("12345");
+        userRepository.save(new User(2, "a@a.ru", adminPass, "a", "a", 1, adminRoles));
+
+        HashSet<Role> userRoles = new HashSet<>();
+        userRoles.add(userRole);
+        String userPass = bCryptPasswordEncoder.encode("12345");
+        userRepository.save(new User(1, "u@u.ru", userPass, "u", "u", 1, userRoles));
     }
 
     private int getRandomIntegerInRange(int min, int max) {

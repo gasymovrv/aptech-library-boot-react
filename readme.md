@@ -109,7 +109,13 @@
     + В консоли переходим в необходимый клиентский модуль, например **library-client-react-main**. 
         + Если папки **node_modules** нет, то делаем ```mvn install``` в этой папке или через меню IDE, 
         + иначе можем запускать с помощью команды ```yarn start```. 
-    + Переходим в браузере по урлу **http://localhost:3000**. 
+    + Переходим в браузере по урлу **http://localhost:[порт модуля]**. 
+    + Описание клиентских модулей
+        + library-client-react-main - основной, здесь главная реализация фронта библиотеки
+        + library-client-react-books - просто список книг в табличном виде
+        + library-client-react-npm-books - тоже что и предыдущий но с npm
+        + library-client-reactstrap - подключен reactstrap
+        + library-client-react-lifecycle - модуль с примерами использования методов ЖЦ
     + Просмотр компонентов через **storybook**:
         + Ставим глобально эту утилиту: ```npm i -g @storybook/cli```
         + Получаем нужные зависимости, запустив в проекте ```getstorybook```
