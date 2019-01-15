@@ -1,6 +1,11 @@
 # Тема: Онлайн-библиотека с возможностью покупки книг
 ![](https://github.com/gasymovrv/AptechLibrary/blob/master/src/main/webapp/resources/img/BeSmart-logo.png)
 
+# Описание
++ Frontend - реакт, созданный через create-react-app (eject не делал).
+    + Имеется несколько модулей, в каждом пробовал разные технологии совместно с реактом, главный - library-client-react-main
++ Backend - рест-сервис на spring-boot.
+
 # Действия, необходимые для заупска
 1. Если реальные данные из БД пока **НЕ** нужны, то можно перейти сразу к пункту 6. Spring-Boot автоматически поднимает in-memory-DB (hsqldb) и  генерит данные в CommandLineRunner. 
     
